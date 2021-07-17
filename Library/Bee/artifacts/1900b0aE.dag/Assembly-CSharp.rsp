@@ -314,7 +314,7 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/DistributeSlices.cs"
 "Assets/Scripts/PlayerEyeMovement.cs"
-"Assets/Scripts/UserInterface.cs"
+"Assets/Scripts/Puzzle Setup/UserInterface.cs"
 -langversion:8.0
 
 /deterministic
