@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\PlayerEyeMovement.cs" />
     <Compile Include="Assets\Scripts\Puzzle Setup\UserInterface.cs" />
     <Compile Include="Assets\Scripts\DistributeSlices.cs" />
+    <Compile Include="Assets\Scripts\SetWinningParams.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
