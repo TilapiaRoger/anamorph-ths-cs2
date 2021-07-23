@@ -315,6 +315,7 @@
 "Assets/Scripts/DistributeSlices.cs"
 "Assets/Scripts/PlayerEyeMovement.cs"
 "Assets/Scripts/Puzzle Setup/UserInterface.cs"
+"Assets/Scripts/SetWinningParams.cs"
 -langversion:8.0
 
 /deterministic

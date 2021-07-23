@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class UserInterface : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class UserInterface : MonoBehaviour
     [SerializeField] private List<GameObject> puzzleModelsList;
     [SerializeField] private Dropdown modelListDropdown;
 
-    private GameObject curModel;
     private float ticks = 0.0f;
     private float SPAWN_INTERVAL = 1.0f;
 
@@ -19,27 +19,19 @@ public class UserInterface : MonoBehaviour
     {
         puzzleModel.SetActive(false);
         initModelList();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(curModel != null)
-        {
-            GameObject.Destroy(curModel);
-            curModel = null;
-        }
-        curModel = SpawnDefault(); 
+        puzzleModel = Instantiate(puzzleModelsList[0], modelLocation);
 
         modelListDropdown.onValueChanged.AddListener(delegate
         {
             updateModel(modelListDropdown.value);
         });
+    }
 
-        /*if(ticks > SPAWN_INTERVAL)
-        {
-
-        }*/
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 
     void initModelList()
@@ -58,35 +50,30 @@ public class UserInterface : MonoBehaviour
 
     }
 
+    //https://unity3d.college/2017/09/07/replace-gameobjects-or-prefabs-with-another-prefab/ 
     void updateModel(int modelIndex)
     {
-        
-        //GameObject.Destroy(puzzleModel);
-        Vector3 position = curModel.transform.localPosition;
-
-        //GameObject.Destroy(puzzleModel);
         GameObject selectedModel = null;
 
         for (int i = 0; i < puzzleModelsList.Count; i++)
         {
             if (puzzleModelsList[i] != null && modelIndex == i)
             {
-                selectedModel = Instantiate(puzzleModelsList[i], modelLocation);
+                selectedModel = puzzleModelsList[i];
+                break;
             }
         }
 
-        selectedModel.transform.localPosition = position;
+        Debug.Log("Model selected: " + selectedModel.name + " at index " + modelIndex);
 
+        GameObject.Destroy(puzzleModel);
+        puzzleModel = Instantiate(selectedModel, modelLocation);
         
-        //puzzleModel = curModel;
-
-        Debug.Log("Model selected: " + puzzleModel.name + "at index " + modelIndex);
-
     }
 
     private GameObject SpawnDefault()
     {
-        GameObject myObj = Instantiate(puzzleModel, modelLocation);
+        GameObject myObj = Instantiate(puzzleModelsList[0], modelLocation);
         myObj.SetActive(true);
 
         return myObj;
