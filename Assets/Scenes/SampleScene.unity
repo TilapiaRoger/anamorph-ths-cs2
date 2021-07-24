@@ -2298,7 +2298,7 @@ Transform:
   m_GameObject: {fileID: 798008297}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -33.204563, y: -6.1651497, z: 72}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 40, y: 40, z: 40}
   m_Children:
   - {fileID: 1426094862}
   m_Father: {fileID: 798130952}
@@ -4634,7 +4634,7 @@ MonoBehaviour:
   puzzleModelsList:
   - {fileID: 919132149155446097, guid: 3d3b9dcbd52c2014f84f77c206e94f75, type: 3}
   - {fileID: 919132149155446097, guid: 77b910d2fdefa6f44bf82747a8c2124a, type: 3}
-  - {fileID: 919132149155446097, guid: 12bfcf22037106645937aca5223e9eae, type: 3}
+  - {fileID: 919132149155446097, guid: 2b4e16973c6491d41883f1bfe64b3b7f, type: 3}
   - {fileID: 919132149155446097, guid: 3406031cd9a4a194dbf09f3f2c2add76, type: 3}
   - {fileID: 919132149155446097, guid: f09fb885435f69a4cae09d013423dfce, type: 3}
   modelListDropdown: {fileID: 1609832866}
