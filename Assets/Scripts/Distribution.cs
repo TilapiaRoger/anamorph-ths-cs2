@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class Distribution : MonoBehaviour
 {
-    public GameObject model;
-    public Transform winningPoint;
-    public Transform modelSpawnPoint;
-    public float minDistance;
-    public float oriDistance;
-    public float maxDistance = 100F;
-    public float scaleFactor;
+    public GameObject model,
+                      pivot;
+    public Transform winningPoint, 
+                     modelSpawnPoint;
+    public float minDistance, 
+                 oriDistance,
+                 maxDistance = 100F,
+                 scaleFactor;
     private Vector3 origin = new Vector3(0, 0, 0);
     // Start is called before the first frame update
     void Start()
@@ -34,24 +35,33 @@ public class Distribution : MonoBehaviour
 
     void Distribute()
     {
-        minDistance = Vector3.Distance(origin, modelSpawnPoint.transform.position);
-        oriDistance = Vector3.Distance(winningPoint.transform.position, modelSpawnPoint.transform.position);
+        minDistance = Vector3.Distance(origin, modelSpawnPoint.position);
+        oriDistance = Vector3.Distance(winningPoint.position, modelSpawnPoint.position);
 
         foreach (Transform child in model.transform)
         {
             GameObject piece = child.gameObject;
-            
-            // Set the Transform pivot of each slice to the model spawn point
-            piece.transform.position = modelSpawnPoint.position;
+
+            // Set the Transform pivot of each slice to the model spawn point by:
+            // Instantiating a temporary empty gameobject at the model spawn point
+            // Parenting the piece to the empty
+            pivot = new GameObject();
+            Instantiate(pivot, modelSpawnPoint);
+            piece.transform.SetParent(pivot.transform);
 
             // Move piece by a random distance from the model spawn point
             // between minDistance and maxDistance
-            piece.transform.position += new Vector3(0, Random.Range(minDistance, maxDistance), 0);
+            pivot.transform.position += new Vector3(0, Random.Range(minDistance, maxDistance), 0);
 
             // Scale the model
             scaleFactor = minDistance / oriDistance;
-            // localScale of each piece is assumed to be (1F, 1F, 1F)
-            piece.transform.localScale *= scaleFactor;
+            pivot.transform.localScale *= scaleFactor;
+
+            // Parent the piece back to the model
+            piece.transform.SetParent(model.transform);
+
+            // Destroy the pivot
+            Destroy(pivot);
         }
     }
 }
