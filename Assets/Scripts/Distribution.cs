@@ -37,6 +37,7 @@ public class Distribution : MonoBehaviour
     {
         minDistance = Vector3.Distance(origin, modelSpawnPoint.position);
         oriDistance = Vector3.Distance(winningPoint.position, modelSpawnPoint.position);
+        pivot = new GameObject();
 
         foreach (Transform child in model.transform)
         {
@@ -45,7 +46,7 @@ public class Distribution : MonoBehaviour
             // Set the Transform pivot of each slice to the model spawn point by:
             // Instantiating a temporary empty gameobject at the model spawn point
             // Parenting the piece to the empty
-            pivot = new GameObject();
+            
             Instantiate(pivot, modelSpawnPoint);
             piece.transform.SetParent(pivot.transform);
 
