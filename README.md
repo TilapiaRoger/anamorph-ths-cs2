@@ -7,8 +7,8 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 
 ## Models List and Their Stats
 
-| Model | # of Triangles | # of Times the Model is Sliced | Average Distance between Slices (in meters) | Fully Manual | Manual Slicing and Automatic Distribution | Fully Automatic | 
-| :---- | :-------------- | :------------------------------ | :------------------------------------------- | :------------ | :----------------------------------------- | :--------------- |
+| Model | # of Triangles | # of Times the Model is Sliced | Average Distance between Slices (in meters) | Fully Manual | Half Half | Fully Automatic | 
+| :---- | :-------------- | :------------------------------ | :------------------------------------------- | :------------ | :------------ | :--------------- |
 | **Suzanne** | 968 | 6 | 1 | ✔️ | ✔️ | ✔️                                 
 | **The Empire State Building** | 2066 | 6 | 1 | ✔️ | ✔️ | ✔️     
 | **Dolphin** | 14672 | 8 | 1 | ✔️ | ✔️ | ✔️     
