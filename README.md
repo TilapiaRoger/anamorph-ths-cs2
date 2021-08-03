@@ -9,20 +9,16 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 
 | Model | # of Triangles | # of Times the Model is Sliced | Average Distance between Slices (in meters) | Fully Manual | Manual Slicing and Automatic Distribution | Fully Automatic | 
 | :---- | :-------------- | :------------------------------ | :------------------------------------------- | :------------ | :----------------------------------------- | :--------------- |
-| **Suzanne** | 968 | 6 | 1 | ?✔️ | ✔️ | ✔️                                 
-| **The Empire State Building** | 2066 | 6 | 1 | ?✔️ | ✔️ | ✔️     
-| **Dolphin** | 14672 | 8 | 1 | ?✔️ | ✔️ | ✔️     
-| **The Utah Teapot** | 9438 | 8 | 1 | ?✔️ | ✔️ | ✔️     
-| **The Eiffel Tower** | 17060 | 8 | 1.5 | ?✔️ | ✔️ | ✔️     
-| **Buddha** | 72910 | 10 | 1.5 | ?✔️ | h✔️ | ✔️     
-| **The Stanford Dragon** | 100000 | 12 | 1.5 | ?✔️ | ✔️ | ✔️     
-| **The Stanford Armadillo** | 112402 | 14 | 2.5 | ?✔️ | ✔️ | ✔️     
-| **The Stanford Bunny** | 112414 | 16 | 2.5 | ?✔️ | ✔️ | ✔️     
-| **The Phlegmatic Dragon (Smoothed)** | 480076 | 18 | 2.5 | ?✔️ | ✔️ | ✔️     
-
-h✔️ - half done
-?✔️ - Do research on how to randomly generate distances, such that they're 
-	 between the winning point and the edge of the game sphere
+| **Suzanne** | 968 | 6 | 1 | ✔️ | ✔️ | ✔️                                 
+| **The Empire State Building** | 2066 | 6 | 1 | ✔️ | ✔️ | ✔️     
+| **Dolphin** | 14672 | 8 | 1 | ✔️ | ✔️ | ✔️     
+| **The Utah Teapot** | 9438 | 8 | 1 | ✔️ | ✔️ | ✔️     
+| **The Eiffel Tower** | 17060 | 8 | 1.5 | ✔️ | ✔️ | ✔️     
+| **Buddha** | 72910 | 10 | 1.5 | ✔️ | ✔️ | ✔️     
+| **The Stanford Dragon** | 100000 | 12 | 1.5 | ✔️ | ✔️ | ✔️     
+| **The Stanford Armadillo** | 112402 | 14 | 2.5 | ✔️ | ✔️ | ✔️     
+| **The Stanford Bunny** | 112414 | 16 | 2.5 | ✔️ | ✔️ | ✔️     
+| **The Phlegmatic Dragon (Smoothed)** | 480076 | 18 | 2.5 | ✔️ | ✔️ | ✔️     
 
 ## Concrete algorithm steps:
 01.  Pick the winning point
