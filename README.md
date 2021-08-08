@@ -21,16 +21,17 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 | **The Phlegmatic Dragon (Smoothed)** | 480076 | 18 | 2.5 | ✔️ | ✔️ | ✔️     
 
 ## Concrete algorithm steps:
-01.  Pick the winning point
-02.  Pick the the winning distance
-03.  Set the one of the axes as the winning angles
-04.  Pick the spawn point of the model based on the winning distance and angles
-05.  Slice the model such that a slice is sliced individually each time
-05.1 Set the origins of the slices to the spawn point of the model
-05.2 Fill the faces of the sliced side
-07.  Distribute the slices
-08.  Pick random winning angles
-09.  Delete the spawn point of the model
-10.  Rotate the entire collection of slices with the winning point as the center according to the winning angles
+01.  Pick the modelSpawnPoint along the axis between the origin and the game limits
+02.  Pick the winning point along the axis between the modelSpawnPoint and the game limits
+03.  Pick the spawn point of the model based on the winning distance and angles
+04.  Slice the model such that a slice is sliced individually each time
+04.1 Fill the faces of the sliced side
+04.2 Parent the slices to modelSpawnPoint
+05.  Distribute the slices
+05.1 Translate the slice along the axis
+05.2 Scale the slice by newDistance / oldDistance
+07.  Parent modelSpawnPoint to winningPoint
+08.  Rotate the winningPoint at random angles
+09.  Parent winningPoint to origin
+10.  Rotate origin
 (Optional) Add random slices
-
