@@ -545,6 +545,96 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: allManualList.Array.data[0]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 09f9d4851ecb66841ba74c3d109d565e,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: allManualList.Array.data[1]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 8f4a364f59af51945a9d57aacb78dd49,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: allManualList.Array.data[2]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 8872bc30140311a46b4c7b25014df413,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: allManualList.Array.data[3]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 98589f28a959a1c49b835fce552d32ee,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: allManualList.Array.data[4]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: a4498149aff91eb4d9441b05c5aaca95,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: allAutomaticList.Array.data[0]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 437eb4bfc6471e940ab3d35a51703523,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: allAutomaticList.Array.data[1]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: c2dcd30f6dc3e2446b955ab1b09f923b,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: allAutomaticList.Array.data[2]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 156f46c15ccbf37458b680dcc04a8807,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: allAutomaticList.Array.data[3]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 761f67f330aa61247858bdfdfe65f68a,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: allAutomaticList.Array.data[4]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: e5a2b6fe6bee32644aae931492c88565,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: manualSliceAutoDistList.Array.data[0]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 12e9cd4723e33a14a84d6d44c562e581,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: manualSliceAutoDistList.Array.data[1]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 43acdb44e424a144dbb7c74dd1be3889,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: manualSliceAutoDistList.Array.data[2]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 33c226fd93bbc1a47b777cfea3e778cd,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: manualSliceAutoDistList.Array.data[3]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 8b8fb52c39fe00e46afa55159c2530b8,
+        type: 3}
+    - target: {fileID: 8944332751498885667, guid: 6efbea094d493684b9f64c06bbdf7703,
+        type: 3}
+      propertyPath: manualSliceAutoDistList.Array.data[4]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 32686d9d80f29b94697e51f31047141c,
+        type: 3}
     - target: {fileID: 8944332751498885676, guid: 6efbea094d493684b9f64c06bbdf7703,
         type: 3}
       propertyPath: m_RootOrder
