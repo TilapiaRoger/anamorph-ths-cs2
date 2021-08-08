@@ -26,11 +26,11 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 03.  Initialize the origin, winningPoint, and modelSpawnPoint as invisible spheres
 04.  Initialize the model at modelSpawnPoint
 05.  Slice the model such that a slice is sliced individually each time
-05.1 Fill the faces of the sliced side
-05.2 Parent the slices to modelSpawnPoint
+- Fill the faces of the sliced side
+- Parent the slices to modelSpawnPoint
 06.  Distribute the slices
-06.1 Translate the slice along the axis
-06.2 Scale the slice by newDistance / oldDistance
+- Translate the slice along the axis
+- Scale the slice by newDistance / oldDistance
 07.  Parent modelSpawnPoint to winningPoint
 08.  Rotate the winningPoint at random angles
 09.  Parent winningPoint to origin
