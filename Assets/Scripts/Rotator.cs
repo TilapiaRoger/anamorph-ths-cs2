@@ -36,7 +36,6 @@ public class Rotator : MonoBehaviour
         modelSpawnPoint.transform.position = initializer.modelSpawnPoint.transform.position;
 
         // Parent model and modelSpawnPoint to winningPoint
-        model.transform.SetParent(winningPoint.transform);
         modelSpawnPoint.transform.SetParent(winningPoint.transform);
 
         // Rotate winningPoint

@@ -11,10 +11,10 @@ public class Distribution : MonoBehaviour
                         model,
                         pivot,
                         gameManager;
-    private float minDistance, 
-                 oriDistance,
-                 maxDistance = 100F,
-                 scaleFactor;
+    private float newDistance, 
+                  oldDistance,
+                  maxDistance = 100F,
+                  scaleFactor;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,8 +37,8 @@ public class Distribution : MonoBehaviour
         winningPoint.transform.position = initializer.winningPoint.transform.position;
         modelSpawnPoint.transform.position = initializer.modelSpawnPoint.transform.position;
 
-        minDistance = Vector3.Distance(origin.transform.position, modelSpawnPoint.transform.position);
-        oriDistance = Vector3.Distance(winningPoint.transform.position, modelSpawnPoint.transform.position);
+        newDistance = Vector3.Distance(origin.transform.position, modelSpawnPoint.transform.position);
+        oldDistance = Vector3.Distance(winningPoint.transform.position, modelSpawnPoint.transform.position);
         pivot = new GameObject();
 
         foreach (Transform child in model.transform)
@@ -54,10 +54,10 @@ public class Distribution : MonoBehaviour
 
             // Move piece by a random distance from the model spawn point
             // between minDistance and maxDistance
-            pivot.transform.position += new Vector3(0, Random.Range(minDistance, maxDistance), 0);
+            pivot.transform.position += new Vector3(0, Random.Range(newDistance, maxDistance), 0);
 
             // Scale the model
-            scaleFactor = minDistance / oriDistance;
+            scaleFactor = newDistance / oldDistance;
             pivot.transform.localScale *= scaleFactor;
 
             // Parent the piece back to the model
