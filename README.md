@@ -22,16 +22,24 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 
 ## Concrete algorithm steps:
 01.  Pick the modelSpawnPoint along the axis between the origin and the game limits
-02.  Pick the winning point along the axis between the modelSpawnPoint and the game limits
-03.  Pick the spawn point of the model based on the winning distance and angles
-04.  Slice the model such that a slice is sliced individually each time
-04.1 Fill the faces of the sliced side
-04.2 Parent the slices to modelSpawnPoint
-05.  Distribute the slices
-05.1 Translate the slice along the axis
-05.2 Scale the slice by newDistance / oldDistance
-07.  Parent modelSpawnPoint to winningPoint
-08.  Rotate the winningPoint at random angles
-09.  Parent winningPoint to origin
-10.  Rotate origin
+02.  Pick the winningPoint along the axis between the modelSpawnPoint and the game limits
+04.  Initialize the origin, winningPoint, and modelSpawnPoint as invisible spheres
+05.  Initialize the model at modelSpawnPoint
+06.  Slice the model such that a slice is sliced individually each time
+06.1 Fill the faces of the sliced side
+06.2 Parent the slices to modelSpawnPoint
+07.  Distribute the slices
+07.1 Translate the slice along the axis
+07.2 Scale the slice by newDistance / oldDistance
+08.  Parent modelSpawnPoint to winningPoint
+09.  Rotate the winningPoint at random angles
+10.  Parent winningPoint to origin
+11.  Rotate origin
 (Optional) Add random slices
+
+# In code
+1. Initializer
+2. Slicer
+3. Distributor
+4. Rotator
+5. Results
