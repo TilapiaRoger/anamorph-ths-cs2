@@ -23,9 +23,9 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 ## Concrete algorithm steps:
 01.  Pick the modelSpawnPoint along the axis between the origin and the game limits
 02.  Pick the winningPoint along the axis between the modelSpawnPoint and the game limits
-04.  Initialize the origin, winningPoint, and modelSpawnPoint as invisible spheres
-05.  Initialize the model at modelSpawnPoint
-06.  Slice the model such that a slice is sliced individually each time
+03.  Initialize the origin, winningPoint, and modelSpawnPoint as invisible spheres
+04.  Initialize the model at modelSpawnPoint
+05.  Slice the model such that a slice is sliced individually each time
 06.1 Fill the faces of the sliced side
 06.2 Parent the slices to modelSpawnPoint
 07.  Distribute the slices
