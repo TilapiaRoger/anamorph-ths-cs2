@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class Distribution : MonoBehaviour
 {
-    public GameObject model,
-                      pivot;
-    public Transform winningPoint, 
-                     modelSpawnPoint;
-    public float minDistance, 
+    private GameObject  origin,
+                        winningPoint,
+                        modelSpawnPoint, 
+                        model,
+                        pivot,
+                        gameManager;
+    private float minDistance, 
                  oriDistance,
                  maxDistance = 100F,
                  scaleFactor;
-    private Vector3 origin = new Vector3(0, 0, 0);
     // Start is called before the first frame update
     void Start()
     {
@@ -26,17 +27,18 @@ public class Distribution : MonoBehaviour
         
     }
 
-    Distribution(GameObject model, Transform winningPoint, Transform modelSpawnPoint)
-    {
-        this.model = model;
-        this.winningPoint = winningPoint;
-        this.modelSpawnPoint = modelSpawnPoint;
-    }
-
     void Distribute()
     {
-        minDistance = Vector3.Distance(origin, modelSpawnPoint.position);
-        oriDistance = Vector3.Distance(winningPoint.position, modelSpawnPoint.position);
+        // From http://answers.unity.com/answers/42845/view.html
+        gameManager = GameObject.Find("GameManager");
+        Initializer initializer = gameManager.GetComponent<Initializer>();
+        
+        origin.transform.position = initializer.origin.transform.position;
+        winningPoint.transform.position = initializer.winningPoint.transform.position;
+        modelSpawnPoint.transform.position = initializer.modelSpawnPoint.transform.position;
+
+        minDistance = Vector3.Distance(origin.transform.position, modelSpawnPoint.transform.position);
+        oriDistance = Vector3.Distance(winningPoint.transform.position, modelSpawnPoint.transform.position);
         pivot = new GameObject();
 
         foreach (Transform child in model.transform)
@@ -47,7 +49,7 @@ public class Distribution : MonoBehaviour
             // Instantiating a temporary empty gameobject at the model spawn point
             // Parenting the piece to the empty
             
-            Instantiate(pivot, modelSpawnPoint);
+            Instantiate(pivot, modelSpawnPoint.transform);
             piece.transform.SetParent(pivot.transform);
 
             // Move piece by a random distance from the model spawn point
