@@ -61,14 +61,17 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerEyeMovement.cs" />
     <Compile Include="Assets\Scripts\SetWinningParams.cs" />
+    <Compile Include="Assets\Scripts\Puzzle Setup\ModelParams.cs" />
     <Compile Include="Assets\Scripts\Puzzle Setup\ProcessedModels.cs" />
+    <Compile Include="Assets\Scripts\Rotator.cs" />
     <Compile Include="Assets\Scripts\InitializeModel.cs" />
     <Compile Include="Assets\Scripts\Puzzle Setup\UserInterface.cs" />
     <Compile Include="Assets\Scripts\Puzzle Setup\ModelList.cs" />
-    <Compile Include="Assets\Scripts\SolvingUI.cs" />
+    <Compile Include="Assets\Scripts\Initializer.cs" />
+    <Compile Include="Assets\Scripts\UI\SolvingUI.cs" />
     <Compile Include="Assets\Scripts\DistributeSlices.cs" />
-    <Compile Include="Assets\Scripts\Puzzle Setup\ModelParams.cs" />
-    <Compile Include="Assets\Scripts\Distribution.cs" />
+    <Compile Include="Assets\Scripts\UI\ResultsUI.cs" />
+    <Compile Include="Assets\Scripts\Solving\Distribution.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\3D Models\Test 3D Models\README.txt" />

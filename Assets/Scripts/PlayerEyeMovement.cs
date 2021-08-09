@@ -9,12 +9,12 @@ public class PlayerEyeMovement : MonoBehaviour
 
     private enum Direction
     {
-        UP, DOWN, LEFT, RIGHT, NONE
+        UP, DOWN, LEFT, RIGHT, ASCEND, DESCEND, NONE
     }
 
     private enum CamDirection
     {
-        HORIZONTAL, NONE
+        HORIZONTAL, VERTICAL, NONE
     }
 
     private Direction currentDir = Direction.NONE;
@@ -51,20 +51,50 @@ public class PlayerEyeMovement : MonoBehaviour
         {
             currentDir = Direction.DOWN;
         }
-        else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W))
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            currentDir = Direction.ASCEND;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            currentDir = Direction.DESCEND;
+        }
+        else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.LeftShift) || Input.GetMouseButtonUp(0))
         {
             currentDir = Direction.NONE;
         }
 
-
-        if (Input.GetAxis("Mouse X") != 0)
+        if (Input.GetMouseButtonDown(0))
         {
-            currentCamDir = CamDirection.HORIZONTAL;
+            if (Input.GetAxis("Mouse X") != 0)
+            {
+                currentCamDir = CamDirection.HORIZONTAL;
+            }
+            /*else if (Input.GetAxis("Mouse Y") != 0)
+            {
+                currentCamDir = CamDirection.VERTICAL;
+            }*/
+            else if (Input.GetAxis("Mouse X") == 0)
+            {
+                currentCamDir = CamDirection.NONE;
+            }
+
+            /*
+            else if (Input.GetAxis("Mouse Y") == 0)
+            {
+                currentCamDir = CamDirection.NONE;
+            }*/
+        }
+
+
+        /*if (Input.GetAxis("Mouse Y") != 0)
+        {
+            currentCamDir = CamDirection.VERTICAL;
         }
         else if (Input.GetAxis("Mouse X") == 0)
         {
             currentCamDir = CamDirection.NONE;
-        }
+        }*/
     }
 
     private void Move()
@@ -83,7 +113,14 @@ public class PlayerEyeMovement : MonoBehaviour
             case Direction.RIGHT:
                 this.gameObject.transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
                 break;
+            case Direction.ASCEND:
+                this.gameObject.transform.Translate(Vector3.up * Time.deltaTime * moveSpeed);
+                break;
+            case Direction.DESCEND:
+                this.gameObject.transform.Translate(Vector3.down * Time.deltaTime * moveSpeed);
+                break;
         }
+
 
         if (currentCamDir == CamDirection.HORIZONTAL)
         {
@@ -93,5 +130,13 @@ public class PlayerEyeMovement : MonoBehaviour
 
             this.gameObject.transform.Rotate(0, h, 0);
         }
+        /*else if (currentCamDir == CamDirection.VERTICAL)
+        {
+            float v;
+
+            v = rotateSpeed * Input.GetAxis("Mouse Y");
+
+            this.gameObject.transform.Rotate(v, 0, 0);
+        }*/
     }
 }
