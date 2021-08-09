@@ -236,7 +236,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Congratulations, you finished solving the puzzle!
+  m_Text: Congratulations for finally solving the puzzle!
 --- !u!1 &4369110763659269870
 GameObject:
   m_ObjectHideFlags: 0

@@ -313,9 +313,18 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/DistributeSlices.cs"
+"Assets/Scripts/InitializeModel.cs"
 "Assets/Scripts/PlayerEyeMovement.cs"
+"Assets/Scripts/Puzzle Setup/ModelList.cs"
+"Assets/Scripts/Puzzle Setup/ModelParams.cs"
+"Assets/Scripts/Puzzle Setup/ProcessedModels.cs"
 "Assets/Scripts/Puzzle Setup/UserInterface.cs"
 "Assets/Scripts/SetWinningParams.cs"
+"Assets/Scripts/Solving/Distribution.cs"
+"Assets/Scripts/Solving/Initializer.cs"
+"Assets/Scripts/Solving/Rotator.cs"
+"Assets/Scripts/UI/ResultsUI.cs"
+"Assets/Scripts/UI/SolvingUI.cs"
 -langversion:8.0
 
 /deterministic

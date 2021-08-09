@@ -34,10 +34,13 @@ public class ResultsUI : MonoBehaviour
 
     public void FinishSolving()
     {
+        string modelName = modelUsed.transform.GetChild(0).gameObject.name;
+
+        modelName = modelName.Replace("(Clone)", "");
 
         sFinalTimeSolved = solveUI.getFinalTime();
 
-        modelLabel.text = "Model solved: " + modelUsed.transform.GetChild(0).gameObject.name;
+        modelLabel.text = "Model solved: " + modelName;
         timeLabel.text = "Time to solve: " + sFinalTimeSolved;
 
         resultsWindow.gameObject.SetActive(true);
