@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,26 +5,28 @@ using UnityEngine;
 
 public class Distribution : MonoBehaviour
 {
-    private GameObject  origin,
-                        winningPoint,
-                        modelSpawnPoint, 
-                        model,
-                        pivot,
-                        gameManager;
-    private float newDistance, 
+    public GameObject origin,
+                      modelSpawnPoint,
+                      winningPoint;
+
+    private GameObject gameManager,
+                       model,
+                       pivot;
+
+    private float newDistance,
                   oldDistance,
                   maxDistance = 100F,
                   scaleFactor;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void Distribute()
@@ -33,10 +34,6 @@ public class Distribution : MonoBehaviour
         // From http://answers.unity.com/answers/42845/view.html
         gameManager = GameObject.Find("GameManager");
         Initializer initializer = gameManager.GetComponent<Initializer>();
-        
-        origin.transform.position = initializer.origin.transform.position;
-        winningPoint.transform.position = initializer.winningPoint.transform.position;
-        modelSpawnPoint.transform.position = initializer.modelSpawnPoint.transform.position;
 
         newDistance = Vector3.Distance(origin.transform.position, modelSpawnPoint.transform.position);
         oldDistance = Vector3.Distance(winningPoint.transform.position, modelSpawnPoint.transform.position);
@@ -49,7 +46,7 @@ public class Distribution : MonoBehaviour
             // Set the Transform pivot of each slice to the model spawn point by:
             // Instantiating a temporary empty gameobject at the model spawn point
             // Parenting the piece to the empty
-            
+
             Instantiate(pivot, modelSpawnPoint.transform);
             piece.transform.SetParent(pivot.transform);
 

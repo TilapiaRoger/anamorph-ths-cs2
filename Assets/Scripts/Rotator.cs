@@ -6,23 +6,24 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    GameObject origin, 
-               winningPoint, 
-               modelSpawnPoint, 
-               model,
-               gameManager;
-    private float pi = Mathf.PI;
+    public GameObject origin,
+                      modelSpawnPoint,
+                      winningPoint;
 
+    private GameObject gameManager,
+                       model;
+
+    private float pi = Mathf.PI;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void rotate()
@@ -30,10 +31,6 @@ public class Rotator : MonoBehaviour
         // From http://answers.unity.com/answers/42845/view.html
         gameManager = GameObject.Find("GameManager");
         Initializer initializer = gameManager.GetComponent<Initializer>();
-
-        origin.transform.position = initializer.origin.transform.position;
-        winningPoint.transform.position = initializer.winningPoint.transform.position;
-        modelSpawnPoint.transform.position = initializer.modelSpawnPoint.transform.position;
 
         // Parent model and modelSpawnPoint to winningPoint
         modelSpawnPoint.transform.SetParent(winningPoint.transform);

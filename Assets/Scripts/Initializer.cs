@@ -7,10 +7,12 @@ public class Initializer : MonoBehaviour
     public GameObject origin,
                       modelSpawnPoint,
                       winningPoint;
+    
     public bool isManuallyDistributed;
+    
     private Transform holder;
+    
     private float max;
-
     // Start is called before the first frame update
     void Start()
     {

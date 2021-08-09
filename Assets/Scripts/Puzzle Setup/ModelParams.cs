@@ -10,7 +10,8 @@ public class ModelParams : MonoBehaviour
     public string modelName;
 
     public static GameObject puzzleModel;
-    [SerializeField] private ModelList modelList;
+    private GameObject gameManager;
+    private ModelList modelList;
 
     // Start is called before the first frame update
     void Start()
@@ -32,10 +33,12 @@ public class ModelParams : MonoBehaviour
         Debug.Log("Set Distribute: " + distributeType);
         Debug.Log("Set Model Name: " + modelName);
 
+        // From http://answers.unity.com/answers/42845/view.html
+        gameManager = GameObject.Find("GameManager");
+        modelList = gameManager.GetComponent<ModelList>();
+
         puzzleModel = modelList.findModel(sliceType, distributeType, modelName);
         Debug.Log("Model: " + puzzleModel.name);
-
-        
     }
 
     public GameObject initModel()
