@@ -15,9 +15,9 @@ public class UserInterface : MonoBehaviour
     [SerializeField] private Dropdown sliceTypeDropdown;
     [SerializeField] private Dropdown distributeTypeDropdown;
 
-    private GameObject gameManager;
-    private ModelList modelList;
-    private ModelParams modelParams;
+    [SerializeField] private GameObject gameManager;
+    ModelList modelList;
+    ModelParams modelParams;
 
     private float ticks = 0.0f;
     private float SPAWN_INTERVAL = 1.0f;
@@ -26,15 +26,16 @@ public class UserInterface : MonoBehaviour
     void Start()
     {
         //puzzleModel.SetActive(false);
-        initModelDropdown();
-        modelList.initPuzzleModelTable();
 
         //puzzleModel = Instantiate(puzzleModelsList[0], modelLocation);
 
         // From http://answers.unity.com/answers/42845/view.html
-        gameManager = GameObject.Find("GameManager");
+        //gameManager = GameObject.Find("GameManager");
         modelList = gameManager.GetComponent<ModelList>();
         modelParams = gameManager.GetComponent<ModelParams>();
+
+        initModelDropdown();
+        modelList.initPuzzleModelTable();
 
         modelParams.sliceType = sliceTypeDropdown.options[0].text;
         modelParams.distributeType = distributeTypeDropdown.options[0].text;
