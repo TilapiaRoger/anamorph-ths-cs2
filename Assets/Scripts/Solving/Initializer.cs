@@ -20,14 +20,18 @@ public class Initializer : MonoBehaviour
     private GameObject gameManager;
     private ModelParams modelParams;
 
+    private float originF = 0f,
+                  modelF,
+                  winningF;
 
+    private string distributeType;
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("GameManager");
+        /*gameManager = GameObject.Find("GameManager");
         modelParams = gameManager.GetComponent<ModelParams>();
 
-        isManuallyDistributed = true;
+        isManuallyDistributed = true;*/
         //isManuallyDistributed = modelParams.IsFullyManual();
 
         Initialize();
@@ -48,12 +52,27 @@ public class Initializer : MonoBehaviour
 
     void Initialize()
     {
+        // From http://answers.unity.com/answers/42845/view.html
+        gameManager = GameObject.Find("GameManager");
+        ModelParams modelParams = gameManager.GetComponent<ModelParams>();
+
+        // Get type of distribution from modelParams
+        distributeType = modelParams.DistributeType();
+
+        Debug.Log("Distribute Type: " + distributeType);
+
         Transform playerModelLocation = playerAvatar.transform;
 
-        max = Random.Range(0, 100);
+        // Where the modelSpawnPoint is along the z-axis
+        // Also the maximum for the position of winningPoint along the z-axis
+        modelF = Random.Range(0, 100);
+
+        // Where the winningPoint is along the z-axis
+        // Must be between the modelSpawnPoint and origin (exclusive)
+        winningF = Random.Range(originF, modelF);
+        while (winningF == originF || winningF == modelF) winningF = Random.Range(originF, modelF);
 
         // Instantiate origin as an invisible sphere
-
         origin = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         origin.SetActive(false);
         holder.position = new Vector3(0, 0, 0);
@@ -65,7 +84,6 @@ public class Initializer : MonoBehaviour
         GameObject selectedModel = modelParams.initModel();
         modelSpawnPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //modelSpawnPoint = Instantiate(selectedModel);
-
         modelSpawnPoint.SetActive(false);
         holder.position = new Vector3(0, max, 0);
         Instantiate(modelSpawnPoint, holder);
@@ -84,14 +102,18 @@ public class Initializer : MonoBehaviour
         winningPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
         winningPoint.transform.localScale = new Vector3(50, 50, 50);
-        //winningPoint.SetActive(false);
+        winningPoint.SetActive(false);
 
-        if (isManuallyDistributed)
-            holder.position = puzzleModelLocation.transform.localPosition - new Vector3(0, 10, 0);
+        if (distributeType == "Manual")
+        {
+            Debug.Log("Distributed manually.");
+            holder.position = modelSpawnPoint.transform.localPosition + new Vector3(0, 0, 10);
+        }
         else
-            holder.position = new Vector3(0, Random.Range(0, max), 0);
-
-        winningPoint.transform.position = holder.position;
+        {
+            holder.position = new Vector3(0, 0, winningF);
+        }
+            
         Instantiate(winningPoint, holder);
     }
 }

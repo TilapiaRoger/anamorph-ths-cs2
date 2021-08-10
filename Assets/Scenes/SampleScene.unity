@@ -296,11 +296,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 84479705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5faa75b7e0ae4794ca4f6eff302081ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 57efbcb9ad1bc8941a054c3b7b7039c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 150
-  rotateSpeed: 5
+  moveSpeed: 120
+  rotateSpeed: 15
 --- !u!1 &161817450
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +517,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 458581623}
+      objectReference: {fileID: 188137176}
     - target: {fileID: 4369110764159894007, guid: cc2131c8e26a5f9479d6b8a1fa8ee4ec,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName

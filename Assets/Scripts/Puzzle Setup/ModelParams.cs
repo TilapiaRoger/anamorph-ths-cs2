@@ -15,6 +15,8 @@ public class ModelParams : MonoBehaviour
     private GameObject gameManager;
     private ModelList modelList;
 
+    public static string distributeTypeCopy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,8 @@ public class ModelParams : MonoBehaviour
 
         puzzleModel = modelList.findModel(sliceType, distributeType, modelName);
         //Debug.Log("Model: " + puzzleModel.name);
+
+        distributeTypeCopy = distributeType;
     }
 
     public void SetDistributeStatus(string distributeType)
@@ -60,5 +64,10 @@ public class ModelParams : MonoBehaviour
     public bool IsFullyManual()
     {
         return isFullyManual;
+    }
+
+    public string DistributeType()
+    {
+        return distributeTypeCopy;
     }
 }
