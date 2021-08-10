@@ -28,7 +28,6 @@ public class InitializeModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
 
+    }
 }

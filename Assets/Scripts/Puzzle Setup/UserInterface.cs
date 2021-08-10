@@ -100,7 +100,7 @@ public class UserInterface : MonoBehaviour
         //puzzleModel = Instantiate(selectedModel, modelLocation);
         
     }*/
-    
+
     /*private GameObject SpawnDefault()
     {
         GameObject myObj = Instantiate(puzzleModelsList[0], modelLocation);

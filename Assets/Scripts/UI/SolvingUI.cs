@@ -29,7 +29,8 @@ public class SolvingUI : MonoBehaviour
         timeElapsedLabel.text = "Time elapsed: " + sTimeElapsed;
     }
 
-    public string getFinalTime() {
+    public string getFinalTime()
+    {
         return sTimeElapsed;
     }
 

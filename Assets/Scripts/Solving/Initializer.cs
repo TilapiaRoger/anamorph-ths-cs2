@@ -7,7 +7,7 @@ public class Initializer : MonoBehaviour
     public GameObject origin,
                       modelSpawnPoint,
                       winningPoint;
-    
+
     public bool isManuallyDistributed;
 
     [SerializeField] private Transform playerAvatar;
