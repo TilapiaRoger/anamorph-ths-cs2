@@ -59,18 +59,16 @@ public class UserInterface : MonoBehaviour
         });
 
         modelParams.setModel(modelParams.sliceType, modelParams.distributeType, modelParams.modelName);
+        modelParams.SetDistributeStatus(modelParams.distributeType);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*Debug.Log("Slice: " + modelParams.sliceType);
-        Debug.Log("Distribute: " + modelParams.distributeType);
-        Debug.Log("Model Name: " + modelParams.modelName);
-        */
 
         modelParams.setModel(modelParams.sliceType, modelParams.distributeType, modelParams.modelName);
+        modelParams.SetDistributeStatus(modelParams.distributeType);
     }
 
     void initModelDropdown()
@@ -113,9 +111,9 @@ public class UserInterface : MonoBehaviour
 
     public void StartSolving()
     {
-        Debug.Log("Slice: " + modelParams.sliceType);
+        /*Debug.Log("Slice: " + modelParams.sliceType);
         Debug.Log("Distribute: " + modelParams.distributeType);
-        Debug.Log("Model Name: " + modelParams.modelName);
+        Debug.Log("Model Name: " + modelParams.modelName);*/
         SceneManager.LoadScene("SampleScene");
     }
 }

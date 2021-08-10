@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\DistributeSlices.cs" />
     <Compile Include="Assets\Scripts\UI\ResultsUI.cs" />
     <Compile Include="Assets\Scripts\Solving\Distribution.cs" />
+    <Compile Include="Assets\Scripts\Solving\FinishSolving.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -9,24 +9,26 @@ public class Initializer : MonoBehaviour
                       winningPoint;
     
     public bool isManuallyDistributed;
-    
+
+    [SerializeField] private Transform playerAvatar;
+
     [SerializeField] private Transform holder;
     [SerializeField] private Transform puzzleModelLocation;
 
     private float max;
 
-    [SerializeField] private GameObject puzzleModel;
-
     private GameObject gameManager;
     private ModelParams modelParams;
 
 
-  
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager");
         modelParams = gameManager.GetComponent<ModelParams>();
+
+        isManuallyDistributed = true;
+        //isManuallyDistributed = modelParams.IsFullyManual();
 
         Initialize();
 
@@ -46,6 +48,8 @@ public class Initializer : MonoBehaviour
 
     void Initialize()
     {
+        Transform playerModelLocation = playerAvatar.transform;
+
         max = Random.Range(0, 100);
 
         // Instantiate origin as an invisible sphere
@@ -78,11 +82,16 @@ public class Initializer : MonoBehaviour
         // in between the origin and the modelSpawnPoint
 
         winningPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        winningPoint.SetActive(false);
+
+        winningPoint.transform.localScale = new Vector3(50, 50, 50);
+        //winningPoint.SetActive(false);
+
         if (isManuallyDistributed)
-            holder.position = modelSpawnPoint.transform.position - new Vector3(0, 10, 0);
+            holder.position = puzzleModelLocation.transform.localPosition - new Vector3(0, 10, 0);
         else
             holder.position = new Vector3(0, Random.Range(0, max), 0);
+
+        winningPoint.transform.position = holder.position;
         Instantiate(winningPoint, holder);
     }
 }

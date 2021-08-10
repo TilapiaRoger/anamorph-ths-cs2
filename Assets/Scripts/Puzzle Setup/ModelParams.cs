@@ -10,6 +10,8 @@ public class ModelParams : MonoBehaviour
     public string modelName;
 
     public static GameObject puzzleModel;
+    public static bool isFullyManual;
+
     private GameObject gameManager;
     private ModelList modelList;
 
@@ -17,8 +19,6 @@ public class ModelParams : MonoBehaviour
     void Start()
     {
         
-        //puzzleModel = Instantiate(modelList.findModel(sliceType, distributeType, modelName));
-
     }
 
     // Update is called once per frame
@@ -29,20 +29,36 @@ public class ModelParams : MonoBehaviour
 
     public void setModel(string sliceType, string distributeType, string modelName)
     {
-        Debug.Log("Set Slice: " + sliceType);
+        /*Debug.Log("Set Slice: " + sliceType);
         Debug.Log("Set Distribute: " + distributeType);
-        Debug.Log("Set Model Name: " + modelName);
+        Debug.Log("Set Model Name: " + modelName);*/
 
         // From http://answers.unity.com/answers/42845/view.html
         gameManager = GameObject.Find("GameManager");
         modelList = gameManager.GetComponent<ModelList>();
 
         puzzleModel = modelList.findModel(sliceType, distributeType, modelName);
-        Debug.Log("Model: " + puzzleModel.name);
+        //Debug.Log("Model: " + puzzleModel.name);
+    }
+
+    public void SetDistributeStatus(string distributeType)
+    {
+        if (distributeType == "Manual")
+        {
+            Debug.Log("This is manually distributed.");
+            isFullyManual = true;
+        }
+        isFullyManual = false;
+
     }
 
     public GameObject initModel()
     {
         return puzzleModel;
+    }
+
+    public bool IsFullyManual()
+    {
+        return isFullyManual;
     }
 }

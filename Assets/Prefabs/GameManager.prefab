@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6834537999514759323}
   - component: {fileID: 6834537999514759322}
   - component: {fileID: 6834537999514759327}
+  - component: {fileID: 160586095666164549}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -50,7 +51,6 @@ MonoBehaviour:
   sliceType: 
   distributeType: 
   modelName: 
-  modelList: {fileID: 0}
 --- !u!114 &6834537999514759320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +112,9 @@ MonoBehaviour:
   modelSpawnPoint: {fileID: 0}
   winningPoint: {fileID: 0}
   isManuallyDistributed: 0
+  holder: {fileID: 0}
+  puzzleModelLocation: {fileID: 0}
+  puzzleModel: {fileID: 0}
 --- !u!114 &6834537999514759322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,3 +145,19 @@ MonoBehaviour:
   origin: {fileID: 0}
   modelSpawnPoint: {fileID: 0}
   winningPoint: {fileID: 0}
+--- !u!114 &160586095666164549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6834537999514759326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142f77a0df017454fa9e27fcc50b169d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAvatar: {fileID: 0}
+  winningPoint: {fileID: 0}
+  resultsWindow: {fileID: 0}
+  errorMessage: {fileID: 0}
