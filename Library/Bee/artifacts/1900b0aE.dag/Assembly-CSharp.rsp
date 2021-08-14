@@ -318,6 +318,7 @@
 "Assets/Scripts/Puzzle Setup/ModelList.cs"
 "Assets/Scripts/Puzzle Setup/ModelParams.cs"
 "Assets/Scripts/Puzzle Setup/UserInterface.cs"
+"Assets/Scripts/QuitApplication.cs"
 "Assets/Scripts/SetWinningParams.cs"
 "Assets/Scripts/Solving/Distribution.cs"
 "Assets/Scripts/Solving/FinishSolving.cs"

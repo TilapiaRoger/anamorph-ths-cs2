@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\Solving\Rotator.cs" />
     <Compile Include="Assets\Scripts\SetWinningParams.cs" />
     <Compile Include="Assets\Scripts\PlayerEyeMovement.cs" />
+    <Compile Include="Assets\Scripts\QuitApplication.cs" />
     <Compile Include="Assets\Scripts\UI\SolvingUI.cs" />
     <Compile Include="Assets\Scripts\Puzzle Setup\UserInterface.cs" />
     <Compile Include="Assets\Scripts\Solving\Initializer.cs" />
