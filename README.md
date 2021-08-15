@@ -7,7 +7,7 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 
 ## Models List and Their Stats
 
-| Model | # of Triangles | # of Times the Model is Sliced | Distance between winningPoint and modelSpawnPoint | Fully Manual | Half Half | Fully Automatic | 
+| Model | # of Triangles | # of Times the Model is Sliced | Distance between winningPoint and modelSpawnPoint (in meters) | Fully Manual | Half Half | Fully Automatic | 
 | :---- | :------------- | :----------------------------- | :------------------------------------------------ | :----------- | :-------- | :-------------- |
 | **Suzanne** | 968 | 6 | 15 | ✔️ | ✔️ | ✔️                                 
 | **The Empire State Building** | 2066 | 6 | 15 | ✔️ | ✔️ | ✔️     
