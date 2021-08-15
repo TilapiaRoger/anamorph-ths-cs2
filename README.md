@@ -37,8 +37,6 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 10. Rotate origin
 11. (Optional) Add random slices
 
-Distance between winningPoint and modelSpawnPoint
-
 # In code
 1. Initializer
 2. Slicer
