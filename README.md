@@ -7,8 +7,8 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 
 ## Models List and Their Stats
 
-| Model | # of Triangles | # of Times the Model is Sliced | Average Distance between Slices (in meters) | Fully Manual | Half Half | Fully Automatic | 
-| :---- | :-------------- | :------------------------------ | :------------------------------------------- | :------------ | :------------ | :--------------- |
+| Model | # of Triangles | # of Times the Model is Sliced | Distance between winningPoint and modelSpawnPoint | Fully Manual | Half Half | Fully Automatic | 
+| :---- | :------------- | :----------------------------- | :------------------------------------------------ | :----------- | :-------- | :-------------- |
 | **Suzanne** | 968 | 6 | 1 | ✔️ | ✔️ | ✔️                                 
 | **The Empire State Building** | 2066 | 6 | 1 | ✔️ | ✔️ | ✔️     
 | **Dolphin** | 14672 | 8 | 1 | ✔️ | ✔️ | ✔️     
@@ -35,7 +35,9 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 08. Rotate the winningPoint at random angles
 09. Parent winningPoint to origin
 10. Rotate origin
-(Optional) Add random slices
+11. (Optional) Add random slices
+
+Distance between winningPoint and modelSpawnPoint
 
 # In code
 1. Initializer
