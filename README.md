@@ -9,16 +9,16 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 
 | Model | # of Triangles | # of Times the Model is Sliced | Distance between winningPoint and modelSpawnPoint | Fully Manual | Half Half | Fully Automatic | 
 | :---- | :------------- | :----------------------------- | :------------------------------------------------ | :----------- | :-------- | :-------------- |
-| **Suzanne** | 968 | 6 | 1 | ✔️ | ✔️ | ✔️                                 
-| **The Empire State Building** | 2066 | 6 | 1 | ✔️ | ✔️ | ✔️     
-| **Dolphin** | 14672 | 8 | 1 | ✔️ | ✔️ | ✔️     
-| **The Utah Teapot** | 9438 | 8 | 1 | ✔️ | ✔️ | ✔️     
-| **The Eiffel Tower** | 17060 | 8 | 1.5 | ✔️ | ✔️ | ✔️     
-| **Buddha** | 72910 | 10 | 1.5 | ✔️ | ✔️ | ✔️     
-| **The Stanford Dragon** | 100000 | 12 | 1.5 | ✔️ | ✔️ | ✔️     
-| **The Stanford Armadillo** | 112402 | 14 | 2.5 | ✔️ | ✔️ | ✔️     
-| **The Stanford Bunny** | 112414 | 16 | 2.5 | ✔️ | ✔️ | ✔️     
-| **The Phlegmatic Dragon (Smoothed)** | 480076 | 18 | 2.5 | ✔️ | ✔️ | ✔️     
+| **Suzanne** | 968 | 6 | 15 | ✔️ | ✔️ | ✔️                                 
+| **The Empire State Building** | 2066 | 6 | 15 | ✔️ | ✔️ | ✔️     
+| **Dolphin** | 14672 | 8 | 15 | ✔️ | ✔️ | ✔️     
+| **The Utah Teapot** | 9438 | 8 | 15 | ✔️ | ✔️ | ✔️     
+| **The Eiffel Tower** | 17060 | 8 | 30 | ✔️ | ✔️ | ✔️     
+| **Buddha** | 72910 | 10 | 30 | ✔️ | ✔️ | ✔️     
+| **The Stanford Dragon** | 100000 | 12 | 30 | ✔️ | ✔️ | ✔️     
+| **The Stanford Armadillo** | 112402 | 14 | 45 | ✔️ | ✔️ | ✔️     
+| **The Stanford Bunny** | 112414 | 16 | 45 | ✔️ | ✔️ | ✔️     
+| **The Phlegmatic Dragon (Smoothed)** | 480076 | 18 | 45 | ✔️ | ✔️ | ✔️     
 
 ## Concrete algorithm steps:
 01. Pick the modelSpawnPoint along the axis between the origin and the game limits
