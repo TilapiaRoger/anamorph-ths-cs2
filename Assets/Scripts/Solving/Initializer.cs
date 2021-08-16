@@ -8,8 +8,6 @@ public class Initializer : MonoBehaviour
                       modelSpawnPoint,
                       winningPoint;
 
-    public bool isManuallyDistributed;
-
     [SerializeField] private Transform playerAvatar;
 
     [SerializeField] private Transform holder;
@@ -21,25 +19,17 @@ public class Initializer : MonoBehaviour
     private float gameBoundsF = 100f,
                   originF = 0f,
                   modelF,
-                  winningF;
+                  winningF,
+                  d;
 
-    private string distributeType;
+    private string distributionType,
+                   slicingType;
+
+    private int modelNumber;
     // Start is called before the first frame update
     void Start()
     {
         Initialize();
-
-        /*gameManager = GameObject.Find("GameManager");
-        modelParams = gameManager.GetComponent<ModelParams>();
-
-        isManuallyDistributed = true;*/
-        //isManuallyDistributed = modelParams.IsFullyManual();
-
-        //puzzleModel.SetActive(false);
-
-        //GameObject.Destroy(puzzleModel);
-
-        //puzzleModel = Instantiate(selectedModel, modelLocation);
     }
 
     // Update is called once per frame
@@ -53,39 +43,59 @@ public class Initializer : MonoBehaviour
         // From http://answers.unity.com/answers/42845/view.html
         gameManager = GameObject.Find("GameManager");
         ModelParams modelParams = gameManager.GetComponent<ModelParams>();
-        
+
         // Get type of distribution from modelParams
-        distributeType = modelParams.DistributeType();
-        
-        Debug.Log("Distribute Type: " + distributeType);
-        
+        distributionType = modelParams.DistributeType();
+        slicingType = modelParams.SliceType();
+
+        Debug.Log("Distribute Type: " + distributionType);
+
         Transform playerModelLocation = playerAvatar.transform;
 
-        /*\                                                                   /*\
-        |*|-------------------------------------------------------------------|*|
-        |*|                                                                   |*|
-        |*|                         model spawn point                         |*|
-        |*|    <--------d-------->        range        <--------d-------->    |*|
-        |*|   |-------------------|-------------------|-------------------|   |*|
-        |*| game                game               winning             origin |*|
-        |*| bounds              bounds             point                      |*|
-        |*|                       -                                           |*|
-        |*|                     winning                                       |*|
-        |*|                     point                                         |*|
-        |*|                                                                   |*|
-        |*|-------------------------------------------------------------------|*|
-        \*/                                                                 /*\*/
+        /*\                                     /*\
+        |*|-------------------------------------|*|
+        |*|                                     |*|
+        |*|                model                |*|
+        |*|                spawn                |*|
+        |*|                point                |*|
+        |*|    <---d---> <-range-> <---d--->    |*|
+        |*|   |---------|---------|---------|   |*|
+        |*| game      upper     lower    origin |*|
+        |*| bounds    bound     bound           |*|
+        |*|                                     |*|
+        |*|-------------------------------------|*|
+        \*/                                   /*\*/
 
-        // Where the winningPoint is along the z-axis
-        // Must be between the modelSpawnPoint and gameBounds (exclusive)
-        winningF = Random.Range(originF, gameBoundsF);
-        while (winningF == originF || winningF == modelF) winningF = Random.Range(originF, modelF);
+        // Set d based on the number of the model
+        char[] delimiters = { '_', '.' };
+        string[] holderS = modelParams.modelName.Split(delimiters);
+
+        int.TryParse(holderS[0], out modelNumber);
+
+        if (1 <= modelNumber && modelNumber <= 4) d = 15f;
+        else if (5 <= modelNumber && modelNumber <= 7) d = 30f;
+        else if (8 <= modelNumber && modelNumber <= 10) d = 45f;
 
         // Where the modelSpawnPoint is along the z-axis
-        // Must be between winningPoint and gameBounds - winningPoint (exclusive)
-        modelF = Random.Range(winningF, gameBoundsF - winningF);
-        while (winningF == winningF || winningF == gameBoundsF - winningF) winningF = Random.Range(winningF, gameBoundsF - winningF);
+        // Must be between d and gameBounds - d (exclusive)
+        modelF = Random.Range(d, gameBoundsF - d);
+        while (winningF == d || winningF == gameBoundsF - d) modelF = Random.Range(d, gameBoundsF - d);
 
+        /*\                                          /*\
+        |*|------------------------------------------|*|
+        |*|           <---d---> <---d--->            |*|
+        |*|   |------|---------|---------|-------|   |*|
+        |*| game   model     model    winning origin |*|
+        |*| bounds spawn     spawn     point         |*|
+        |*|        point     point                   |*|
+        |*|          +                               |*|
+        |*|          d                               |*|
+        |*|------------------------------------------|*|
+        \*/                                        /*\*/
+
+        // Where the winningPoint is along the z-axis
+        // Must be d away from modelSpawnPoint
+        winningF = modelF - d;
 
         // Instantiate origin as an invisible sphere
         origin = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -94,41 +104,24 @@ public class Initializer : MonoBehaviour
         Instantiate(origin, holder);
 
         // Instantiate modelSpawnPoint as an invisible sphere
-        // somewhere along the y-axis
-
-        GameObject selectedModel = modelParams.initModel();
         modelSpawnPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //modelSpawnPoint = Instantiate(selectedModel);
         modelSpawnPoint.SetActive(false);
-        holder.position = new Vector3(0, modelF, 0);
+        holder.position = new Vector3(0, 0, modelF);
         Instantiate(modelSpawnPoint, holder);
 
         puzzleModelLocation.position = holder.position;
 
+        // Instantiate selectedModel
+        GameObject selectedModel = modelParams.initModel();
         selectedModel.SetActive(true);
         selectedModel.transform.localScale = new Vector3(70, 70, 70);
-
         Instantiate(selectedModel, puzzleModelLocation);
 
         // Instantiate winningPoint as an invisible sphere
-        // somewhere along the y-axis
-        // in between the origin and the modelSpawnPoint
-
         winningPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-
         winningPoint.transform.localScale = new Vector3(50, 50, 50);
         winningPoint.SetActive(false);
-
-        if (distributeType == "Manual")
-        {
-            Debug.Log("Distributed manually.");
-            holder.position = modelSpawnPoint.transform.localPosition + new Vector3(0, 0, 10);
-        }
-        else
-        {
-            holder.position = new Vector3(0, 0, winningF);
-        }
-            
+        holder.position = new Vector3(0, 0, winningF);
         Instantiate(winningPoint, holder);
     }
 }
