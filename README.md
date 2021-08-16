@@ -7,7 +7,7 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 
 ## Models List and Their Stats
 
-| Model | # of Triangles | # of Times the Model is Sliced | Distance between winningPoint and modelSpawnPoint (in meters) | Fully Manual | Half Half | Fully Automatic | 
+| Model | # of Triangles | # of Times the Model is Sliced | Distance between winningPoint and modelSpawnPoint (in meters) | Fully Manual | MSAD | Fully Automatic | 
 | :---- | :------------- | :----------------------------- | :------------------------------------------------ | :----------- | :-------- | :-------------- |
 | **Suzanne** | 968 | 6 | 15 | ✔️ | ✔️ | ✔️                                 
 | **The Empire State Building** | 2066 | 6 | 15 | ✔️ | ✔️ | ✔️     
@@ -19,6 +19,8 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 | **The Stanford Armadillo** | 112402 | 14 | 45 | ✔️ | ✔️ | ✔️     
 | **The Stanford Bunny** | 112414 | 16 | 45 | ✔️ | ✔️ | ✔️     
 | **The Phlegmatic Dragon (Smoothed)** | 480076 | 18 | 45 | ✔️ | ✔️ | ✔️     
+
+MSAD - Manually Sliced Automatically Distributed
 
 ## Concrete algorithm steps:
 01. Pick the modelSpawnPoint along the axis between the origin and the game limits
