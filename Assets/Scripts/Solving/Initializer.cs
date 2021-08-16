@@ -48,7 +48,8 @@ public class Initializer : MonoBehaviour
         distributionType = modelParams.DistributeType();
         slicingType = modelParams.SliceType();
 
-        Debug.Log("Distribute Type: " + distributionType);
+        Debug.Log("Distribution Type: " + distributionType);
+        Debug.Log("Slicing Type: " + slicingType);
 
         Transform playerModelLocation = playerAvatar.transform;
 
