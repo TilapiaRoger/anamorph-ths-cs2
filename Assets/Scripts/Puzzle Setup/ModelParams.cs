@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class ModelParams : MonoBehaviour
 {
-    public string sliceType;
-    public string distributeType;
-    public string modelName;
+    public string sliceType,
+                  distributeType,
+                  modelName;
 
     public static GameObject puzzleModel;
     public static bool isFullyManual;
@@ -15,7 +15,8 @@ public class ModelParams : MonoBehaviour
     private GameObject gameManager;
     private ModelList modelList;
 
-    public static string distributeTypeCopy;
+    public static string distributeTypeCopy,
+                         sliceTypeCopy;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,7 @@ public class ModelParams : MonoBehaviour
         //Debug.Log("Model: " + puzzleModel.name);
 
         distributeTypeCopy = distributeType;
+        sliceTypeCopy = sliceType;
     }
 
     public void SetDistributeStatus(string distributeType)
@@ -52,8 +54,17 @@ public class ModelParams : MonoBehaviour
             Debug.Log("This is manually distributed.");
             isFullyManual = true;
         }
-        isFullyManual = false;
+        else isFullyManual = false;
+    }
 
+    public void SetSliceStatus(string sliceType)
+    {
+        if (sliceType == "Manual")
+        {
+            Debug.Log("This is manually sliced.");
+            isFullyManual = true;
+        }
+        else isFullyManual = false;
     }
 
     public GameObject initModel()
@@ -69,5 +80,10 @@ public class ModelParams : MonoBehaviour
     public string DistributeType()
     {
         return distributeTypeCopy;
+    }
+
+    public string SliceType()
+    {
+        return sliceTypeCopy;
     }
 }
