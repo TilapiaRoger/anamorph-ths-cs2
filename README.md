@@ -7,18 +7,20 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 
 ## Models List and Their Stats
 
-| Model | # of Triangles | # of Times the Model is Sliced | Average Distance between Slices (in meters) | Fully Manual | Half Half | Fully Automatic | 
-| :---- | :-------------- | :------------------------------ | :------------------------------------------- | :------------ | :------------ | :--------------- |
-| **Suzanne** | 968 | 6 | 1 | ✔️ | ✔️ | ✔️                                 
-| **The Empire State Building** | 2066 | 6 | 1 | ✔️ | ✔️ | ✔️     
-| **Dolphin** | 14672 | 8 | 1 | ✔️ | ✔️ | ✔️     
-| **The Utah Teapot** | 9438 | 8 | 1 | ✔️ | ✔️ | ✔️     
-| **The Eiffel Tower** | 17060 | 8 | 1.5 | ✔️ | ✔️ | ✔️     
-| **Buddha** | 72910 | 10 | 1.5 | ✔️ | ✔️ | ✔️     
-| **The Stanford Dragon** | 100000 | 12 | 1.5 | ✔️ | ✔️ | ✔️     
-| **The Stanford Armadillo** | 112402 | 14 | 2.5 | ✔️ | ✔️ | ✔️     
-| **The Stanford Bunny** | 112414 | 16 | 2.5 | ✔️ | ✔️ | ✔️     
-| **The Phlegmatic Dragon (Smoothed)** | 480076 | 18 | 2.5 | ✔️ | ✔️ | ✔️     
+| Model | # of Triangles | # of Times the Model is Sliced | Distance between winningPoint and modelSpawnPoint (in meters) | Fully Manual | MSAD | Fully Automatic | 
+| :---- | :------------- | :----------------------------- | :------------------------------------------------ | :----------- | :-------- | :-------------- |
+| **Suzanne** | 968 | 6 | 15 | ✔️ | ✔️ | ✔️                                 
+| **The Empire State Building** | 2066 | 6 | 15 | ✔️ | ✔️ | ✔️     
+| **Dolphin** | 14672 | 8 | 15 | ✔️ | ✔️ | ✔️     
+| **The Utah Teapot** | 9438 | 8 | 15 | ✔️ | ✔️ | ✔️     
+| **The Eiffel Tower** | 17060 | 8 | 30 | ✔️ | ✔️ | ✔️     
+| **Buddha** | 72910 | 10 | 30 | ✔️ | ✔️ | ✔️     
+| **The Stanford Dragon** | 100000 | 12 | 30 | ✔️ | ✔️ | ✔️     
+| **The Stanford Armadillo** | 112402 | 14 | 45 | ✔️ | ✔️ | ✔️     
+| **The Stanford Bunny** | 112414 | 16 | 45 | ✔️ | ✔️ | ✔️     
+| **The Phlegmatic Dragon (Smoothed)** | 480076 | 18 | 45 | ✔️ | ✔️ | ✔️     
+
+MSAD - Manually Sliced Automatically Distributed
 
 ## Concrete algorithm steps:
 01. Pick the modelSpawnPoint along the axis between the origin and the game limits
@@ -35,7 +37,7 @@ Repository for the thesis Automatic Splitting and Distribution of 3D Models For 
 08. Rotate the winningPoint at random angles
 09. Parent winningPoint to origin
 10. Rotate origin
-(Optional) Add random slices
+11. (Optional) Add random slices
 
 # In code
 1. Initializer
