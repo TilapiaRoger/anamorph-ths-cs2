@@ -15,12 +15,11 @@ public class Initializer : MonoBehaviour
     [SerializeField] private Transform holder;
     [SerializeField] private Transform puzzleModelLocation;
 
-    private float max;
-
     private GameObject gameManager;
     private ModelParams modelParams;
 
-    private float originF = 0f,
+    private float gameBoundsF = 100f,
+                  originF = 0f,
                   modelF,
                   winningF;
 
@@ -28,14 +27,13 @@ public class Initializer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Initialize();
+
         /*gameManager = GameObject.Find("GameManager");
         modelParams = gameManager.GetComponent<ModelParams>();
 
         isManuallyDistributed = true;*/
         //isManuallyDistributed = modelParams.IsFullyManual();
-
-        Initialize();
-
 
         //puzzleModel.SetActive(false);
 
@@ -55,22 +53,39 @@ public class Initializer : MonoBehaviour
         // From http://answers.unity.com/answers/42845/view.html
         gameManager = GameObject.Find("GameManager");
         ModelParams modelParams = gameManager.GetComponent<ModelParams>();
-
+        
         // Get type of distribution from modelParams
         distributeType = modelParams.DistributeType();
-
+        
         Debug.Log("Distribute Type: " + distributeType);
-
+        
         Transform playerModelLocation = playerAvatar.transform;
 
-        // Where the modelSpawnPoint is along the z-axis
-        // Also the maximum for the position of winningPoint along the z-axis
-        modelF = Random.Range(0, 100);
+        /*\                                                                   /*\
+        |*|-------------------------------------------------------------------|*|
+        |*|                                                                   |*|
+        |*|                         model spawn point                         |*|
+        |*|    <--------d-------->        range        <--------d-------->    |*|
+        |*|   |-------------------|-------------------|-------------------|   |*|
+        |*| game                game               winning             origin |*|
+        |*| bounds              bounds             point                      |*|
+        |*|                       -                                           |*|
+        |*|                     winning                                       |*|
+        |*|                     point                                         |*|
+        |*|                                                                   |*|
+        |*|-------------------------------------------------------------------|*|
+        \*/                                                                 /*\*/
 
         // Where the winningPoint is along the z-axis
-        // Must be between the modelSpawnPoint and origin (exclusive)
-        winningF = Random.Range(originF, modelF);
+        // Must be between the modelSpawnPoint and gameBounds (exclusive)
+        winningF = Random.Range(originF, gameBoundsF);
         while (winningF == originF || winningF == modelF) winningF = Random.Range(originF, modelF);
+
+        // Where the modelSpawnPoint is along the z-axis
+        // Must be between winningPoint and gameBounds - winningPoint (exclusive)
+        modelF = Random.Range(winningF, gameBoundsF - winningF);
+        while (winningF == winningF || winningF == gameBoundsF - winningF) winningF = Random.Range(winningF, gameBoundsF - winningF);
+
 
         // Instantiate origin as an invisible sphere
         origin = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -85,7 +100,7 @@ public class Initializer : MonoBehaviour
         modelSpawnPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //modelSpawnPoint = Instantiate(selectedModel);
         modelSpawnPoint.SetActive(false);
-        holder.position = new Vector3(0, max, 0);
+        holder.position = new Vector3(0, modelF, 0);
         Instantiate(modelSpawnPoint, holder);
 
         puzzleModelLocation.position = holder.position;
