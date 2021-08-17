@@ -15,7 +15,8 @@ public class Distribution : MonoBehaviour
 
     private float newDistance,
                   oldDistance,
-                  maxDistance = 100F,
+                  minDistance,
+                  maxDistance,
                   scaleFactor;
     // Start is called before the first frame update
     void Start()
@@ -35,7 +36,6 @@ public class Distribution : MonoBehaviour
         gameManager = GameObject.Find("GameManager");
         Initializer initializer = gameManager.GetComponent<Initializer>();
 
-        newDistance = Vector3.Distance(origin.transform.position, modelSpawnPoint.transform.position);
         oldDistance = Vector3.Distance(winningPoint.transform.position, modelSpawnPoint.transform.position);
         pivot = new GameObject();
 
@@ -46,13 +46,16 @@ public class Distribution : MonoBehaviour
             // Set the Transform pivot of each slice to the model spawn point by:
             // Instantiating a temporary empty gameobject at the model spawn point
             // Parenting the piece to the empty
-
             Instantiate(pivot, modelSpawnPoint.transform);
             piece.transform.SetParent(pivot.transform);
 
+            minDistance = pivot.transform.position.z - initializer.d;
+            maxDistance = pivot.transform.position.z + initializer.d;
+
             // Move piece by a random distance from the model spawn point
-            // between minDistance and maxDistance
-            pivot.transform.position += new Vector3(0, Random.Range(newDistance, maxDistance), 0);
+            // between modelF - d and modelF + d
+            pivot.transform.position += new Vector3(0, 0, Random.Range(minDistance, maxDistance));
+            newDistance = Vector3.Distance(pivot.transform.position, modelSpawnPoint.transform.position);
 
             // Scale the model
             scaleFactor = newDistance / oldDistance;

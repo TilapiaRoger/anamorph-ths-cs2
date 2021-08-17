@@ -9,7 +9,6 @@ public class Initializer : MonoBehaviour
                       winningPoint;
 
     [SerializeField] private Transform playerAvatar;
-
     [SerializeField] private Transform holder;
     [SerializeField] private Transform puzzleModelLocation;
 
@@ -19,8 +18,9 @@ public class Initializer : MonoBehaviour
     private float gameBoundsF = 100f,
                   originF = 0f,
                   modelF,
-                  winningF,
-                  d;
+                  winningF;
+
+    public float d;
 
     private string distributionType,
                    slicingType;
