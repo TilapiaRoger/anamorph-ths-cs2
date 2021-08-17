@@ -9,12 +9,10 @@ public class FinishSolving : MonoBehaviour
     [SerializeField] private GameObject winningPoint;
 
     [SerializeField] private ResultsUI resultsWindow;
-    [SerializeField] private Text errorMessage;
 
     // Start is called before the first frame update
     void Start()
     {
-        errorMessage.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -27,7 +25,6 @@ public class FinishSolving : MonoBehaviour
     {
         //if (playerAvatar.transform == winningPoint.transform)
         //{
-            errorMessage.gameObject.SetActive(false);
             resultsWindow.FinishSolving();
         //}
         /*else
