@@ -73,6 +73,8 @@
     <Compile Include="Assets\Scripts\Puzzle Setup\ModelParams.cs" />
     <Compile Include="Assets\Scripts\Solving\FinishSolving.cs" />
     <Compile Include="Assets\Scripts\Puzzle Setup\ModelList.cs" />
+    <Compile Include="Assets\Scripts\Solving\InitSelectedModel.cs" />
+    <Compile Include="Assets\Scripts\Solving\StartSolving.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\3D Models\Models\README.txt" />

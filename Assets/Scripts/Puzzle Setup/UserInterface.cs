@@ -55,7 +55,7 @@ public class UserInterface : MonoBehaviour
 
         distributeTypeDropdown.onValueChanged.AddListener(delegate
         {
-            modelParams.distributeType = distributeTypeDropdown.options[sliceTypeDropdown.value].text;
+            modelParams.distributeType = distributeTypeDropdown.options[distributeTypeDropdown.value].text;
         });
 
         modelParams.setModel(modelParams.sliceType, modelParams.distributeType, modelParams.modelName);

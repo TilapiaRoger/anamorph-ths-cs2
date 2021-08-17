@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8739400752778728940}
   - component: {fileID: 4323737538137125684}
   - component: {fileID: 526746226639452966}
+  - component: {fileID: 5265224784719202503}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -51,7 +52,6 @@ MonoBehaviour:
   playerAvatar: {fileID: 0}
   winningPoint: {fileID: 0}
   resultsWindow: {fileID: 0}
-  errorMessage: {fileID: 0}
 --- !u!114 &1677200801832321720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,10 +82,10 @@ MonoBehaviour:
   origin: {fileID: 0}
   modelSpawnPoint: {fileID: 0}
   winningPoint: {fileID: 0}
-  isManuallyDistributed: 0
   playerAvatar: {fileID: 0}
   holder: {fileID: 0}
   puzzleModelLocation: {fileID: 0}
+  d: 0
 --- !u!114 &8739400752778728940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,35 +129,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fullyManualList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 919132149155446097, guid: 339e0a5e630948442aa59cd45d2bd81c, type: 3}
+  - {fileID: 919132149155446097, guid: 4ad7718e1cd4192448aad5f9a49d820e, type: 3}
+  - {fileID: 919132149155446097, guid: 978d6a8ecceda7243b4f326b873fae46, type: 3}
+  - {fileID: 919132149155446097, guid: 97a84606de52a684793a13d4bcf7912b, type: 3}
+  - {fileID: 919132149155446097, guid: 8c9969440c0b3ed48be0e9912bb4b402, type: 3}
+  - {fileID: 919132149155446097, guid: 7ffabb86ba302e248840e1c258b70ac1, type: 3}
+  - {fileID: 919132149155446097, guid: 7a5c68b1bdecf0947a072607feff0719, type: 3}
+  - {fileID: 919132149155446097, guid: 667e28b343a1a8b48927683b9fb1d599, type: 3}
+  - {fileID: 919132149155446097, guid: 38f65b1a2292634469f818bb4c08ed9b, type: 3}
+  - {fileID: 919132149155446097, guid: 8e1646c5d0dd0fe4a863310e12e5c79d, type: 3}
   halfHalfList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 919132149155446097, guid: 78a56444a3dc4f44695184cba4881103, type: 3}
+  - {fileID: 919132149155446097, guid: 056b1ea0a4a1ce24aa02277ff30b11bc, type: 3}
+  - {fileID: 919132149155446097, guid: a1e88e39b492b3646918d1a7a047a13a, type: 3}
+  - {fileID: 919132149155446097, guid: 533096d5d2c3c27469c8dbc6d10e6990, type: 3}
+  - {fileID: 919132149155446097, guid: f88bfd10b586b744d93feea326c70b40, type: 3}
+  - {fileID: 919132149155446097, guid: c677f5f16cc36e640990f567e549a3ea, type: 3}
+  - {fileID: 919132149155446097, guid: 7af8ca915b0a6344ba7a7c38aa20897c, type: 3}
+  - {fileID: 919132149155446097, guid: 1e6c0a87c999fc8498230081b423b3e1, type: 3}
+  - {fileID: 919132149155446097, guid: b79ba2e66cc379744aeae84b1b1e77fb, type: 3}
+  - {fileID: 919132149155446097, guid: c8fbf66edae3a4b44a8b5919352ac8d1, type: 3}
   fullyAutomaticList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 919132149155446097, guid: b45296d0888bad44594d953598246973, type: 3}
+  - {fileID: 919132149155446097, guid: 6be811b3c2b937c4d8c11698add11887, type: 3}
+  - {fileID: 919132149155446097, guid: e9193c15e64831543af1641414a3c95a, type: 3}
+  - {fileID: 919132149155446097, guid: 775a3b1f4f416e042bc46b347952ec74, type: 3}
+  - {fileID: 919132149155446097, guid: 2dcd857c661208b439badbba4c731e7c, type: 3}
+  - {fileID: 919132149155446097, guid: ed759e84934e13742b73b5ea1f4b39b5, type: 3}
+  - {fileID: 919132149155446097, guid: a244470bde7522d4aa5ba153d027f65b, type: 3}
+  - {fileID: 919132149155446097, guid: cfc0fddf93c64bf428844fd403021579, type: 3}
+  - {fileID: 919132149155446097, guid: 61de810c4d0295842b6002579fd9fb0e, type: 3}
+  - {fileID: 919132149155446097, guid: 3da7f8f939566ee43a15e894e08170f7, type: 3}
+--- !u!114 &5265224784719202503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6834537999514759326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b4e59bb70d9b934387519b3ec715dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzleModelLocation: {fileID: 0}

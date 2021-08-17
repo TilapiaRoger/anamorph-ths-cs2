@@ -323,7 +323,9 @@
 "Assets/Scripts/Solving/Distribution.cs"
 "Assets/Scripts/Solving/FinishSolving.cs"
 "Assets/Scripts/Solving/Initializer.cs"
+"Assets/Scripts/Solving/InitSelectedModel.cs"
 "Assets/Scripts/Solving/Rotator.cs"
+"Assets/Scripts/Solving/StartSolving.cs"
 "Assets/Scripts/UI/ResultsUI.cs"
 "Assets/Scripts/UI/SolvingUI.cs"
 -langversion:8.0
