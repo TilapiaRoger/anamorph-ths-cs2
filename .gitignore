@@ -58,3 +58,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 *.log
+Library/ArtifactDB
+Library/Search/transactions.db
+Library/SourceAssetDB
+Logs/AssetImportWorker0.log
