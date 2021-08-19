@@ -3631,6 +3631,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5328536222963466569, guid: 0d2eebcdd87c2284aaa8d9781410363a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6834537999514759320, guid: 0d2eebcdd87c2284aaa8d9781410363a,
         type: 3}
       propertyPath: fullyManualList.Array.size

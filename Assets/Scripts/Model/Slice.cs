@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Slice : MonoBehaviour
 {
-    private Renderer renderer;
+    private MeshRenderer renderer;
 
     // Start is called before the first frame update
     void Start()
     {
-        renderer = GetComponent<Renderer>();
+        renderer = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame

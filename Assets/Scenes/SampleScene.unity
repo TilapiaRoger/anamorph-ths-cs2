@@ -2042,6 +2042,11 @@ PrefabInstance:
       propertyPath: puzzleModelLocation
       value: 
       objectReference: {fileID: 738230329}
+    - target: {fileID: 5328536222963466569, guid: 0d2eebcdd87c2284aaa8d9781410363a,
+        type: 3}
+      propertyPath: selectSliceMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: fecb63eb06795094381f4a84ebfc0538, type: 2}
     - target: {fileID: 6834537999514759326, guid: 0d2eebcdd87c2284aaa8d9781410363a,
         type: 3}
       propertyPath: m_Name

@@ -64,27 +64,27 @@ public class PlayerEyeMovement : MonoBehaviour
             currentDir = Direction.NONE;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             if (Input.GetAxis("Mouse X") != 0)
             {
                 currentCamDir = CamDirection.HORIZONTAL;
             }
-            /*else if (Input.GetAxis("Mouse Y") != 0)
+            else if (Input.GetAxis("Mouse Y") != 0)
             {
                 currentCamDir = CamDirection.VERTICAL;
-            }*/
+            }
             else if (Input.GetAxis("Mouse X") == 0)
             {
                 currentCamDir = CamDirection.NONE;
             }
 
-            /*
+            
             else if (Input.GetAxis("Mouse Y") == 0)
             {
                 currentCamDir = CamDirection.NONE;
-            }*/
-        }
+            }
+        }*/
 
 
         /*if (Input.GetAxis("Mouse Y") != 0)
@@ -122,7 +122,7 @@ public class PlayerEyeMovement : MonoBehaviour
         }
 
 
-        if (currentCamDir == CamDirection.HORIZONTAL)
+        /*if (currentCamDir == CamDirection.HORIZONTAL)
         {
             float h;
 
@@ -130,7 +130,7 @@ public class PlayerEyeMovement : MonoBehaviour
 
             this.gameObject.transform.Rotate(0, h, 0);
         }
-        /*else if (currentCamDir == CamDirection.VERTICAL)
+        else if (currentCamDir == CamDirection.VERTICAL)
         {
             float v;
 

@@ -31,9 +31,9 @@ public class StartSolving : MonoBehaviour
         Debug.Log("Last child: " + puzzleModel.transform.GetChild(3).gameObject.name);
         for (int i = 0; i < puzzleModelSlices.Length; i++)
         {
-            //Slice slice = gameObject.AddComponent(typeof(Slice)) as Slice;
             Debug.Log("Slice " + i + ": " + puzzleModelSlices[i].name);
-            puzzleModelSlices[i].gameObject.AddComponent(typeof(Slice));
+            puzzleModelSlices[i].gameObject.tag = "Slice";
+            //puzzleModelSlices[i].gameObject.AddComponent(typeof(Slice));
         }
     }
 }
