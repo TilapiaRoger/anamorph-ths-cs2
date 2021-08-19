@@ -26,8 +26,6 @@ public class Spawn : MonoBehaviour
         //modelSpawnPoint.SetActive(false);
         Debug.Log("Model Spawn Point at (0, 0, " + modelF +")");
 
-        
-
         // Instantiate a sphere at winningPoint
         winningF = generate(0, modelF);
         winningPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
