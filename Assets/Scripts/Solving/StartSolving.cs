@@ -23,7 +23,7 @@ public class StartSolving : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        puzzleModel = puzzleModelLocation.transform.GetChild(0).gameObject;
+        puzzleModel = puzzleModelLocation.transform.GetChild(1).gameObject;
         Transform[] puzzleModelSlices = puzzleModel.GetComponentsInChildren<Transform>();
 
         Debug.Log("Model used: " + puzzleModel.name);
@@ -31,7 +31,9 @@ public class StartSolving : MonoBehaviour
         Debug.Log("Last child: " + puzzleModel.transform.GetChild(3).gameObject.name);
         for (int i = 0; i < puzzleModelSlices.Length; i++)
         {
+            //Slice slice = gameObject.AddComponent(typeof(Slice)) as Slice;
             Debug.Log("Slice " + i + ": " + puzzleModelSlices[i].name);
+            puzzleModelSlices[i].gameObject.AddComponent(typeof(Slice));
         }
     }
 }
