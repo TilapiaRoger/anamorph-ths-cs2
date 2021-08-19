@@ -14,11 +14,9 @@ public class ModelList : MonoBehaviour
     public List<string> initModelNameList()
     {
         List<string> modelNames = new List<string>();
-        for (int i = 0; i < 10; i++) modelNames.Add(fullyManualList[i].name);
-        return modelNames;
+        for (int i = 0; i < fullyManualList.Count; i++) modelNames.Add(fullyManualList[i].name);
 
-        //modelListDropdown.ClearOptions();
-        //modelListDropdown.AddOptions(modelNames);
+        return modelNames;
     }
 
     public GameObject findModel(string sliceType, string distributeType, string modelName)
@@ -32,7 +30,7 @@ public class ModelList : MonoBehaviour
         Tuple<string, string, string> modelKey;
         modelNames = initModelNameList();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < fullyManualList.Count; i++)
         {
             modelKey = new Tuple<string, string, string>("Manual", "Manual", modelNames[i]);
             puzzleModelList.Add(modelKey, fullyManualList[i]);

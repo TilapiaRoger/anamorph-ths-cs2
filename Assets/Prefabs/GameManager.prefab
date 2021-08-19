@@ -139,6 +139,7 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 667e28b343a1a8b48927683b9fb1d599, type: 3}
   - {fileID: 919132149155446097, guid: 38f65b1a2292634469f818bb4c08ed9b, type: 3}
   - {fileID: 919132149155446097, guid: 8e1646c5d0dd0fe4a863310e12e5c79d, type: 3}
+  - {fileID: 919132149155446097, guid: 8418d6162d28f1a4bac441333e159afc, type: 3}
   halfHalfList:
   - {fileID: 919132149155446097, guid: 78a56444a3dc4f44695184cba4881103, type: 3}
   - {fileID: 919132149155446097, guid: 056b1ea0a4a1ce24aa02277ff30b11bc, type: 3}
@@ -150,6 +151,7 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 1e6c0a87c999fc8498230081b423b3e1, type: 3}
   - {fileID: 919132149155446097, guid: b79ba2e66cc379744aeae84b1b1e77fb, type: 3}
   - {fileID: 919132149155446097, guid: c8fbf66edae3a4b44a8b5919352ac8d1, type: 3}
+  - {fileID: 919132149155446097, guid: de0f700adf8f45d4badbf99a028a7f23, type: 3}
   fullyAutomaticList:
   - {fileID: 919132149155446097, guid: b45296d0888bad44594d953598246973, type: 3}
   - {fileID: 919132149155446097, guid: 6be811b3c2b937c4d8c11698add11887, type: 3}
@@ -161,6 +163,7 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: cfc0fddf93c64bf428844fd403021579, type: 3}
   - {fileID: 919132149155446097, guid: 61de810c4d0295842b6002579fd9fb0e, type: 3}
   - {fileID: 919132149155446097, guid: 3da7f8f939566ee43a15e894e08170f7, type: 3}
+  - {fileID: 919132149155446097, guid: 17d612ebb9aefff498cb8dd054fe9c00, type: 3}
 --- !u!114 &5265224784719202503
 MonoBehaviour:
   m_ObjectHideFlags: 0
