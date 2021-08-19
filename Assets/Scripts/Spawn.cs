@@ -17,7 +17,7 @@ public class Spawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Instantiate modelSpawnPoint as an invisible cylinder
+        // Instantiate a cylinder at modelSpawnPoint
         modelF = generate(0, 10);
         modelSpawnPoint = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         modelSpawnPoint.transform.Rotate(90f, 0.0f, 0.0f, Space.Self);
@@ -28,7 +28,7 @@ public class Spawn : MonoBehaviour
 
         
 
-        // Instantiate winningPoint as an invisible sphere
+        // Instantiate a sphere at winningPoint
         winningF = generate(0, modelF);
         winningPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         winningPoint.transform.localScale = new Vector3(1, 1, 1);
@@ -41,12 +41,19 @@ public class Spawn : MonoBehaviour
     void Update()
     {
         RaycastHit[] hits;
+        // Get all the colliders along the ray's path.
+        // The ray starts from the player, and goes along the forward direction.
+        // Detection stops at 100 units
         hits = Physics.RaycastAll(player.transform.position, transform.forward, 100.0F);
-
+        
+        // Check which collider is the target.
+        // The target has a capsule collider.
         for (int i = 0; i < hits.Length; i++)
         {
             RaycastHit hit = hits[i];
-
+            
+            // If the target is found, get the accuracy by:
+            // Taking the Euclidean distance between RaycastHit.point and the center of the cylinder.
             if (hit.collider.GetComponent<CapsuleCollider>() != null)
             {
                 accuracy = Vector3.Distance(modelSpawnPoint.transform.position, hit.point);
