@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
-    public GameObject model,
-                      modelSpawnPoint,
+    [SerializeField] private GameObject modelSpawnPoint,
                       winningPoint,
                       player;
+
+
+    [SerializeField] private Material selectSliceMaterial;
+
+    private GameObject model;
 
     private float modelF,
                   winningF,
@@ -42,20 +46,38 @@ public class Spawn : MonoBehaviour
         // Get all the colliders along the ray's path.
         // The ray starts from the player, and goes along the forward direction.
         // Detection stops at 100 units
-        hits = Physics.RaycastAll(player.transform.position, transform.forward, 100.0F);
-        
+        hits = Physics.RaycastAll(player.transform.position, transform.forward, 1000.0F);
+
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
         // Check which collider is the target.
         // The target has a capsule collider.
         for (int i = 0; i < hits.Length; i++)
         {
             RaycastHit hit = hits[i];
-            
+
             // If the target is found, get the accuracy by:
             // Taking the Euclidean distance between RaycastHit.point and the center of the cylinder.
             if (hit.collider.GetComponent<CapsuleCollider>() != null)
             {
                 accuracy = Vector3.Distance(modelSpawnPoint.transform.position, hit.point);
                 Debug.Log(accuracy);
+            }
+
+            /*if (hit.collider.transform != null)
+            {
+                renderer.material = selectSliceMaterial;
+            }*/
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                var selection = hit.transform;
+                var selectionRenderer = selection.GetComponent<Renderer>();
+                if (selectionRenderer != null)
+                {
+                    selectionRenderer.material = selectSliceMaterial;
+                    Debug.Log("SLICE!!!");
+                }
             }
         }
     }

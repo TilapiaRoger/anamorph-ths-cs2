@@ -16,22 +16,9 @@ public class SliceSelectionManager : MonoBehaviour
     void Update()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit[] hits;
+        RaycastHit hit;
 
-        hits = Physics.RaycastAll(transform.position, transform.forward, 100.0f);
-
-        for(int i = 0; i < hits.Length; i++)
-        {
-            RaycastHit hit = hits[i];
-            Renderer renderer = hit.transform.GetComponent<Renderer>();
-
-            if (renderer)
-            {
-                renderer.material = selectSliceMaterial;
-            }
-        }
-
-        /*if(Physics.Raycast(ray, out hit))
+        if(Physics.Raycast(ray, out hit))
         {
             var selection = hit.transform;
             var selectionRenderer = selection.GetComponent<Renderer>();
@@ -40,6 +27,6 @@ public class SliceSelectionManager : MonoBehaviour
                 selectionRenderer.material = selectSliceMaterial;
                 Debug.Log("SLICE!!!");
             }
-        }*/
+        }
     }
 }

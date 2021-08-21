@@ -16,7 +16,8 @@ GameObject:
   - component: {fileID: 4323737538137125684}
   - component: {fileID: 526746226639452966}
   - component: {fileID: 5265224784719202503}
-  - component: {fileID: 5328536222963466569}
+  - component: {fileID: 3880083532688293817}
+  - component: {fileID: 5331522864878882677}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -178,7 +179,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puzzleModelLocation: {fileID: 0}
---- !u!114 &5328536222963466569
+--- !u!114 &3880083532688293817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6834537999514759326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc37effa57e1a3c4b972e07d02613ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelSpawnPoint: {fileID: 0}
+  winningPoint: {fileID: 0}
+  player: {fileID: 0}
+  selectSliceMaterial: {fileID: 0}
+--- !u!114 &5331522864878882677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

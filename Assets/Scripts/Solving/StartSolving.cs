@@ -33,6 +33,7 @@ public class StartSolving : MonoBehaviour
         {
             Debug.Log("Slice " + i + ": " + puzzleModelSlices[i].name);
             puzzleModelSlices[i].gameObject.tag = "Slice";
+            puzzleModelSlices[i].gameObject.AddComponent(typeof(BoxCollider));
             //puzzleModelSlices[i].gameObject.AddComponent(typeof(Slice));
         }
     }

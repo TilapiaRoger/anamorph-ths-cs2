@@ -7,6 +7,9 @@ public class PlayerEyeMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 10.0f;
     [SerializeField] private float rotateSpeed = 10.0f;
 
+    private Transform userTransform;
+    private Vector3 offset;
+
     private enum Direction
     {
         UP, DOWN, LEFT, RIGHT, ASCEND, DESCEND, NONE
@@ -23,7 +26,8 @@ public class PlayerEyeMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        userTransform = this.gameObject.transform;
+        //offset = new Vector3(userTransform.position.x, userTransform.position.y + rotateSpeed, userTransform.position.z + rotateSpeed);
     }
 
     // Update is called once per frame
@@ -31,6 +35,13 @@ public class PlayerEyeMovement : MonoBehaviour
     {
         InputListen();
         Move();
+    }
+
+    void FixedUpdate()
+    {
+        /*offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotateSpeed, Vector3.up) * offset;
+        transform.position = userTransform.position + offset;
+        transform.LookAt(userTransform.position);*/
     }
 
     private void InputListen()
@@ -102,22 +113,22 @@ public class PlayerEyeMovement : MonoBehaviour
         switch (currentDir)
         {
             case Direction.UP:
-                this.gameObject.transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
+                userTransform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
                 break;
             case Direction.DOWN:
-                this.gameObject.transform.Translate(Vector3.back * Time.deltaTime * moveSpeed);
+                userTransform.Translate(Vector3.back * Time.deltaTime * moveSpeed);
                 break;
             case Direction.LEFT:
-                this.gameObject.transform.Translate(Vector3.left * Time.deltaTime * moveSpeed);
+                userTransform.Translate(Vector3.left * Time.deltaTime * moveSpeed);
                 break;
             case Direction.RIGHT:
-                this.gameObject.transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
+                userTransform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
                 break;
             case Direction.ASCEND:
-                this.gameObject.transform.Translate(Vector3.up * Time.deltaTime * moveSpeed);
+                userTransform.Translate(Vector3.up * Time.deltaTime * moveSpeed);
                 break;
             case Direction.DESCEND:
-                this.gameObject.transform.Translate(Vector3.down * Time.deltaTime * moveSpeed);
+                userTransform.Translate(Vector3.down * Time.deltaTime * moveSpeed);
                 break;
         }
 
