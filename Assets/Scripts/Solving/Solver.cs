@@ -34,7 +34,7 @@ public class Solver : MonoBehaviour
         // Get all the colliders along the ray's path.
         // The ray starts from the player, and goes along the forward direction.
         // Detection stops at 100 units
-        hits = Physics.RaycastAll(player.transform.position, transform.forward, 1000.0F);
+        hits = Physics.RaycastAll(player.transform.position, transform.forward, Mathf.Infinity);
 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -63,8 +63,10 @@ public class Solver : MonoBehaviour
                 var selectionRenderer = selection.GetComponent<Renderer>();
                 if (selectionRenderer != null)
                 {
+                    float coordinates = Vector3.Distance(selection.transform.position, hit.point);
+
                     selectionRenderer.material = selectSliceMaterial;
-                    Debug.Log("SLICE!!!");
+                    Debug.Log("Slice " + selection.name + " coordinates: " + selection.transform.position);
                 }
             }
         }
