@@ -33,10 +33,11 @@ public class PlayerEyeMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.S)) velocity += Vector3.back;
         if (Input.GetKey(KeyCode.D)) velocity += Vector3.right;
 
-        transform.position += velocity * Time.deltaTime * movementSpeed;
+        //transform.position += velocity * Time.deltaTime * movementSpeed;
+        userTransform.Translate(velocity * Time.deltaTime * movementSpeed);
 
         Vector3 angle = new Vector3(0, 0, 0);
-        if (Input.GetKey(KeyCode.O)) angle += new Vector3(-22.5f, 0, 0);
+        if (Input.GetKey(KeyCode.I)) angle += new Vector3(-22.5f, 0, 0);
         if (Input.GetKey(KeyCode.J)) angle += new Vector3(0, -22.5f, 0);
         if (Input.GetKey(KeyCode.K)) angle += new Vector3(22.5f, 0, 0);
         if (Input.GetKey(KeyCode.L)) angle += new Vector3(0, 22.5f, 0);
