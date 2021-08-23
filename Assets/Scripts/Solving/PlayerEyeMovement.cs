@@ -10,17 +10,31 @@ public class PlayerEyeMovement : MonoBehaviour
     private Transform userTransform;
     private Vector3 offset;
 
+    private float yaw = 0.0f;
+    private float pitch = 0.0f;
+
+    private bool moveStatus = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        //Cursor.lockState = CursorLockMode.Locked;
         userTransform = this.gameObject.transform;
         //offset = new Vector3(userTransform.position.x, userTransform.position.y + rotateSpeed, userTransform.position.z + rotateSpeed);
+    }
+
+    public void StartMove()
+    {
+        moveStatus = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if (moveStatus == true)
+        {
+            Move();
+        }
     }
 
     private void Move()
@@ -37,12 +51,21 @@ public class PlayerEyeMovement : MonoBehaviour
         userTransform.Translate(velocity * Time.deltaTime * movementSpeed);
 
         Vector3 angle = new Vector3(0, 0, 0);
-        if (Input.GetKey(KeyCode.I)) angle += new Vector3(-22.5f, 0, 0);
+        /*if (Input.GetKey(KeyCode.I)) angle += new Vector3(-22.5f, 0, 0);
         if (Input.GetKey(KeyCode.J)) angle += new Vector3(0, -22.5f, 0);
         if (Input.GetKey(KeyCode.K)) angle += new Vector3(22.5f, 0, 0);
         if (Input.GetKey(KeyCode.L)) angle += new Vector3(0, 22.5f, 0);
+        */
 
 
-        transform.Rotate(angle * Time.deltaTime * rotateSpeed);
+        if (Input.GetMouseButton(2))
+        {
+            yaw += rotateSpeed * Input.GetAxis("Mouse X");
+            pitch -= rotateSpeed * Input.GetAxis("Mouse Y");
+        }
+
+        userTransform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+
+        //userTransform.Rotate(angle * Time.deltaTime * rotateSpeed);
     }
 }

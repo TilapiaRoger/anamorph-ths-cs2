@@ -46,7 +46,7 @@ public class Solver : MonoBehaviour
 
             // If the target is found, get the accuracy by:
             // Taking the Euclidean distance between RaycastHit.point and the center of the cylinder.
-            if (hit.collider.GetComponent<CapsuleCollider>() != null)
+            if (hit.collider.GetComponent<Collider>() != null)
             {
                 accuracy = Vector3.Distance(modelSpawnPoint.transform.position, hit.point);
                 Debug.Log(accuracy);

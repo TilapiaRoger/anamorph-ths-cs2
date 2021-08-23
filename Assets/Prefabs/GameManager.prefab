@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 8739400752778728940}
   - component: {fileID: 4323737538137125684}
   - component: {fileID: 526746226639452966}
-  - component: {fileID: 5265224784719202503}
   - component: {fileID: 3880083532688293817}
   - component: {fileID: 5331522864878882677}
   m_Layer: 0
@@ -81,12 +80,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9880c125e973f954ca9f50fe0a421075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  origin: {fileID: 0}
   modelSpawnPoint: {fileID: 0}
+  player: {fileID: 0}
   winningPoint: {fileID: 0}
-  playerAvatar: {fileID: 0}
-  holder: {fileID: 0}
-  puzzleModelLocation: {fileID: 0}
+  target: {fileID: 0}
+  winningSphere: {fileID: 0}
   d: 0
 --- !u!114 &8739400752778728940
 MonoBehaviour:
@@ -166,19 +164,6 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 61de810c4d0295842b6002579fd9fb0e, type: 3}
   - {fileID: 919132149155446097, guid: 3da7f8f939566ee43a15e894e08170f7, type: 3}
   - {fileID: 919132149155446097, guid: 17d612ebb9aefff498cb8dd054fe9c00, type: 3}
---- !u!114 &5265224784719202503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6834537999514759326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b4e59bb70d9b934387519b3ec715dae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  puzzleModelLocation: {fileID: 0}
 --- !u!114 &3880083532688293817
 MonoBehaviour:
   m_ObjectHideFlags: 0

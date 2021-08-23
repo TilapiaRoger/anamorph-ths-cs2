@@ -5,6 +5,8 @@ using UnityEngine;
 public class StartSolving : MonoBehaviour
 {
     [SerializeField] private GameObject puzzleModelLocation;
+    [SerializeField] private PlayerEyeMovement playerAvatar;
+
     private GameObject puzzleModel;
 
     // Start is called before the first frame update
@@ -22,6 +24,7 @@ public class StartSolving : MonoBehaviour
     public void StartSolve()
     {
         Time.timeScale = 1;
+        playerAvatar.StartMove();
 
         puzzleModel = puzzleModelLocation.transform.GetChild(1).gameObject;
         Transform[] puzzleModelSlices = puzzleModel.GetComponentsInChildren<Transform>();

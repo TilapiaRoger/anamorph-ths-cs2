@@ -86,7 +86,12 @@ public class Initializer : MonoBehaviour
 
         // Instantiate modelSpawnPoint as an invisible sphere
         target.transform.SetParent(modelSpawnPoint.transform);
-        modelSpawnPoint.transform.position = new Vector3(0f, 0f, modelF);
+        //modelSpawnPoint.transform.localPosition = new Vector3(0f, 0f, modelF);
+
+        GameObject selectedModel = modelParams.initModel();
+        selectedModel.SetActive(true);
+        selectedModel.transform.localScale = new Vector3(70, 70, 70);
+        Instantiate(selectedModel, modelSpawnPoint.transform);
 
         // Instantiate winningPoint as an invisible sphere
         winningSphere.transform.SetParent(winningPoint.transform);
