@@ -49,7 +49,7 @@ public class Solver : MonoBehaviour
             if (hit.collider.GetComponent<Collider>() != null)
             {
                 accuracy = Vector3.Distance(modelSpawnPoint.transform.position, hit.point);
-                Debug.Log(accuracy);
+                Debug.Log("Accuracy: " + accuracy);
             }
 
             /*if (hit.collider.transform != null)

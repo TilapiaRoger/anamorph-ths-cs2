@@ -95,6 +95,7 @@ public class Initializer : MonoBehaviour
 
         // Instantiate winningPoint as an invisible sphere
         winningSphere.transform.SetParent(winningPoint.transform);
+        winningSphere.
         winningPoint.transform.position = new Vector3(0, 0, winningF);
     }
 

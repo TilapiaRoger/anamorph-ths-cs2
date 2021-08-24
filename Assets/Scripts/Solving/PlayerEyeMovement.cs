@@ -58,7 +58,7 @@ public class PlayerEyeMovement : MonoBehaviour
         */
 
 
-        if (Input.GetMouseButton(2))
+        if (Input.GetMouseButton(1))
         {
             yaw += rotateSpeed * Input.GetAxis("Mouse X");
             pitch -= rotateSpeed * Input.GetAxis("Mouse Y");

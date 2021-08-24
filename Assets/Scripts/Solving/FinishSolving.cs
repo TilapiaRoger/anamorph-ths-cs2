@@ -31,5 +31,11 @@ public class FinishSolving : MonoBehaviour
         {
             errorMessage.gameObject.SetActive(true);
         }*/
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Finish?");
     }
 }
