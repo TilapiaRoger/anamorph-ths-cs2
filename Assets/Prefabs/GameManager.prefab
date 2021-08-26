@@ -11,12 +11,10 @@ GameObject:
   - component: {fileID: 6834537999514759332}
   - component: {fileID: 160586095666164549}
   - component: {fileID: 1677200801832321720}
-  - component: {fileID: 3552449837421977693}
   - component: {fileID: 8739400752778728940}
   - component: {fileID: 4323737538137125684}
   - component: {fileID: 526746226639452966}
   - component: {fileID: 3880083532688293817}
-  - component: {fileID: 5331522864878882677}
   - component: {fileID: 8072306420776542566}
   m_Layer: 0
   m_Name: GameManager
@@ -48,12 +46,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 6834537999514759326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 142f77a0df017454fa9e27fcc50b169d, type: 3}
+  m_Script: {fileID: 11500000, guid: 92d0123919958a54280b7b6983ed2738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAvatar: {fileID: 0}
-  winningPoint: {fileID: 0}
-  resultsWindow: {fileID: 0}
+  fullyManualList:
+  - {fileID: 919132149155446097, guid: 8418d6162d28f1a4bac441333e159afc, type: 3}
+  - {fileID: 919132149155446097, guid: 3bd6b9da3673e8241b0190633d84c687, type: 3}
+  - {fileID: 919132149155446097, guid: 5466704c2288e2642b25eb7b232bc4d5, type: 3}
+  - {fileID: 919132149155446097, guid: cd2b87fd5772f124093cc7f426566022, type: 3}
+  - {fileID: 919132149155446097, guid: 1a82638cf1bba2244b232c58f32d9bfc, type: 3}
+  - {fileID: 919132149155446097, guid: 13080dc0636343a41acde867cda6d431, type: 3}
+  - {fileID: 919132149155446097, guid: ae262673b218a1f4e87c902df0098d0e, type: 3}
+  - {fileID: 919132149155446097, guid: 8761ba50a665fe246921ee15bc03f866, type: 3}
+  - {fileID: 919132149155446097, guid: 6b8281dd46929ad46b9017029cc8d7fd, type: 3}
+  - {fileID: 919132149155446097, guid: ea05dd3caf4b55144a97b5d450bd5c01, type: 3}
+  - {fileID: 919132149155446097, guid: 7315ace569c530e479646da098b55d32, type: 3}
+  halfHalfList:
+  - {fileID: 919132149155446097, guid: de0f700adf8f45d4badbf99a028a7f23, type: 3}
+  - {fileID: 919132149155446097, guid: f66ede7e242bb4c4db29d92ce39ae371, type: 3}
+  - {fileID: 919132149155446097, guid: a646b3008235b1540b8974d19593529a, type: 3}
+  - {fileID: 919132149155446097, guid: fa6dde19497653d4abc2db8087e6b598, type: 3}
+  - {fileID: 919132149155446097, guid: bc5a799de921e604d949d6ea42bc1c13, type: 3}
+  - {fileID: 919132149155446097, guid: 6b524629071895f4ea262bfa7690c33c, type: 3}
+  - {fileID: 919132149155446097, guid: 596ce9476e7177c47970429042f705e8, type: 3}
+  - {fileID: 919132149155446097, guid: 6af2ea1564b18ce49b10598831841f5d, type: 3}
+  - {fileID: 919132149155446097, guid: 243d1e9f5b4ea864297750b8e5e70b39, type: 3}
+  - {fileID: 919132149155446097, guid: 96bbbdf3b81fec546a226a36ab7561cb, type: 3}
+  - {fileID: 919132149155446097, guid: d283bcc40185dc044a8a29e3c9409cf6, type: 3}
+  fullyAutomaticList:
+  - {fileID: 919132149155446097, guid: 17d612ebb9aefff498cb8dd054fe9c00, type: 3}
+  - {fileID: 919132149155446097, guid: 51baebaf073373540ba63cd869b45af7, type: 3}
+  - {fileID: 919132149155446097, guid: 9dcd22e44303eda4d9802b123be939a0, type: 3}
+  - {fileID: 919132149155446097, guid: 5a484df0cf331114abb9f990f15a3afd, type: 3}
+  - {fileID: 919132149155446097, guid: 42b1a737e8a8cb443b4645012e562944, type: 3}
+  - {fileID: 919132149155446097, guid: f5e0f1eff224c2b41bf2b76040e6b980, type: 3}
+  - {fileID: 919132149155446097, guid: 63d444a664c7964439ee69d6d5d4c87f, type: 3}
+  - {fileID: 919132149155446097, guid: f89bab4c93b4b7745b72166cb2e304fc, type: 3}
+  - {fileID: 919132149155446097, guid: 619feede74339a94ca13ec6a81fa0b85, type: 3}
+  - {fileID: 919132149155446097, guid: f91d4da649909874e8c9828b1dde824f, type: 3}
+  - {fileID: 919132149155446097, guid: 0296d8535f036304094dcb15a68f58e4, type: 3}
 --- !u!114 &1677200801832321720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,30 +94,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6834537999514759326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaf97d2c94a2ea045a21067134cfca71, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b92eca87e94dbb459be2e1f8fd75558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sliceType: 
   distributeType: 
   modelName: 
---- !u!114 &3552449837421977693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6834537999514759326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9880c125e973f954ca9f50fe0a421075, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modelSpawnPoint: {fileID: 0}
-  player: {fileID: 0}
-  winningPoint: {fileID: 0}
-  target: {fileID: 0}
-  winningSphere: {fileID: 0}
-  d: 0
 --- !u!114 &8739400752778728940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,12 +109,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6834537999514759326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e8edd456fd7644cb2eb05314f18588, type: 3}
+  m_Script: {fileID: 11500000, guid: cf818fc299ff75d49bacce30a05e9e25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  origin: {fileID: 0}
   modelSpawnPoint: {fileID: 0}
   winningPoint: {fileID: 0}
+  player: {fileID: 0}
+  selectSliceMaterial: {fileID: 0}
 --- !u!114 &4323737538137125684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,12 +125,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6834537999514759326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 147475eed8a21064a9ece77b43320485, type: 3}
+  m_Script: {fileID: 11500000, guid: 55e2319f46820b144a8649ba3d694961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  origin: {fileID: 0}
   modelSpawnPoint: {fileID: 0}
+  player: {fileID: 0}
   winningPoint: {fileID: 0}
+  target: {fileID: 0}
+  winningSphere: {fileID: 0}
+  d: 0
 --- !u!114 &526746226639452966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,45 +143,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6834537999514759326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fab882a7ca283564fb8b1eb96569c2b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 00caeb771757f2e4bb2afb22b0f968f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullyManualList:
-  - {fileID: 919132149155446097, guid: 339e0a5e630948442aa59cd45d2bd81c, type: 3}
-  - {fileID: 919132149155446097, guid: 4ad7718e1cd4192448aad5f9a49d820e, type: 3}
-  - {fileID: 919132149155446097, guid: 978d6a8ecceda7243b4f326b873fae46, type: 3}
-  - {fileID: 919132149155446097, guid: 97a84606de52a684793a13d4bcf7912b, type: 3}
-  - {fileID: 919132149155446097, guid: 8c9969440c0b3ed48be0e9912bb4b402, type: 3}
-  - {fileID: 919132149155446097, guid: 7ffabb86ba302e248840e1c258b70ac1, type: 3}
-  - {fileID: 919132149155446097, guid: 7a5c68b1bdecf0947a072607feff0719, type: 3}
-  - {fileID: 919132149155446097, guid: 667e28b343a1a8b48927683b9fb1d599, type: 3}
-  - {fileID: 919132149155446097, guid: 38f65b1a2292634469f818bb4c08ed9b, type: 3}
-  - {fileID: 919132149155446097, guid: 8e1646c5d0dd0fe4a863310e12e5c79d, type: 3}
-  - {fileID: 919132149155446097, guid: 8418d6162d28f1a4bac441333e159afc, type: 3}
-  halfHalfList:
-  - {fileID: 919132149155446097, guid: 78a56444a3dc4f44695184cba4881103, type: 3}
-  - {fileID: 919132149155446097, guid: 056b1ea0a4a1ce24aa02277ff30b11bc, type: 3}
-  - {fileID: 919132149155446097, guid: a1e88e39b492b3646918d1a7a047a13a, type: 3}
-  - {fileID: 919132149155446097, guid: 533096d5d2c3c27469c8dbc6d10e6990, type: 3}
-  - {fileID: 919132149155446097, guid: f88bfd10b586b744d93feea326c70b40, type: 3}
-  - {fileID: 919132149155446097, guid: c677f5f16cc36e640990f567e549a3ea, type: 3}
-  - {fileID: 919132149155446097, guid: 7af8ca915b0a6344ba7a7c38aa20897c, type: 3}
-  - {fileID: 919132149155446097, guid: 1e6c0a87c999fc8498230081b423b3e1, type: 3}
-  - {fileID: 919132149155446097, guid: b79ba2e66cc379744aeae84b1b1e77fb, type: 3}
-  - {fileID: 919132149155446097, guid: c8fbf66edae3a4b44a8b5919352ac8d1, type: 3}
-  - {fileID: 919132149155446097, guid: de0f700adf8f45d4badbf99a028a7f23, type: 3}
-  fullyAutomaticList:
-  - {fileID: 919132149155446097, guid: b45296d0888bad44594d953598246973, type: 3}
-  - {fileID: 919132149155446097, guid: 6be811b3c2b937c4d8c11698add11887, type: 3}
-  - {fileID: 919132149155446097, guid: e9193c15e64831543af1641414a3c95a, type: 3}
-  - {fileID: 919132149155446097, guid: 775a3b1f4f416e042bc46b347952ec74, type: 3}
-  - {fileID: 919132149155446097, guid: 2dcd857c661208b439badbba4c731e7c, type: 3}
-  - {fileID: 919132149155446097, guid: ed759e84934e13742b73b5ea1f4b39b5, type: 3}
-  - {fileID: 919132149155446097, guid: a244470bde7522d4aa5ba153d027f65b, type: 3}
-  - {fileID: 919132149155446097, guid: cfc0fddf93c64bf428844fd403021579, type: 3}
-  - {fileID: 919132149155446097, guid: 61de810c4d0295842b6002579fd9fb0e, type: 3}
-  - {fileID: 919132149155446097, guid: 3da7f8f939566ee43a15e894e08170f7, type: 3}
-  - {fileID: 919132149155446097, guid: 17d612ebb9aefff498cb8dd054fe9c00, type: 3}
+  origin: {fileID: 0}
+  modelSpawnPoint: {fileID: 0}
+  winningPoint: {fileID: 0}
 --- !u!114 &3880083532688293817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,26 +158,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6834537999514759326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc37effa57e1a3c4b972e07d02613ab1, type: 3}
+  m_Script: {fileID: 11500000, guid: 5065c0103fe3825448c3bb55dbababfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  origin: {fileID: 0}
   modelSpawnPoint: {fileID: 0}
   winningPoint: {fileID: 0}
-  player: {fileID: 0}
-  selectSliceMaterial: {fileID: 0}
---- !u!114 &5331522864878882677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6834537999514759326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef673e22dc488094ba5adc095710bff6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectSliceMaterial: {fileID: 0}
 --- !u!114 &8072306420776542566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,7 +173,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6834537999514759326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 142f77a0df017454fa9e27fcc50b169d, type: 3}
+  m_Script: {fileID: 11500000, guid: 47a459a93c167af48b2909fca913a42e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerAvatar: {fileID: 0}

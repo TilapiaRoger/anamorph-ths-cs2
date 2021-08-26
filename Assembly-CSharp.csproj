@@ -59,22 +59,22 @@
     <Analyzer Include="D:\Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Solving\Distribution.cs" />
-    <Compile Include="Assets\Scripts\Solving\StartSolving.cs" />
-    <Compile Include="Assets\Scripts\Solving\Rotator.cs" />
     <Compile Include="Assets\Scripts\Solving\PlayerEyeMovement.cs" />
     <Compile Include="Assets\Scripts\UI\QuitApplication.cs" />
     <Compile Include="Assets\Scripts\Model\SliceSelectionManager.cs" />
-    <Compile Include="Assets\Scripts\Solving\Solver.cs" />
     <Compile Include="Assets\Scripts\UI\SolvingUI.cs" />
-    <Compile Include="Assets\Scripts\Solving\WinningSphere.cs" />
-    <Compile Include="Assets\Scripts\Puzzle Setup\UserInterface.cs" />
-    <Compile Include="Assets\Scripts\Solving\Initializer.cs" />
     <Compile Include="Assets\Scripts\Model\Slice.cs" />
+    <Compile Include="Assets\Scripts\Solving\Checkpoints\StartSolving.cs" />
+    <Compile Include="Assets\Scripts\Solving\Model Algorithms\Distribution.cs" />
+    <Compile Include="Assets\Scripts\Solving\Model Algorithms\Initializer.cs" />
+    <Compile Include="Assets\Scripts\Solving\Checkpoints\FinishSolving.cs" />
+    <Compile Include="Assets\Scripts\Solving\Model Algorithms\Rotator.cs" />
+    <Compile Include="Assets\Scripts\Solving\Raycaster\Solver.cs" />
+    <Compile Include="Assets\Scripts\Solving\Model Algorithms\WinningSphere.cs" />
     <Compile Include="Assets\Scripts\UI\ResultsUI.cs" />
-    <Compile Include="Assets\Scripts\Puzzle Setup\ModelParams.cs" />
-    <Compile Include="Assets\Scripts\Solving\FinishSolving.cs" />
     <Compile Include="Assets\Scripts\Puzzle Setup\ModelList.cs" />
+    <Compile Include="Assets\Scripts\Puzzle Setup\UserInterface.cs" />
+    <Compile Include="Assets\Scripts\Puzzle Setup\ModelParams.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\3D Models\Models\README.txt" />

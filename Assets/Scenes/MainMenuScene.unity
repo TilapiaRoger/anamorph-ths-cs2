@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 55033297}
   - component: {fileID: 55033296}
   - component: {fileID: 55033295}
-  - component: {fileID: 55033294}
+  - component: {fileID: 55033299}
   m_Layer: 5
   m_Name: Choose Model UI
   m_TagString: Untagged
@@ -222,22 +222,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &55033294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55033293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 741922b5d63cf6c4e8a321e33b777146, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modelListDropdown: {fileID: 1756712100}
-  sliceTypeDropdown: {fileID: 1437116089}
-  distributeTypeDropdown: {fileID: 1395941792}
-  gameManager: {fileID: 194790427}
 --- !u!114 &55033295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +308,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &55033299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55033293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176c02ae80f73764eb4062ecae51150c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelListDropdown: {fileID: 1756712100}
+  sliceTypeDropdown: {fileID: 1437116089}
+  distributeTypeDropdown: {fileID: 1395941792}
+  gameManager: {fileID: 194790427}
 --- !u!1 &159213773
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,7 +881,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 55033294}
+      - m_Target: {fileID: 55033299}
         m_TargetAssemblyTypeName: UserInterface, Assembly-CSharp
         m_MethodName: StartSolving
         m_Mode: 1
@@ -3427,6 +3427,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 160586095666164549, guid: 0d2eebcdd87c2284aaa8d9781410363a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 526746226639452966, guid: 0d2eebcdd87c2284aaa8d9781410363a,
         type: 3}
       propertyPath: m_Enabled
       value: 0
