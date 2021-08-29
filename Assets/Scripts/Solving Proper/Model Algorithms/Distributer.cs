@@ -48,8 +48,9 @@ public class Distributer : MonoBehaviour
         minDistance = mspPosition.z - d;
         maxDistance = mspPosition.z + d;
 
-        oldDistance = Vector3.Distance(winningPoint.transform.position, modelSpawnPoint.transform.position);
+        oldDistance = Vector3.Distance(winningPoint.transform.position, mspPosition);
         pivot = new GameObject();
+        Instantiate(pivot, modelSpawnPoint.transform);
 
         foreach (Transform child in model.transform)
         {
@@ -58,7 +59,7 @@ public class Distributer : MonoBehaviour
             // Set the Transform pivot of each slice to the model spawn point by:
             // Instantiating a temporary empty gameobject at the model spawn point
             // Parenting the piece to the empty
-            Instantiate(pivot, modelSpawnPoint.transform);
+            
             piece.transform.SetParent(pivot.transform);
 
             // Move piece by a random distance from the model spawn point
@@ -73,8 +74,11 @@ public class Distributer : MonoBehaviour
             // Parent the piece back to the model
             piece.transform.SetParent(model.transform);
 
-            // Destroy the pivot
-            Destroy(pivot);
+            // Reset the position of the pivot to the model spawn point
+            piece.transform.position = mspPosition;
         }
+        
+        // Destroy the pivot
+        Destroy(pivot);
     }
 }
