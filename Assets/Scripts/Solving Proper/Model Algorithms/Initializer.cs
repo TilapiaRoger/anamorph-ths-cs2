@@ -59,7 +59,6 @@ public class Initializer : MonoBehaviour
     {
         float num = Random.Range(min, max);
         while (num == min || num == max) num = Random.Range(min, max);
-
         return num;
     }
 }
