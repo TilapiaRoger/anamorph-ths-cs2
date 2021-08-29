@@ -10,7 +10,7 @@ public class Initializer : MonoBehaviour
                       winningPoint,
                       winningSphere;
                       
-    public float d = 10f;
+    public float d;
 
     private GameObject sphere,
                        target;
