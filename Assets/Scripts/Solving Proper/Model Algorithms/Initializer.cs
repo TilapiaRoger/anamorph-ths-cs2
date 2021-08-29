@@ -58,7 +58,7 @@ public class Initializer : MonoBehaviour
     float generate(float min, float max)
     {
         float num = Random.Range(min, max);
-        while (num == min || num == max) modelF = Random.Range(min, max);
+        while (num == min || num == max) num = Random.Range(min, max);
 
         return num;
     }
