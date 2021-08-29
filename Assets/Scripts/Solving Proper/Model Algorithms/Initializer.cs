@@ -8,14 +8,17 @@ public class Initializer : MonoBehaviour
                       modelSpawnPoint,
                       player,
                       winningPoint,
-                      target,
                       winningSphere;
-
-    private GameObject sphere;
-    private SphereCollider sphereCollider;
-
+                      
     public float d = 10f;
 
+    private GameObject sphere,
+                       target;
+    
+    private ModelParameters modelParameters;
+    
+    private SphereCollider sphereCollider;
+    
     private float modelF,
                   winningF,
                   gameBoundsF = 100f;
@@ -23,6 +26,16 @@ public class Initializer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        modelParameters = GetComponent<ModelParameters>();
+        modelName = modelParameters.modelName;
+
+             if(modelName.Contains("01") || modelName.Contains("02") || modelName.Contains("03") || modelName.Contains("04"))
+            d = 10;
+        else if (modelName.Contains("05") || modelName.Contains("06") || modelName.Contains("07"))
+            d = 20;
+        else if (modelName.Contains("08") || modelName.Contains("09") || modelName.Contains("10"))
+            d = 30;
+            
         // Instantiate an invisible cylinder at modelSpawnPoint
         modelF = generate(d, gameBoundsF - d);
         target.transform.SetParent(modelSpawnPoint.transform);
@@ -48,13 +61,5 @@ public class Initializer : MonoBehaviour
         while (num == min || num == max) modelF = Random.Range(min, max);
 
         return num;
-    }
-
-    public GameObject[] getPoints()
-    {
-        GameObject[] points = new GameObject[2];
-        points[0] = modelSpawnPoint;
-        points[1] = winningPoint;
-        return points;
     }
 }
