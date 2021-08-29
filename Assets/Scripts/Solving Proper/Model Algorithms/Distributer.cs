@@ -20,6 +20,7 @@ public class Distributer : MonoBehaviour
                   minDistance,
                   maxDistance,
                   scaleFactor,
+                  pivotPosition,
                   d;
 
     private string distributionType;
@@ -56,15 +57,14 @@ public class Distributer : MonoBehaviour
         {
             GameObject piece = child.gameObject;
 
-            // Set the Transform pivot of each slice to the model spawn point by:
-            // Instantiating a temporary empty gameobject at the model spawn point
-            // Parenting the piece to the empty
-            
+            // Set the Transform pivot of each slice to the model spawn point by
+            // parenting the piece to the empty
             piece.transform.SetParent(pivot.transform);
 
             // Move piece by a random distance from the model spawn point
             // between modelF - d and modelF + d
-            pivot.transform.position += new Vector3(0, 0, Random.Range(minDistance, maxDistance));
+            pivotPosition = generate(minDistance, maxDistance);
+            pivot.transform.position += new Vector3(0, 0, pivotPosition);
             newDistance = Vector3.Distance(pivot.transform.position, mspPosition);
 
             // Scale the model
@@ -75,10 +75,17 @@ public class Distributer : MonoBehaviour
             piece.transform.SetParent(model.transform);
 
             // Reset the position of the pivot to the model spawn point
-            piece.transform.position = mspPosition;
+            pivot.transform.position = mspPosition;
         }
         
         // Destroy the pivot
         Destroy(pivot);
+    }
+    
+    float generate(float min, float max)
+    {
+        float num = Random.Range(min, max);
+        while (num == min || num == max) num = Random.Range(min, max);
+        return num;
     }
 }
