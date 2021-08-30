@@ -38,12 +38,14 @@ public class Initializer : MonoBehaviour
             
         // Instantiate an invisible cylinder at modelSpawnPoint
         modelF = generate(d, gameBoundsF - d);
+        target = GameObject.Find("Target");
         target.transform.SetParent(modelSpawnPoint.transform);
         modelSpawnPoint.transform.position = new Vector3(0f, 0f, modelF);
         Debug.Log("Model Spawn Point at " + modelSpawnPoint.transform.position);
 
         // Instantiate an invisible sphere at winningPoint
         winningF = modelF - d;
+        winningSphere = GameObject.Find("WinningSphere");
         winningSphere.transform.SetParent(winningPoint.transform);
         winningPoint.transform.position = new Vector3(0, 0, winningF);
         Debug.Log("Winning Point at " + winningPoint.transform.position);
