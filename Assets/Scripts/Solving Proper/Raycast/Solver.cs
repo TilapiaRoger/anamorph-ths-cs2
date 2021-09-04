@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,28 +7,50 @@ public class Solver : MonoBehaviour
     public GameObject modelSpawnPoint,
                       player,
                       winningPoint;
-
+    private Vector3 hitPosition,
+                    playerPosition,
+                    mspPosition,
+                    wpPosition;
     private float lookAccuracy,
                   positionAccuracy;
-    private bool isInWinningSphere = false;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        mspPosition = modelSpawnPoint.transform.position;
+        wpPosition = winningPoint.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        checkAngle();
+        
+        lookAccuracy = Vector3.Distance(mspPosition, hitPosition);
+        positionAccuracy = Vector3.Distance(wpPosition, playerPosition);
+        results();
+        //Debug.Log("In winning sphere? " + isInWinningSphere + " Looking at target? " + checkAngle());
     }
 
-    public void checkAngle()
+    private void results()
     {
+             if ( checkPosition() &&  checkAngle()) 
+            Debug.Log("Congratulations. Accuracy: " + lookAccuracy + ", " + positionAccuracy);
+        else if (!checkPosition() &&  checkAngle())
+            Debug.Log("Model spawn point is at " + mspPosition + "\nLooking at " + hitPosition + "\nAccuracy:" + lookAccuracy);
+        else if ( checkPosition() && !checkAngle())
+            Debug.Log("Winning point is at " + wpPosition + "\nCurrently at " + playerPosition + "\n Accuracy: " + positionAccuracy);
+    }
 
+    private bool checkPosition()
+    {
+        playerPosition = player.transform.position;
+        return (Vector3.Distance(playerPosition, wpPosition) <= 0.5) ? true : false;
+    }
+
+    private bool checkAngle()
+    {
         RaycastHit[] hits;
-        hits = Physics.RaycastAll(player.transform.position, transform.forward, 100.0F);
+        hits = Physics.RaycastAll(playerPosition, transform.forward, 100.0F);
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -36,34 +58,11 @@ public class Solver : MonoBehaviour
 
             if (hit.collider.GetComponent<CapsuleCollider>() != null)
             {
-                lookAccuracy = Vector3.Distance(modelSpawnPoint.transform.position, hit.point);
-
-                if (isInWinningSphere)
-                {
-                    Debug.Log("Congratulations. Accuracy: " + lookAccuracy + ", " + positionAccuracy);
-                    FinishSolving finishSolve = GetComponent<FinishSolving>();
-                    finishSolve.WinPuzzle();
-                }
-                else
-                {
-                    Debug.Log("Model spawn point is at " + modelSpawnPoint.transform.position + "\nLooking at " + hit.point + "\nAccuracy:" + lookAccuracy);
-                }
+                hitPosition = hit.point;
+                if(Vector3.Distance(hitPosition, mspPosition) <= 0.5) return true;
             }
         }
-    }
 
-    public void ToggleIsInWinningSphere()
-    {
-        isInWinningSphere = !isInWinningSphere;
-    }
-
-    public bool IsInWinningSphere()
-    {
-        return isInWinningSphere;
-    }
-
-    public void SetPositionAccuracy(float positionAccuracy)
-    {
-        this.positionAccuracy = positionAccuracy;
+        return false;
     }
 }
