@@ -6,61 +6,39 @@ using UnityEngine;
 public class ModelList : MonoBehaviour
 {
     [SerializeField] List<GameObject> fullyManualList;
-    [SerializeField] List<GameObject> halfhalfList;
+    [SerializeField] List<GameObject> MSADList;
     [SerializeField] List<GameObject> fullyAutomaticList;
+    private List<string> modelNames = new List<string>();
     Dictionary<Tuple<string, string, string>, GameObject> puzzleModelList = new Dictionary<Tuple<string, string, string>, GameObject>();
 
     public List<string> initModelNameList()
     {
         List<string> modelNames = new List<string>();
-
-        for (int i = 0; i < fullyManualList.Count; i++)
-        {
-            modelNames.Add(fullyManualList[i].name);
-        }
-
+        for (int i = 0; i < fullyManualList.Count; i++) modelNames.Add(fullyManualList[i].name);
         return modelNames;
-        //modelListDropdown.ClearOptions();
-        //modelListDropdown.AddOptions(modelNames);
-
     }
 
     public GameObject findModel(string sliceType, string distributeType, string modelName)
     {
         Tuple<string, string, string> modelKey = new Tuple<string, string, string>(sliceType, distributeType, modelName);
-        if (puzzleModelList.ContainsKey(modelKey))
-        {
-            return puzzleModelList[modelKey];
-        }
-        else{
-            return null;
-        }
+        return puzzleModelList.ContainsKey(modelKey) ? puzzleModelList[modelKey] : null;
     }
 
     public void initPuzzleModelTable()
     {
         Tuple<string, string, string> modelKey;
-
-        //puzzleModelList = new Dictionary<Tuple<string, string, string>, GameObject>();
+        modelNames = initModelNameList();
 
         for (int i = 0; i < fullyManualList.Count; i++)
         {
-            modelKey = new Tuple<string, string, string>("Manual", "Manual", fullyManualList[i].name);
+            modelKey = new Tuple<string, string, string>("Manual", "Manual", modelNames[i]);
             puzzleModelList.Add(modelKey, fullyManualList[i]);
-        }
 
-        for (int i = 0; i < halfhalfList.Count; i++)
-        {
-            modelKey = new Tuple<string, string, string>("Manual", "Automatic", halfhalfList[i].name);
-            puzzleModelList.Add(modelKey, halfhalfList[i]);
-        }
+            modelKey = new Tuple<string, string, string>("Manual", "Automatic", modelNames[i]);
+            puzzleModelList.Add(modelKey, MSADList[i]);
 
-        for (int i = 0; i < fullyAutomaticList.Count; i++)
-        {
-            modelKey = new Tuple<string, string, string>("Automatic", "Automatic", fullyAutomaticList[i].name);
+            modelKey = new Tuple<string, string, string>("Automatic", "Automatic", modelNames[i]);
             puzzleModelList.Add(modelKey, fullyAutomaticList[i]);
         }
-
-        //Debug.Log(puzzleModelList);
     }
 }
