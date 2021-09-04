@@ -9,19 +9,21 @@ public class Initializer : MonoBehaviour
                       player,
                       winningPoint,
                       winningSphere;
-                      
+
     public float d;
 
     private GameObject sphere,
                        target;
-    
+
     private ModelParameters modelParameters;
-    
+
     private SphereCollider sphereCollider;
-    
+
     private float modelF,
                   winningF,
                   gameBoundsF = 100f;
+
+    private string modelName;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +31,10 @@ public class Initializer : MonoBehaviour
         modelParameters = GetComponent<ModelParameters>();
         modelName = modelParameters.modelName;
 
-             if(modelName.Contains("01") || modelName.Contains("02") || modelName.Contains("03") || modelName.Contains("04"))
-            d = 10;
-        else if (modelName.Contains("05") || modelName.Contains("06") || modelName.Contains("07"))
-            d = 20;
-        else if (modelName.Contains("08") || modelName.Contains("09") || modelName.Contains("10"))
-            d = 30;
-            
+        SetD(modelName);
+
+        Debug.Log("d: " + d);
+
         // Instantiate an invisible cylinder at modelSpawnPoint
         modelF = generate(d, gameBoundsF - d);
         target = GameObject.Find("Target");
@@ -45,8 +44,6 @@ public class Initializer : MonoBehaviour
 
         // Instantiate an invisible sphere at winningPoint
         winningF = modelF - d;
-        winningSphere = GameObject.Find("WinningSphere");
-        winningSphere.transform.SetParent(winningPoint.transform);
         winningPoint.transform.position = new Vector3(0, 0, winningF);
         Debug.Log("Winning Point at " + winningPoint.transform.position);
     }
@@ -62,5 +59,25 @@ public class Initializer : MonoBehaviour
         float num = Random.Range(min, max);
         while (num == min || num == max) num = Random.Range(min, max);
         return num;
+    }
+
+    public void SetD(string modelName)
+    {
+             if (modelName.Contains("01") || modelName.Contains("02") || modelName.Contains("03") || modelName.Contains("04"))
+        {
+            d = 10;
+            Debug.Log("Contains 01 to 04");
+        }
+            
+        else if (modelName.Contains("05") || modelName.Contains("06") || modelName.Contains("07"))
+        {
+            d = 20;
+            Debug.Log("Contains 05 to 07");
+        }
+        else if (modelName.Contains("08") || modelName.Contains("09") || modelName.Contains("10"))
+        {
+            d = 30;
+            Debug.Log("Contains 08 to 10");
+        }
     }
 }
