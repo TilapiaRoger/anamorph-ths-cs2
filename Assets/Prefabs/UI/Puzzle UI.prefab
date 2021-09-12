@@ -145,7 +145,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bbe610c5fe1028c4587e5159fc196ec2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5b86e1df0c8b00f4faa03e891acea279, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -199,10 +199,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8033785345482160359}
-        m_TargetAssemblyTypeName: SceneTransition, Assembly-CSharp
-        m_MethodName: NextScene
-        m_Mode: 5
+      - m_Target: {fileID: 1956769627127025518}
+        m_TargetAssemblyTypeName: SolvingUI, Assembly-CSharp
+        m_MethodName: OpenSettings
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -583,7 +583,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3883905282981268620}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b6c837728e0de1489bfb06909dc6294, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f0bfa40d32070744a1db52824614e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   puzzleModelLocation: {fileID: 0}
@@ -707,6 +707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeElapsedLabel: {fileID: 3883905281729048139}
+  settingsUI: {fileID: 0}
 --- !u!114 &8033785345482160359
 MonoBehaviour:
   m_ObjectHideFlags: 0

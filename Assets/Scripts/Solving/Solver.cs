@@ -44,6 +44,8 @@ public class Solver : MonoBehaviour
             Debug.Log("Congratulations.\n"+
                       "Positions: " + hitPosition + ", " + playerPosition + "\n" +
                       "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
+            FinishSolving finishSolving = GetComponent<FinishSolving>();
+            finishSolving.WinPuzzle();
         }
         else if (!checkPosition() && checkAngle())
             Debug.Log("Winning point is at " + wpPosition + "\nCurrently at " + playerPosition + "\n Accuracy: " + positionAccuracy);
@@ -55,7 +57,7 @@ public class Solver : MonoBehaviour
     private bool checkPosition()
     {
         playerPosition = player.transform.position;
-        return (Vector3.Distance(playerPosition, wpPosition) <= 1) ? true : false;
+        return (Vector3.Distance(playerPosition, wpPosition) <= 2) ? true : false;
     }
 
     private bool checkAngle()
@@ -70,7 +72,7 @@ public class Solver : MonoBehaviour
             if (hit.collider.GetComponent<CapsuleCollider>() != null)
             {
                 hitPosition = hit.point;
-                if(Vector3.Distance(hitPosition, mspPosition) <= 1) return true;
+                if(Vector3.Distance(hitPosition, mspPosition) <= 2) return true;
             }
         }
 

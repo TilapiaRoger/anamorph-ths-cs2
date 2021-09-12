@@ -34,10 +34,12 @@ public class Distributer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //modelParameters = GetComponent<ModelParameters>();
-        //distributionType = modelParameters.GetDistributionType();
-        //if (distributionType.Equals("Automatic"))
-        Distribute();
+        modelParameters = GetComponent<ModelParameters>();
+        distributionType = modelParameters.GetDistributionType();
+
+        if (distributionType.Equals("Automatic")){
+            Distribute();
+        }
     }
 
     // Update is called once per frame
@@ -56,37 +58,36 @@ public class Distributer : MonoBehaviour
         mspTransform = modelSpawnPoint.transform;
         modelTransform = mspTransform.GetChild(0);
 
+        Debug.Log("Number" + "\tPosition" + "\tScale Factor" + "\tLast Scale" + "\tBounds");
+
         foreach (Transform child in modelTransform)
         {
             GameObject piece = child.gameObject;
 
-            if (childNumber == 0)
-            {
-                minDistance = mspPosition.z - oldDistance;
-                maxDistance = mspPosition.z + oldDistance;
-                lastPosition = -wpPosition.z;
-            }
+            if (childNumber == 0) pivotPosition = mspPosition.z - oldDistance + 1;
             else
             {
-                minDistance = lastPosition + lastScale / 2;
-                maxDistance = lastPosition + lastScale;
+                minDistance = lastPosition + lastScale / 100;
+                maxDistance = lastPosition + lastScale / 50;
+                pivotPosition = Random.Range(minDistance, maxDistance);
             }
 
             // Move piece by a random distance from the model spawn point
             // between modelF - d + 1 and modelF + d - 1
             // The offset of 1 is to prevent the slice from clipping inside the player
             // When they're at the winning point.
-            pivotPosition = Random.Range(minDistance, maxDistance);
             piece.transform.position = new Vector3(0, 0, pivotPosition);
-            newDistance = Mathf.Abs(wpPosition.z - piece.transform.position.z);
+            lastPosition = pivotPosition;
+            newDistance = Mathf.Abs(wpPosition.z - pivotPosition);
 
             // Scale the model
             scaleFactor = newDistance / oldDistance;
-            lastScale = piece.transform.localScale.z;
-            piece.transform.localScale *= scaleFactor;
-
-            lastPosition = newDistance;
             //lastScale = piece.transform.localScale.z;
+            piece.transform.localScale *= scaleFactor;
+            lastScale = piece.transform.localScale.z;
+
+            Debug.Log((childNumber + 1) + "\t" + pivotPosition + "\t" + scaleFactor + "\t" + lastScale + "\t" + minDistance + " - " + maxDistance);
+
             childNumber++;
         }
     }

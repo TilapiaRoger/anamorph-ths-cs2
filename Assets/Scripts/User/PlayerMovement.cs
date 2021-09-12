@@ -7,8 +7,6 @@ public class PlayerMovement : MonoBehaviour
     public float movementSpeed = 1.0f;
     public float rotateSpeed = 1.0f;
 
-    public GameObject modelSpawnPoint;
-
     private Transform userTransform;
 
     private float yaw = 0.0f;
@@ -18,14 +16,26 @@ public class PlayerMovement : MonoBehaviour
                     linearVelocity,
                     angularVelocity;
 
+
     private bool canMove = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartMove();
         userTransform = this.gameObject.transform;
-        SetPlayerTransform();
+
+        userTransform.Rotate(0, 0, 0);
+        pitch = userTransform.eulerAngles.x;
+        yaw = userTransform.eulerAngles.y;
+        userTransform.eulerAngles = new Vector3(pitch, yaw, 0);
+
+        GameObject origin = GameObject.Find("Origin");
+        userTransform.position = origin.transform.position; 
+
+        //Vector3 mspPosition = modelSpawnPoint.transform.position;
+
+        //float positionAdder = 20.0f;
+        //userTransform.position = new Vector3(Random.Range(mspPosition.x - positionAdder, mspPosition.x + positionAdder), Random.Range(mspPosition.y - positionAdder, mspPosition.y + positionAdder), Random.Range(mspPosition.z - positionAdder, mspPosition.z + positionAdder));
     }
 
     // Update is called once per frame
@@ -38,25 +48,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void StartMove()
+    public void SetMoveStatus(bool moveStatus)
     {
-        canMove = true; 
-    }
-
-    private void SetPlayerTransform()
-    {
-        yaw = Random.Range(0, 360);
-        pitch = Random.Range(0, 360);
-
-        userTransform.localEulerAngles = new Vector3(pitch, yaw, 0);
-
-        Vector3 mspPosition = modelSpawnPoint.transform.position;
-
-        float newX = Random.Range(mspPosition.x - 100, mspPosition.x + 100),
-        newY = Random.Range(mspPosition.y - 100, mspPosition.y + 100),
-              newZ = Random.Range(mspPosition.z - 100, mspPosition.z + 100);
-
-        userTransform.position = new Vector3(newX, newY, newZ);
+        canMove = moveStatus; 
     }
 
     private void Pan()
@@ -71,7 +65,8 @@ public class PlayerMovement : MonoBehaviour
 
         userTransform.Translate(linearVelocity * Time.deltaTime * movementSpeed);
 
-        //Debug.Log("MOVE.");
+
+        Debug.Log("MOVE.");
 
     }
 
@@ -84,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
             pitch -= rotateSpeed * Input.GetAxis("Mouse Y");
         }
 
-        userTransform.localEulerAngles = new Vector3(pitch, yaw, 0);
+        userTransform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
     }
 
     public void SetMoveSpeed(float moveSpeed)
@@ -92,8 +87,8 @@ public class PlayerMovement : MonoBehaviour
         this.movementSpeed = moveSpeed;
     }
 
-    public void SetRotateSpeed(float rotateSpeed)
+    public void SetRotateSpeed(float rotationSpeed)
     {
-        this.rotateSpeed = rotateSpeed;
+        this.rotateSpeed = rotationSpeed;
     }
 }

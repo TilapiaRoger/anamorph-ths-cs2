@@ -5,8 +5,9 @@ using UnityEngine;
 public class ModelParameters : MonoBehaviour
 {
     public string sliceType,
-                  distributeType,
-                  modelName;
+                  distributeType;
+
+    public string modelName;
 
     public static GameObject puzzleModel;
     public static bool isFullyManual;
