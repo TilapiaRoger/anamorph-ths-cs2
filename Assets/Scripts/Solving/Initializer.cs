@@ -91,7 +91,7 @@ public class Initializer : MonoBehaviour
 
     public void SetTargetScale()
     {
-        float fTargetScale = (d / 90)*2.5f;
+        float fTargetScale = (d / 90)*1.5f;
         target.transform.localScale = new Vector3(fTargetScale, 0, fTargetScale);
     }
 }

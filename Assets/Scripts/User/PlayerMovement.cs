@@ -7,6 +7,11 @@ public class PlayerMovement : MonoBehaviour
     public float movementSpeed = 1.0f;
     public float rotateSpeed = 1.0f;
 
+    public GameObject gameManager;
+    //public GameObject origin;
+
+    public Transform target;
+
     private Transform userTransform;
 
     private float yaw = 0.0f;
@@ -22,20 +27,47 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject modelSpawnPoint = GameObject.Find("ModelSpawnPoint");
+        GameObject model = modelSpawnPoint.transform.GetChild(0).gameObject;
+        string modelName = model.name;
+
         userTransform = this.gameObject.transform;
 
         userTransform.Rotate(0, 0, 0);
-        pitch = userTransform.eulerAngles.x;
-        yaw = userTransform.eulerAngles.y;
-        userTransform.eulerAngles = new Vector3(pitch, yaw, 0);
 
         GameObject origin = GameObject.Find("Origin");
-        userTransform.position = origin.transform.position; 
 
-        //Vector3 mspPosition = modelSpawnPoint.transform.position;
+        ModelParameters modelParameters = gameManager.GetComponent<ModelParameters>();
+        if (modelParameters.GetDistributionType() == "Manual"){
+            if (modelName.Contains("05") || modelName.Contains("06") || modelName.Contains("07") || modelName.Contains("08") || modelName.Contains("09") || modelName.Contains("10"))
+            {
+                userTransform.position = origin.transform.position + new Vector3(500, 0, -80);
+            }
+            else
+            {
+                userTransform.position = origin.transform.position + new Vector3(-45, 0, -400);
+            }
 
-        //float positionAdder = 20.0f;
-        //userTransform.position = new Vector3(Random.Range(mspPosition.x - positionAdder, mspPosition.x + positionAdder), Random.Range(mspPosition.y - positionAdder, mspPosition.y + positionAdder), Random.Range(mspPosition.z - positionAdder, mspPosition.z + positionAdder));
+        }
+
+        userTransform.LookAt(target);
+
+        //pitch = userTransform.eulerAngles.x;
+        //yaw = userTransform.eulerAngles.y;
+
+        SetRotationX(userTransform.eulerAngles.x);
+        SetRotationY(userTransform.eulerAngles.y);
+        userTransform.eulerAngles = new Vector3(pitch, yaw, 0);
+    }
+
+    public void SetRotationX(float rotationX)
+    {
+        pitch = rotationX;
+    }
+
+    public void SetRotationY(float rotationY)
+    {
+        yaw = rotationY;
     }
 
     // Update is called once per frame

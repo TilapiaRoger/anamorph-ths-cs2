@@ -22,7 +22,25 @@ public class Rotator : MonoBehaviour
     {
         modelSpawnPoint.transform.SetParent(winningPoint.transform);
         winningPoint.transform.SetParent(origin.transform);
+
+        GameObject player = GameObject.Find("Player");
+        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+
         rotate();
+
+        ModelParameters modelParameters = GetComponent<ModelParameters>();
+
+        if (modelParameters.GetDistributionType() == "Automatic")
+        {
+            //player.transform.Rotate(0, 0, 0);
+            player.transform.position = winningPoint.transform.position + new Vector3(5, 0, -2);
+            Debug.Log("Is automatic and in origin.");
+
+            player.transform.LookAt(modelSpawnPoint.transform.GetChild(0).transform);
+
+            playerMovement.SetRotationX(player.transform.eulerAngles.x);
+            playerMovement.SetRotationY(player.transform.eulerAngles.y);
+        }
     }
 
     // Update is called once per frame
