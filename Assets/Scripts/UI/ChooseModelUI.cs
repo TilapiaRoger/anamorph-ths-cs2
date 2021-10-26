@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ChooseModelUI : MonoBehaviour
 {
+    List<string> automaticDistributeOptions;
 
     [SerializeField] private Dropdown modelListDropdown;
     [SerializeField] private Dropdown sliceTypeDropdown;
@@ -21,6 +22,7 @@ public class ChooseModelUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        automaticDistributeOptions = new List<string>() { "Manual", "Automatic"};
 
         // From http://answers.unity.com/answers/42845/view.html
         //gameManager = GameObject.Find("GameManager");
@@ -44,11 +46,27 @@ public class ChooseModelUI : MonoBehaviour
         sliceTypeDropdown.onValueChanged.AddListener(delegate
         {
             modelParams.sliceType = sliceTypeDropdown.options[sliceTypeDropdown.value].text;
+
+            if (modelParams.sliceType == "Automatic")
+            {
+                automaticDistributeOptions.Remove("Manual");
+                distributeTypeDropdown.ClearOptions();
+                distributeTypeDropdown.AddOptions(automaticDistributeOptions);
+                modelParams.distributeType = distributeTypeDropdown.options[distributeTypeDropdown.value].text;
+            }
+            else if (modelParams.sliceType == "Manual")
+            {
+                automaticDistributeOptions = new List<string>() { "Manual", "Automatic" };
+                distributeTypeDropdown.ClearOptions();
+                distributeTypeDropdown.AddOptions(automaticDistributeOptions);
+            }
+
         });
 
         distributeTypeDropdown.onValueChanged.AddListener(delegate
         {
             modelParams.distributeType = distributeTypeDropdown.options[distributeTypeDropdown.value].text;
+
         });
 
         modelParams.setModel(modelParams.sliceType, modelParams.distributeType, modelParams.modelName);
@@ -59,9 +77,12 @@ public class ChooseModelUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         modelParams.setModel(modelParams.sliceType, modelParams.distributeType, modelParams.modelName);
         modelParams.SetDistributeStatus(modelParams.distributeType);
+
+
+        Debug.Log("Slice: " + modelParams.sliceType);
+        Debug.Log("Distribute: " + modelParams.distributeType);
     }
 
     void initModelDropdown()

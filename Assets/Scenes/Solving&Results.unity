@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1.0717734, g: 1.0717734, b: 1.0717734, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 72ad860930595074f8c513e0defca71b, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.45010448, g: 0.50014997, b: 0.57545996, a: 1}
+  m_IndirectSpecularColor: {r: 0.072908215, g: 0.08277782, b: 0.20126656, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1048,15 +1048,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3883905281729048139, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
       propertyPath: m_Color.b
-      value: 0.08235294
+      value: 0.9372549
       objectReference: {fileID: 0}
     - target: {fileID: 3883905281729048139, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
       propertyPath: m_Color.g
-      value: 0.08235294
+      value: 0.9372549
       objectReference: {fileID: 0}
     - target: {fileID: 3883905281729048139, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
       propertyPath: m_Color.r
-      value: 0.08627451
+      value: 0.9372549
       objectReference: {fileID: 0}
     - target: {fileID: 3883905281729048139, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -1108,19 +1108,35 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 3a56a95a16c5af54085c85dec6f330d6, type: 3}
     - target: {fileID: 3883905281760126522, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
       propertyPath: m_Color.b
-      value: 0.081221096
+      value: 0.9372549
       objectReference: {fileID: 0}
     - target: {fileID: 3883905281760126522, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
       propertyPath: m_Color.g
-      value: 0.081221096
+      value: 0.9372549
       objectReference: {fileID: 0}
     - target: {fileID: 3883905281760126522, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
       propertyPath: m_Color.r
-      value: 0.084905684
+      value: 0.9372549
       objectReference: {fileID: 0}
     - target: {fileID: 3883905282272006012, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
       propertyPath: m_FontData.m_FontSize
       value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883905282551093267, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
+      propertyPath: m_Name
+      value: Crosshair
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883905282981268617, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
+      propertyPath: m_Color.b
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883905282981268617, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883905282981268617, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9339623
       objectReference: {fileID: 0}
     - target: {fileID: 3883905282981268622, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -2013,8 +2029,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2481354300349014933, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2481354300349014933, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: patchMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: efa7d3a0ee772984d82e54050d477cb1, type: 2}
     - target: {fileID: 2481354300349014933, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: modelSpawnPoint
       value: 
@@ -2038,7 +2058,7 @@ PrefabInstance:
     - target: {fileID: 7408193045496985863, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: fullyAutomaticList.Array.data[5]
       value: 
-      objectReference: {fileID: 919132149155446097, guid: 7f2517cca5a4ea64ab3c29abb35c2e46, type: 3}
+      objectReference: {fileID: 919132149155446097, guid: 63d444a664c7964439ee69d6d5d4c87f, type: 3}
     - target: {fileID: 7942366226599760177, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -2143,6 +2163,10 @@ PrefabInstance:
       propertyPath: origin
       value: 
       objectReference: {fileID: 392145127}
+    - target: {fileID: 7942366226599760182, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 712142681}
     - target: {fileID: 7942366226599760182, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: m_Enabled
       value: 1

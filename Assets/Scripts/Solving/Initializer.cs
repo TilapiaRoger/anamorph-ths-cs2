@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Initializer : MonoBehaviour
 {
+    private GameObject model;
     public GameObject modelSpawnPoint,
                       player,
                       winningPoint;
@@ -34,35 +35,36 @@ public class Initializer : MonoBehaviour
 
         Debug.Log("d: " + d);
 
+        // Instantiate the model
+        model = modelParameters.GetModel();
+
+        model.SetActive(true);
+        model.transform.localScale = new Vector3(1, 1, 1);
+        model.transform.localEulerAngles = new Vector3(0, 180, 0);
+        Instantiate(model, modelSpawnPoint.transform);
+        model.transform.SetAsFirstSibling();
+
         // Instantiate an invisible cylinder at modelSpawnPoint
         mspDistance = generate(d, gbDistance - d);
         target = GameObject.Find("Target");
-        SetTargetScale();
-
+        ResizeTarget(target, model);
         target.transform.SetParent(modelSpawnPoint.transform);
         modelSpawnPoint.transform.position = new Vector3(0f, 0f, mspDistance);
-        modelSpawnPoint.transform.GetChild(0).localScale = new Vector3(2.0f, 2.0f, 1.0f);
         Debug.Log("Model Spawn Point at " + modelSpawnPoint.transform.position);
 
-
         // Instantiate an invisible sphere at winningPoint
-        wpDistance = mspDistance - d; 
+        wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
         Debug.Log("Winning Point at " + winningPoint.transform.position);
-
-
-        
-
-        Debug.Log("Target scale: " + target.transform.localScale);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public float generate(float min, float max)
+    float generate(float min, float max)
     {
         float num = Random.Range(min, max);
         while (num == min || num == max) num = Random.Range(min, max);
@@ -73,25 +75,52 @@ public class Initializer : MonoBehaviour
     {
         if (modelName.Contains("01") || modelName.Contains("02") || modelName.Contains("03") || modelName.Contains("04"))
         {
-            d = 9;
+            d = 10;
             Debug.Log("Contains 01 to 04");
         }
-            
+
         else if (modelName.Contains("05") || modelName.Contains("06") || modelName.Contains("07"))
         {
-            d = 18;
+            d = 20;
             Debug.Log("Contains 05 to 07");
         }
         else if (modelName.Contains("08") || modelName.Contains("09") || modelName.Contains("10"))
         {
-            d = 27;
+            d = 30;
             Debug.Log("Contains 08 to 10");
         }
     }
 
-    public void SetTargetScale()
+    void ResizeTarget(GameObject target, GameObject model)
     {
-        float fTargetScale = (d / 90)*1.5f;
-        target.transform.localScale = new Vector3(fTargetScale, 0, fTargetScale);
+        Bounds modelBounds = GetBounds(model);
+        target.transform.localScale = new Vector3(modelBounds.size.x * model.transform.localScale.x,
+                                                  0,
+                                                  modelBounds.size.z * model.transform.localScale.z);
+    }
+
+    Bounds GetBounds(GameObject model)
+    {
+        Bounds bounds = new Bounds();
+        Renderer[] renderers = model.GetComponentsInChildren<Renderer>();
+
+        if (renderers.Length > 0)
+        {
+            //Find first enabled renderer to start encapsulate from it
+            foreach (Renderer renderer in renderers)
+                if (renderer.enabled)
+                {
+                    bounds = renderer.bounds;
+                    break;
+                }
+
+            //Encapsulate for all renderers
+            foreach (Renderer renderer in renderers)
+                if (renderer.enabled)
+                    bounds.Encapsulate(renderer.bounds);
+
+        }
+
+        return bounds;
     }
 }
