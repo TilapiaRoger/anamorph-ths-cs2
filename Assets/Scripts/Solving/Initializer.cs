@@ -16,8 +16,6 @@ public class Initializer : MonoBehaviour
 
     private ModelParameters modelParameters;
 
-    private SphereCollider sphereCollider;
-
     // Distances between the origin and specific points
     private float mspDistance,       // model spawn point
                   wpDistance,        // winning point
@@ -50,10 +48,19 @@ public class Initializer : MonoBehaviour
         modelSpawnPoint.transform.position = new Vector3(0f, 0f, mspDistance);
         Debug.Log("Model Spawn Point at " + modelSpawnPoint.transform.position);
 
-        // Instantiate an invisible sphere at winningPoint
+        // Initialize the winningPoint
         wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
         Debug.Log("Winning Point at " + winningPoint.transform.position);
+
+        // Instantiate an invisible cylinder at modelSpawnPoint
+        target = GameObject.Find("Target");
+        ResizeTarget(target, model);
+        target.transform.SetParent(modelSpawnPoint.transform);
+        modelSpawnPoint.transform.position = new Vector3(0f, 0f, -d);
+        Debug.Log("Model Spawn Point at " + modelSpawnPoint.transform.position);
+
+        
     }
 
     // Update is called once per frame
@@ -73,18 +80,18 @@ public class Initializer : MonoBehaviour
     {
         if (modelName.Contains("01") || modelName.Contains("02") || modelName.Contains("03") || modelName.Contains("04"))
         {
-            d = 10;
+            d = 5;
             Debug.Log("Contains 01 to 04");
         }
             
         else if (modelName.Contains("05") || modelName.Contains("06") || modelName.Contains("07"))
         {
-            d = 20;
+            d = 10;
             Debug.Log("Contains 05 to 07");
         }
         else if (modelName.Contains("08") || modelName.Contains("09") || modelName.Contains("10"))
         {
-            d = 30;
+            d = 15;
             Debug.Log("Contains 08 to 10");
         }
     }
