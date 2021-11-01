@@ -60,19 +60,11 @@ public class Solver : MonoBehaviour
 
     private bool checkAngle()
     {
-        RaycastHit[] hits;
-        hits = Physics.RaycastAll(playerPosition, player.transform.forward, 5000.0F);
+        RaycastHit[] hits = Physics.RaycastAll(playerPosition, player.transform.forward, 5000.0F);
 
-        for (int i = 0; i < hits.Length; i++)
-        {
-            RaycastHit hit = hits[i];
-
-            if (hit.collider.GetComponent<CapsuleCollider>() != null)
-            {
-                hitPosition = hit.point;
-                if(Vector3.Distance(hitPosition, mspPosition) <= 1) return true;
-            }
-        }
+        foreach(RaycastHit hit in hits)
+            if (hit.collider.GetComponent<CapsuleCollider>() != null) 
+                return true;
 
         return false;
     }
