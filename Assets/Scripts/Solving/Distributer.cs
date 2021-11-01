@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Distributer : MonoBehaviour
 {
     public GameObject modelSpawnPoint,
-                      winningPoint;
+                      winningPoint,
+                      piece;
 
     private GameObject gameManager;
 
@@ -23,8 +25,6 @@ public class Distributer : MonoBehaviour
                   pivotPosition,
                   lastPosition,
                   lastScale;
-
-    private int childNumber = 0;
 
     private string distributionType;
 
@@ -51,44 +51,57 @@ public class Distributer : MonoBehaviour
         initializer = GetComponent<Initializer>();
         oldDistance = initializer.d;
         mspPosition = modelSpawnPoint.transform.position;
-        wpPosition =  winningPoint.transform.position;
+        wpPosition = winningPoint.transform.position;
 
         mspTransform = modelSpawnPoint.transform;
         modelTransform = mspTransform.GetChild(0);
 
-        foreach (Transform child in modelTransform)
-        {
-            GameObject piece = child.gameObject;
+        List<int> list = generatePermutation(modelTransform.childCount);
+        List<float> sizes = getSizes(modelTransform);
 
-            if (childNumber == 0)
-            {
-                minDistance = mspPosition.z - oldDistance;
-                maxDistance = mspPosition.z + oldDistance;
-                lastPosition = -wpPosition.z;
-            }
-            else
-            {
-                minDistance = lastPosition + lastScale / 2;
-                maxDistance = lastPosition + lastScale;
-            }
+        Debug.Log("Piece number\t\tPivot Position\t\tOld Distance\t\tNew Distance\t\tScale Factor\t\tBounds");
+        for(int i = 0; i < modelTransform.childCount; i++)
+        {
+            GameObject piece = modelTransform.GetChild(list[i]).gameObject;
+            Mesh mesh = piece.GetComponent<MeshFilter>().mesh;
+            
+            pivotPosition = (i == 0) ? wpPosition.z + 1 : lastPosition + .9f * lastScale;
 
             // Move piece by a random distance from the model spawn point
-            // between modelF - d + 1 and modelF + d - 1
-            // The offset of 1 is to prevent the slice from clipping inside the player
-            // When they're at the winning point.
-            pivotPosition = Random.Range(minDistance, maxDistance);
             piece.transform.position = new Vector3(0, 0, pivotPosition);
-            newDistance = Mathf.Abs(wpPosition.z - piece.transform.position.z);
+            lastPosition = pivotPosition;
+            newDistance = Mathf.Abs(wpPosition.z - pivotPosition);
 
             // Scale the model
             scaleFactor = newDistance / oldDistance;
-            lastScale = piece.transform.localScale.z;
             piece.transform.localScale *= scaleFactor;
+            lastScale = piece.transform.localScale.z * mesh.bounds.size.z;
 
-            lastPosition = newDistance;
-            //lastScale = piece.transform.localScale.z;
-            childNumber++;
+            Debug.Log(list[i] + 1 + "\t\t" + pivotPosition + "\t\t" + oldDistance + "\t\t"  + newDistance + "\t\t" + scaleFactor);
         }
+    }
+
+    List<int> generatePermutation(int childCount)
+    {
+        List<int> holder = new List<int>();
+        for (int i = 0; i < childCount; i++) holder.Add(i);
+        holder = holder.OrderBy(i => Random.value).ToList();
+        return holder;
+    }
+
+    List<float> getSizes(Transform model)
+    {
+        List<float> holder = new List<float>();
+        foreach(Transform child in model) 
+        {
+            GameObject piece = child.gameObject;
+            Mesh mesh = piece.GetComponent<MeshFilter>().mesh;
+            float size = piece.transform.localScale.z * mesh.bounds.size.z;
+            //float size = mesh.bounds.size.z;
+            holder.Add(size);
+        }
+
+        return holder;
     }
 
     float generate(float min, float max)
