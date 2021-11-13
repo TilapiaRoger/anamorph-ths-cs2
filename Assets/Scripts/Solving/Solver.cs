@@ -41,40 +41,30 @@ public class Solver : MonoBehaviour
     {
         if (checkPosition() && checkAngle())
         {
-            Debug.Log("Congratulations.\n"+
+            Debug.Log("Congratulations.\n" +
                       "Positions: " + hitPosition + ", " + playerPosition + "\n" +
                       "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
-            FinishSolving finishSolving = GetComponent<FinishSolving>();
-            finishSolving.WinPuzzle();
         }
         else if (!checkPosition() && checkAngle())
             Debug.Log("Winning point is at " + wpPosition + "\nCurrently at " + playerPosition + "\n Accuracy: " + positionAccuracy);
         else if (checkPosition() && !checkAngle())
             Debug.Log("Model spawn point is at " + mspPosition + "\nLooking at " + hitPosition + "\nAccuracy:" + lookAccuracy);
-        
+
     }
 
     private bool checkPosition()
     {
         playerPosition = player.transform.position;
-        return (Vector3.Distance(playerPosition, wpPosition) <= 2) ? true : false;
+        return (Vector3.Distance(playerPosition, wpPosition) <= 1) ? true : false;
     }
 
     private bool checkAngle()
     {
-        RaycastHit[] hits;
-        hits = Physics.RaycastAll(playerPosition, player.transform.forward, 5000.0F);
+        RaycastHit[] hits = Physics.RaycastAll(playerPosition, player.transform.forward, 5000.0F);
 
-        for (int i = 0; i < hits.Length; i++)
-        {
-            RaycastHit hit = hits[i];
-
+        foreach (RaycastHit hit in hits)
             if (hit.collider.GetComponent<CapsuleCollider>() != null)
-            {
-                hitPosition = hit.point;
-                if(Vector3.Distance(hitPosition, mspPosition) <= 2) return true;
-            }
-        }
+                return true;
 
         return false;
     }

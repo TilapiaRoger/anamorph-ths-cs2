@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Initializer : MonoBehaviour
 {
-    private GameObject model;
-    public GameObject modelSpawnPoint,
+    public GameObject model,
+                      modelSpawnPoint,
                       player,
                       winningPoint;
 
@@ -16,12 +16,11 @@ public class Initializer : MonoBehaviour
 
     private ModelParameters modelParameters;
 
-    private SphereCollider sphereCollider;
-
     // Distances between the origin and specific points
     private float mspDistance,       // model spawn point
                   wpDistance,        // winning point
-                  gbDistance = 100f; // the game bounds
+                  gbDistance = 100f, // the game bounds
+                  greatestBound;     // size of the largest side of the bounding box of the target.
 
     private string modelName;
 
@@ -31,15 +30,15 @@ public class Initializer : MonoBehaviour
         modelParameters = GetComponent<ModelParameters>();
         modelName = modelParameters.modelName;
 
+        modelName = model.name;
+
         SetD(modelName);
 
         Debug.Log("d: " + d);
 
         // Instantiate the model
-        model = modelParameters.GetModel();
-
         model.SetActive(true);
-        model.transform.localScale = new Vector3(1, 1, 1);
+        model.transform.localScale = d / 10 * new Vector3(1, 1, 1);
         model.transform.localEulerAngles = new Vector3(0, 180, 0);
         Instantiate(model, modelSpawnPoint.transform);
         model.transform.SetAsFirstSibling();
@@ -47,12 +46,14 @@ public class Initializer : MonoBehaviour
         // Instantiate an invisible cylinder at modelSpawnPoint
         mspDistance = generate(d, gbDistance - d);
         target = GameObject.Find("Target");
-        ResizeTarget(target, model);
+        greatestBound = ResizeTarget(target, model); // also gets the size of the largest side of the bounding box of the target.
+        Debug.Log(greatestBound);
         target.transform.SetParent(modelSpawnPoint.transform);
+        target.transform.position += new Vector3(0, 0, greatestBound);
         modelSpawnPoint.transform.position = new Vector3(0f, 0f, mspDistance);
         Debug.Log("Model Spawn Point at " + modelSpawnPoint.transform.position);
 
-        // Instantiate an invisible sphere at winningPoint
+        // Initialize the winningPoint
         wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
         Debug.Log("Winning Point at " + winningPoint.transform.position);
@@ -91,15 +92,17 @@ public class Initializer : MonoBehaviour
         }
     }
 
-    void ResizeTarget(GameObject target, GameObject model)
+    private float ResizeTarget(GameObject target, GameObject model)
     {
         Bounds modelBounds = GetBounds(model);
         target.transform.localScale = new Vector3(modelBounds.size.x * model.transform.localScale.x,
                                                   0,
                                                   modelBounds.size.z * model.transform.localScale.z);
+        return Mathf.Max(modelBounds.size.x * model.transform.localScale.x,
+                         modelBounds.size.z * model.transform.localScale.z);
     }
 
-    Bounds GetBounds(GameObject model)
+    private Bounds GetBounds(GameObject model)
     {
         Bounds bounds = new Bounds();
         Renderer[] renderers = model.GetComponentsInChildren<Renderer>();
@@ -118,7 +121,6 @@ public class Initializer : MonoBehaviour
             foreach (Renderer renderer in renderers)
                 if (renderer.enabled)
                     bounds.Encapsulate(renderer.bounds);
-
         }
 
         return bounds;
