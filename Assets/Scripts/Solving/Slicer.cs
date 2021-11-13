@@ -103,8 +103,8 @@ public class Slicer : MonoBehaviour
         float modelLeft, modelRight, modelUp, modelDown;
 
         modelLeft = -(modelWidth / 2.0f);
-        modelRight = -(modelWidth / 2.0f);
-        modelUp = -(modelheight / 2.0f);
+        modelRight = modelWidth / 2.0f;
+        modelUp = modelheight / 2.0f;
         modelDown = -(modelheight / 2.0f);
 
         return (modelLeft, modelRight, modelUp, modelDown);
