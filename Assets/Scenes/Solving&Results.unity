@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 734933779}
   - component: {fileID: 734933778}
   - component: {fileID: 734933781}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Game Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2056,9 +2056,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 525037209}
     - target: {fileID: 7408193045496985863, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: MSADList.Array.data[5]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 73a744fea7913fa44b6f6043a5da4cb0, type: 3}
+    - target: {fileID: 7408193045496985863, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: fullyManualList.Array.data[5]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 0360cff506e54f544876b9fe1ffd6fd5, type: 3}
+    - target: {fileID: 7408193045496985863, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: fullyAutomaticList.Array.data[5]
       value: 
-      objectReference: {fileID: 919132149155446097, guid: 63d444a664c7964439ee69d6d5d4c87f, type: 3}
+      objectReference: {fileID: 919132149155446097, guid: d4d2059f98dcfb242a7458a045e7bece, type: 3}
     - target: {fileID: 7942366226599760177, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: m_Name
       value: GameManager

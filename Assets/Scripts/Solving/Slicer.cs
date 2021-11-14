@@ -29,6 +29,18 @@ public class Slicer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        modelParameters = GetComponent<ModelParameters>();
+        sliceType = modelParameters.GetSlicingType();
+        distributer = GetComponent<Distributer>();
+
+        if (sliceType.Equals("Automatic"))
+        {
+            Slice();
+        }
+    }
+
+    void Slice()
+    {
         sliceTool = new GameObject();
 
         selectedModel = modelSpawnPoint.transform.GetChild(0).gameObject;
@@ -52,27 +64,18 @@ public class Slicer : MonoBehaviour
         sliceCount = 6;
         //sliceCount = random.Next(3, 4);
 
-        modelParameters = GetComponent<ModelParameters>();
-        sliceType = modelParameters.GetSlicingType();
-        distributer = GetComponent<Distributer>();
-
         sliceCtr = 0;
 
-        if (sliceType.Equals("Automatic"))
-        {
-            target = GameObject.Find("Target");
-            target.layer = 2;
+        target = GameObject.Find("Target");
+        target.layer = 2;
 
-            selectedModel.AddComponent(typeof(MeshCollider));
+        selectedModel.AddComponent(typeof(MeshCollider));
 
-            Bounds bounds = modelMesh.bounds;
-            //bounds.size = new Vector3(70, 70, 70);
-            Debug.Log("Imported model size: " + bounds.size);
-            selectedModel.transform.localScale = new Vector3(70, 70, 70);
-            initParent();
-
-        }
-
+        Bounds bounds = modelMesh.bounds;
+        //bounds.size = new Vector3(70, 70, 70);
+        Debug.Log("Imported model size: " + bounds.size);
+        //selectedModel.transform.localScale = new Vector3(70, 70, 70);
+        initParent();
     }
 
     // Update is called once per frame
@@ -85,7 +88,7 @@ public class Slicer : MonoBehaviour
                 sliceTool.transform.localPosition = RandomizePositions(sliceCtr);
 
                 RaycastHit hit;
-                if (Physics.Raycast(sliceTool.transform.position, sliceTool.transform.forward*20.0f, out hit))
+                if (Physics.Raycast(sliceTool.transform.position, sliceTool.transform.forward*1000.0f, out hit))
                 {
                     GameObject victim = hit.collider.gameObject;
                     Debug.Log("Hit object" + victim);
@@ -207,7 +210,7 @@ public class Slicer : MonoBehaviour
             }
         }
 
-        z = -4;
+        z = -100;
 
         return new Vector3(x, y, z);
     }
@@ -238,7 +241,7 @@ public class Slicer : MonoBehaviour
         Transform sliceToolTransform = sliceTool.transform;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(sliceToolTransform.position, sliceToolTransform.forward * 10.0f);
+        Gizmos.DrawRay(sliceToolTransform.position, sliceToolTransform.forward * 1000.0f);
 
         //Gizmos.DrawLine(sliceToolTransform.position, sliceToolTransform.position + sliceToolTransform.forward*5.0f);
         //Gizmos.DrawLine(sliceToolTransform.position + sliceToolTransform.up*0.5f, sliceToolTransform.position + sliceToolTransform.up * 0.5f + sliceToolTransform.forward*5.0f);
