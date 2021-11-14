@@ -10,6 +10,7 @@ public class Slicer : MonoBehaviour
     private Mesh modelMesh; 
 
     private ModelParameters modelParameters;
+    private Distributer distributer;
     private string sliceType;
 
     private int sliceCount;
@@ -23,15 +24,24 @@ public class Slicer : MonoBehaviour
 
     private GameObject newParent;
 
+    GameObject target;
+
     // Start is called before the first frame update
     void Start()
     {
+        sliceTool = new GameObject();
 
         selectedModel = modelSpawnPoint.transform.GetChild(0).gameObject;
         modelMesh = selectedModel.GetComponent<MeshFilter>().mesh;
-        selectedModel.AddComponent(typeof(MeshCollider));
 
-        sliceTool = new GameObject();
+        selectedModel.transform.SetAsFirstSibling();
+
+        /*if (!selectedModel.GetComponent<MeshFilter>())
+        {
+            selectedModel = modelSpawnPoint.transform.GetChild(1).gameObject;
+            modelMesh = selectedModel.GetComponent<MeshFilter>().mesh;
+        }*/
+
         sliceTool.name = "Slice Tool";
         sliceTool.transform.SetParent(modelSpawnPoint.transform);
         sliceTool.transform.localPosition = new Vector3(0, 0, -2);
@@ -44,13 +54,23 @@ public class Slicer : MonoBehaviour
 
         modelParameters = GetComponent<ModelParameters>();
         sliceType = modelParameters.GetSlicingType();
+        distributer = GetComponent<Distributer>();
 
         sliceCtr = 0;
 
         if (sliceType.Equals("Automatic"))
         {
+            target = GameObject.Find("Target");
+            target.layer = 2;
+
+            selectedModel.AddComponent(typeof(MeshCollider));
+
+            Bounds bounds = modelMesh.bounds;
+            //bounds.size = new Vector3(70, 70, 70);
+            Debug.Log("Imported model size: " + bounds.size);
             selectedModel.transform.localScale = new Vector3(70, 70, 70);
             initParent();
+
         }
 
     }
@@ -65,12 +85,18 @@ public class Slicer : MonoBehaviour
                 sliceTool.transform.localPosition = RandomizePositions(sliceCtr);
 
                 RaycastHit hit;
-                if (Physics.Raycast(sliceTool.transform.position, sliceTool.transform.forward*10.0f, out hit))
+                if (Physics.Raycast(sliceTool.transform.position, sliceTool.transform.forward*20.0f, out hit))
                 {
                     GameObject victim = hit.collider.gameObject;
                     Debug.Log("Hit object" + victim);
 
                     slices = MeshCut.Cut(victim, sliceTool.transform.position, sliceTool.transform.right, patchMaterial);
+
+                    if (slices[0].GetComponent<MeshCollider>())
+                    {
+                        Destroy(slices[0].GetComponent<MeshCollider>());
+                        slices[0].AddComponent(typeof(MeshCollider));
+                    }
 
                     if (!slices[1].GetComponent<MeshCollider>())
                     {
@@ -92,6 +118,20 @@ public class Slicer : MonoBehaviour
                 {
                     Debug.Log("Ray does not hit anything");
                 }
+            }
+            else
+            {
+                newParent.layer = 0;
+                for (int i = 0; i < newParent.transform.childCount; i++)
+                {
+                    newParent.transform.GetChild(i).GetComponent<MeshRenderer>().material = patchMaterial;
+                    newParent.transform.GetChild(i).gameObject.layer = 0;
+                }
+
+                newParent.transform.SetAsFirstSibling();
+
+                target.layer = 0;
+                //distributer.Distribute();
             }
         }
     }
@@ -188,9 +228,9 @@ public class Slicer : MonoBehaviour
     {
         newParent = new GameObject();
         newParent.name = selectedModel.name;
+        newParent.layer = 2;
         newParent.transform.position = selectedModel.transform.position;
         newParent.transform.SetParent(modelSpawnPoint.transform);
-        newParent.transform.SetAsFirstSibling();
     }
 
     private void OnDrawGizmos()

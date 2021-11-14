@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Solver : MonoBehaviour
 {
+    public float maxDistance = 10000.0f;
     public GameObject modelSpawnPoint,
                       player,
                       winningPoint;
@@ -44,6 +45,9 @@ public class Solver : MonoBehaviour
             Debug.Log("Congratulations.\n" +
                       "Positions: " + hitPosition + ", " + playerPosition + "\n" +
                       "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
+
+            FinishSolving finishSolving = GetComponent<FinishSolving>();
+            finishSolving.WinPuzzle();
         }
         else if (!checkPosition() && checkAngle())
             Debug.Log("Winning point is at " + wpPosition + "\nCurrently at " + playerPosition + "\n Accuracy: " + positionAccuracy);
@@ -60,12 +64,18 @@ public class Solver : MonoBehaviour
 
     private bool checkAngle()
     {
-        RaycastHit[] hits = Physics.RaycastAll(playerPosition, player.transform.forward, 5000.0F);
+        RaycastHit[] hits = Physics.RaycastAll(playerPosition, player.transform.forward, maxDistance);
 
         foreach (RaycastHit hit in hits)
             if (hit.collider.GetComponent<CapsuleCollider>() != null)
                 return true;
 
         return false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(player.transform.position, player.transform.forward * maxDistance);
     }
 }

@@ -34,10 +34,12 @@ public class Distributer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //modelParameters = GetComponent<ModelParameters>();
-        //distributionType = modelParameters.GetDistributionType();
-        //if (distributionType.Equals("Automatic"))
-        Distribute();
+        modelParameters = GetComponent<ModelParameters>();
+        distributionType = modelParameters.GetDistributionType();
+        if (distributionType.Equals("Automatic"))
+        {
+            Distribute();
+        }
     }
 
     // Update is called once per frame
@@ -46,7 +48,7 @@ public class Distributer : MonoBehaviour
 
     }
 
-    void Distribute()
+    public void Distribute()
     {
         initializer = GetComponent<Initializer>();
         oldDistance = initializer.d;

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Initializer : MonoBehaviour
 {
-    public GameObject model,
-                      modelSpawnPoint,
+    public Material modelMaterial;
+    private GameObject model;
+    public GameObject modelSpawnPoint,
                       player,
                       winningPoint;
 
@@ -28,9 +29,10 @@ public class Initializer : MonoBehaviour
     void Start()
     {
         modelParameters = GetComponent<ModelParameters>();
+        model = modelParameters.GetModel();
         modelName = modelParameters.modelName;
-
         modelName = model.name;
+
 
         SetD(modelName);
 

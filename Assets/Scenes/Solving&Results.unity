@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 712142684}
   - component: {fileID: 712142683}
   - component: {fileID: 712142682}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2139,6 +2139,10 @@ PrefabInstance:
       propertyPath: winningPoint
       value: 
       objectReference: {fileID: 2035136193}
+    - target: {fileID: 7942366226599760180, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: modelMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: efa7d3a0ee772984d82e54050d477cb1, type: 2}
     - target: {fileID: 7942366226599760180, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: winningSphere
       value: 
