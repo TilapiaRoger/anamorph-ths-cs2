@@ -1,22 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Solver : MonoBehaviour
 {
     public GameObject modelSpawnPoint,
                       player,
                       winningPoint;
+
+    private Initializer initializer;
+    
+    public Text position,
+                vision;
+
     private Vector3 hitPosition,
                     playerPosition,
                     mspPosition,
                     wpPosition;
     private float lookAccuracy,
-                  positionAccuracy;
+                  positionAccuracy,
+                  greatestBound;
 
     // Start is called before the first frame update
     void Start()
     {
+        initializer = GetComponent<Initializer>();
+        greatestBound = initializer.greatestBound;
+
         mspPosition = modelSpawnPoint.transform.position;
         wpPosition = winningPoint.transform.position;
     }
@@ -30,26 +41,23 @@ public class Solver : MonoBehaviour
         lookAccuracy = Vector3.Distance(mspPosition, hitPosition);
         positionAccuracy = Vector3.Distance(wpPosition, playerPosition);
         results();
-        //Debug.Log("In winning sphere? " + checkPosition() + " Looking at target? " + checkAngle());
-        //checkPosition();
-        //checkAngle();
-        //Debug.Log("Winning Points: " + wpPosition + ", " + mspPosition  + 
-        //          "\nCurrent Points: " + playerPosition + ", " + hitPosition);
     }
 
     private void results()
     {
-        if (checkPosition() && checkAngle())
-        {
-            Debug.Log("Congratulations.\n"+
-                      "Positions: " + hitPosition + ", " + playerPosition + "\n" +
-                      "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
-        }
-        else if (!checkPosition() && checkAngle())
-            Debug.Log("Winning point is at " + wpPosition + "\nCurrently at " + playerPosition + "\n Accuracy: " + positionAccuracy);
-        else if (checkPosition() && !checkAngle())
-            Debug.Log("Model spawn point is at " + mspPosition + "\nLooking at " + hitPosition + "\nAccuracy:" + lookAccuracy);
-        
+        string positionVerdict = checkPosition() ? "" : "not ",
+               visionVerdict = checkAngle() ? "" : "not ";
+
+        position.text = "You're " + positionVerdict + "at the winning point\n" + 
+                        "Winning point is at: " + wpPosition + "\n" +
+                        "You're at " + playerPosition + "\n" +
+                        "Accuracy: " + positionAccuracy;
+
+        vision.text = "You're " + visionVerdict + "looking at the target\n" +
+                      "Model spawn point is at: " + mspPosition + "\n" +
+                      "You're looking at " + hitPosition + "\n" +
+                      "Accuracy: " + lookAccuracy + "\n" +
+                      "Greatest Bound:" + greatestBound;
     }
 
     private bool checkPosition()
@@ -63,8 +71,11 @@ public class Solver : MonoBehaviour
         RaycastHit[] hits = Physics.RaycastAll(playerPosition, player.transform.forward, 5000.0F);
 
         foreach(RaycastHit hit in hits)
-            if (hit.collider.GetComponent<CapsuleCollider>() != null) 
+            if (hit.collider.GetComponent<CapsuleCollider>() != null)
+            {
+                hitPosition = hit.point;
                 return true;
+            }
 
         return false;
     }

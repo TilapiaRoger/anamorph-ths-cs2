@@ -6,42 +6,33 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    public GameObject origin,
-                      modelSpawnPoint,
-                      winningPoint,
-                      target;
+    public Transform origin,
+                     modelSpawnPoint,
+                     winningPoint;
 
-    private GameObject gameManager;
-    private Transform model;
-
-    private CapsuleCollider capsuleCollider;
-
-    private float pi = Mathf.PI;
     // Start is called before the first frame update
     void Start()
     {
-        modelSpawnPoint.transform.SetParent(winningPoint.transform);
-        winningPoint.transform.SetParent(origin.transform);
+        modelSpawnPoint.SetParent(winningPoint);
+        winningPoint.SetParent(origin);
         rotate();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //modelSpawnPoint.transform.RotateAround(winningPoint.transform.position, Vector3.up, 10f * Time.deltaTime);
-        //winningPoint.transform.RotateAround(origin.transform.position, Vector3.up, 10f * Time.deltaTime);
+        //modelSpawnPoint.RotateAround(winningPoint.position, Vector3.up, 10f * Time.deltaTime);
+        //winningPoint.RotateAround(origin.position, Vector3.up, 10f * Time.deltaTime);
     }
 
     void rotate()
     {
         // Rotate modelSpawnPoint around winningPoint
-        modelSpawnPoint.transform.RotateAround(winningPoint.transform.position, Vector3.up, Random.Range(0, 360));
-        //modelSpawnPoint.transform.RotateAround(winningPoint.transform.position, Vector3.right, Random.Range(0, 360));
-        //modelSpawnPoint.transform.LookAt(winningPoint.transform);
+        modelSpawnPoint.RotateAround(winningPoint.position, Vector3.up, Random.Range(0, 360));
+        modelSpawnPoint.RotateAround(winningPoint.position, Vector3.right, Random.Range(0, 360));
 
         // Rotate modelSpawnPoint and winningPoint around origin
-        winningPoint.transform.RotateAround(origin.transform.position, Vector3.up, Random.Range(0, 360));
-        //winningPoint.transform.RotateAround(origin.transform.position, Vector3.right, Random.Range(0, 360));
-        //winningPoint.transform.LookAt(origin.transform);
+        winningPoint.RotateAround(origin.position, Vector3.up, Random.Range(0, 360));
+        winningPoint.RotateAround(origin.position, Vector3.right, Random.Range(0, 360));
     }
 }
