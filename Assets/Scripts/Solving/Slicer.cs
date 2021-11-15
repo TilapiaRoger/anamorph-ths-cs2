@@ -76,6 +76,23 @@ public class Slicer : MonoBehaviour
         Debug.Log("Imported model size: " + bounds.size);
         //selectedModel.transform.localScale = new Vector3(70, 70, 70);
         initParent();
+
+        if (bounds.size.x > 70 || bounds.size.y > 70 || bounds.size.y > 70)
+        {
+            float newScale = 1;
+            if ((bounds.size.x <= 1000 && bounds.size.x >= 50)
+                || (bounds.size.y <= 1000 && bounds.size.y >= 50)
+                || (bounds.size.z <= 1000 && bounds.size.z >= 50))
+            {
+                newScale = 0.02030362f;
+            }
+            else if (bounds.size.x > 1000 || bounds.size.y > 1000 || bounds.size.y > 1000)
+            {
+                newScale = 0.0001117155f;
+            }
+
+            selectedModel.transform.localScale = new Vector3(newScale, newScale, newScale);
+        }
     }
 
     // Update is called once per frame
@@ -112,7 +129,7 @@ public class Slicer : MonoBehaviour
 
                     for (int i = 0; i < newParent.transform.childCount; i++)
                     {
-                        newParent.transform.GetChild(i).gameObject.name = "Slice." + "00" + (i + 1);
+                        newParent.transform.GetChild(i).gameObject.name = "Slice " + (i + 1);
                     }
 
                     sliceCtr++;

@@ -26,7 +26,7 @@ public class Distributer : MonoBehaviour
                   lastPosition,
                   lastScale;
 
-    private string distributionType;
+    private string sliceType, distributionType;
 
     private Vector3 mspPosition,
                     wpPosition;
@@ -35,10 +35,15 @@ public class Distributer : MonoBehaviour
     void Start()
     {
         modelParameters = GetComponent<ModelParameters>();
+        sliceType = modelParameters.GetSlicingType();
         distributionType = modelParameters.GetDistributionType();
+
         if (distributionType.Equals("Automatic"))
         {
-            Distribute();
+            if (sliceType.Equals("Manual"))
+            {
+                Distribute();
+            }
         }
     }
 
