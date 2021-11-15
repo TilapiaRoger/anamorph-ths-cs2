@@ -69,7 +69,7 @@ public class Slicer : MonoBehaviour
         target = GameObject.Find("Target");
         target.layer = 2;
 
-        selectedModel.AddComponent(typeof(MeshCollider));
+        selectedModel.AddComponent(typeof(BoxCollider));
 
         Bounds bounds = modelMesh.bounds;
         //bounds.size = new Vector3(70, 70, 70);
@@ -77,18 +77,24 @@ public class Slicer : MonoBehaviour
         //selectedModel.transform.localScale = new Vector3(70, 70, 70);
         initParent();
 
-        if (bounds.size.x > 70 || bounds.size.y > 70 || bounds.size.y > 70)
+        if (bounds.size.x >= 10 || bounds.size.y >= 10 || bounds.size.y >= 10)
         {
             float newScale = 1;
             if ((bounds.size.x <= 1000 && bounds.size.x >= 50)
                 || (bounds.size.y <= 1000 && bounds.size.y >= 50)
                 || (bounds.size.z <= 1000 && bounds.size.z >= 50))
             {
-                newScale = 0.02030362f;
+                newScale = 0.010f;
+            }
+            else if ((bounds.size.x < 50 && bounds.size.x >= 10)
+                || (bounds.size.y < 50 && bounds.size.y >= 10)
+                || (bounds.size.z < 50 && bounds.size.z >= 10))
+            {
+                newScale = 0.12f;
             }
             else if (bounds.size.x > 1000 || bounds.size.y > 1000 || bounds.size.y > 1000)
             {
-                newScale = 0.0001117155f;
+                newScale = 0.0001f;
             }
 
             selectedModel.transform.localScale = new Vector3(newScale, newScale, newScale);
@@ -112,15 +118,15 @@ public class Slicer : MonoBehaviour
 
                     slices = MeshCut.Cut(victim, sliceTool.transform.position, sliceTool.transform.right, patchMaterial);
 
-                    if (slices[0].GetComponent<MeshCollider>())
+                    if (slices[0].GetComponent<BoxCollider>())
                     {
-                        Destroy(slices[0].GetComponent<MeshCollider>());
-                        slices[0].AddComponent(typeof(MeshCollider));
+                        Destroy(slices[0].GetComponent<BoxCollider>());
+                        slices[0].AddComponent(typeof(BoxCollider));
                     }
 
-                    if (!slices[1].GetComponent<MeshCollider>())
+                    if (!slices[1].GetComponent<BoxCollider>())
                     {
-                        slices[1].AddComponent(typeof(MeshCollider));
+                        slices[1].AddComponent(typeof(BoxCollider));
                     }
                     Destroy(slices[1], 1);
 
