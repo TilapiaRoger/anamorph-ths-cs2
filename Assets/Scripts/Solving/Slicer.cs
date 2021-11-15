@@ -77,14 +77,18 @@ public class Slicer : MonoBehaviour
         //selectedModel.transform.localScale = new Vector3(70, 70, 70);
         initParent();
 
+        Initializer initializer = GetComponent<Initializer>();
+        float distance = initializer.d;
+
+        float newScale = 1;
         if (bounds.size.x >= 10 || bounds.size.y >= 10 || bounds.size.y >= 10)
         {
-            float newScale = 1;
+            
             if ((bounds.size.x <= 1000 && bounds.size.x >= 50)
                 || (bounds.size.y <= 1000 && bounds.size.y >= 50)
                 || (bounds.size.z <= 1000 && bounds.size.z >= 50))
             {
-                newScale = 0.010f;
+                newScale = 0.0010f;
             }
             else if ((bounds.size.x < 50 && bounds.size.x >= 10)
                 || (bounds.size.y < 50 && bounds.size.y >= 10)
@@ -97,7 +101,12 @@ public class Slicer : MonoBehaviour
                 newScale = 0.0001f;
             }
 
-            selectedModel.transform.localScale = new Vector3(newScale, newScale, newScale);
+            selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
+        }
+        else if (bounds.size.x < 1 || bounds.size.y < 1 || bounds.size.y < 1)
+        {
+            newScale = 1.41f;
+            selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
         }
     }
 
