@@ -32,6 +32,14 @@ public class MeshCut
         var mesh_vertices = victimMesh.vertices;
         var mesh_normals = victimMesh.normals;
         var mesh_uvs = victimMesh.uv;
+
+        if (mesh_uvs != null && mesh_uvs.Length == 0)
+        {
+            mesh_uvs = new Vector2[mesh_vertices.Length];
+            for (int i = 0; i < mesh_uvs.Length; i++)
+                mesh_uvs[i] = new Vector2(mesh_vertices[i].x, mesh_vertices[i].z);
+        }
+
         var mesh_tangents = victimMesh.tangents;
         if (mesh_tangents != null && mesh_tangents.Length == 0)
             mesh_tangents = null;
@@ -63,20 +71,8 @@ public class MeshCut
                     }
                     isLeftSideCache[j] = blade.GetSide(mesh_vertices[index[j]]);
                 }
-                /*for (int j = 0; i < 3; i++)
-                {
-                    // Vertices
-                    triangleCache.vertices[i] = mesh_vertices[indices[i + j]];
-                    // Normals
-                    triangleCache.normals[i] = mesh_normals[indices[i + j]];
-                    // UVs
-                    triangleCache.uvs[i] = mesh_uvs[indices[i + j]];
-                    // Tangents
-                    triangleCache.tangents[i] = (mesh_tangents != null) ? mesh_tangents[indices[i + j]] : Vector4.zero;
-                    // Which side are the vertices on
-                    isLeftSideCache[i] = blade.GetSide(mesh_vertices[indices[i + j]]);
-                }*/
-                    // whole triangle
+
+                // whole triangle
                 if (isLeftSideCache[0] == isLeftSideCache[1] && isLeftSideCache[0] == isLeftSideCache[2])
                 {
                     if (isLeftSideCache[0])

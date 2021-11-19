@@ -33,7 +33,6 @@ public class Initializer : MonoBehaviour
         modelName = modelParameters.modelName;
         modelName = model.name;
 
-
         SetD(modelName);
 
         Debug.Log("d: " + d);
@@ -76,22 +75,25 @@ public class Initializer : MonoBehaviour
 
     public void SetD(string modelName)
     {
+        string range = "";
+
         if (modelName.Contains("01") || modelName.Contains("02") || modelName.Contains("03") || modelName.Contains("04"))
         {
             d = 10;
-            Debug.Log("Contains 01 to 04");
+            range = "01 and 04";
         }
-
         else if (modelName.Contains("05") || modelName.Contains("06") || modelName.Contains("07"))
         {
             d = 20;
-            Debug.Log("Contains 05 to 07");
+            range = "05 and 07";
         }
         else if (modelName.Contains("08") || modelName.Contains("09") || modelName.Contains("10"))
         {
             d = 30;
-            Debug.Log("Contains 08 to 10");
+            range = "08 and 10";
         }
+
+        Debug.Log("Model name contains a number between" + range + ", therefore d = " + d);
     }
 
     private float ResizeTarget(GameObject target, GameObject model)

@@ -26,6 +26,8 @@ public class Slicer : MonoBehaviour
 
     GameObject target;
 
+    bool shouldExecute = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +49,9 @@ public class Slicer : MonoBehaviour
         modelMesh = selectedModel.GetComponent<MeshFilter>().mesh;
 
         selectedModel.transform.SetAsFirstSibling();
+        selectedModel.GetComponent<MeshRenderer>().material = patchMaterial;
+
+        selectedModel.SetActive(false);
 
         /*if (!selectedModel.GetComponent<MeshFilter>())
         {
@@ -72,9 +77,7 @@ public class Slicer : MonoBehaviour
         selectedModel.AddComponent(typeof(BoxCollider));
 
         Bounds bounds = modelMesh.bounds;
-        //bounds.size = new Vector3(70, 70, 70);
         Debug.Log("Imported model size: " + bounds.size);
-        //selectedModel.transform.localScale = new Vector3(70, 70, 70);
         initParent();
 
         Initializer initializer = GetComponent<Initializer>();
@@ -96,9 +99,15 @@ public class Slicer : MonoBehaviour
             {
                 newScale = 0.12f;
             }
-            else if (bounds.size.x > 1000 || bounds.size.y > 1000 || bounds.size.y > 1000)
+            else if ((bounds.size.x > 1000 && bounds.size.x < 100000)
+                || (bounds.size.y > 1000 && bounds.size.y < 100000)
+                || (bounds.size.z > 1000 && bounds.size.z < 100000))
             {
                 newScale = 0.0001f;
+            }
+            else if (bounds.size.x >= 100000 || bounds.size.y >= 100000 || bounds.size.z >= 100000)
+            {
+                newScale = 1.484818e-08f;
             }
 
             selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
@@ -108,13 +117,25 @@ public class Slicer : MonoBehaviour
             newScale = 1.41f;
             selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
         }
+
+        if (modelMesh.name == "TV Set")
+        {
+            selectedModel.transform.localEulerAngles = new Vector3(0, -90, 0);
+        }
+
+        shouldExecute = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (sliceType.Equals("Automatic"))
+        if (sliceType.Equals("Automatic") && shouldExecute == true)
         {
+            if (sliceCtr == 0)
+            {
+                selectedModel.SetActive(true);
+            }
+
             if (sliceCtr < 6)
             {
                 sliceTool.transform.localPosition = RandomizePositions(sliceCtr);
@@ -137,7 +158,7 @@ public class Slicer : MonoBehaviour
                     {
                         slices[1].AddComponent(typeof(BoxCollider));
                     }
-                    Destroy(slices[1], 1);
+                    //Destroy(slices[1], 1);
 
                     slices[0].transform.SetParent(newParent.transform);
                     slices[1].transform.SetParent(newParent.transform);
@@ -159,14 +180,19 @@ public class Slicer : MonoBehaviour
                 newParent.layer = 0;
                 for (int i = 0; i < newParent.transform.childCount; i++)
                 {
-                    newParent.transform.GetChild(i).GetComponent<MeshRenderer>().material = patchMaterial;
+                    //newParent.transform.GetChild(i).GetComponent<MeshRenderer>().material = patchMaterial;
                     newParent.transform.GetChild(i).gameObject.layer = 0;
+                    Destroy(newParent.transform.GetChild(i).GetComponent<BoxCollider>());
                 }
+
+                Destroy(sliceTool);
 
                 newParent.transform.SetAsFirstSibling();
 
                 target.layer = 0;
-                //distributer.Distribute();
+                distributer.Distribute();
+
+                shouldExecute = false;
             }
         }
     }
@@ -270,10 +296,13 @@ public class Slicer : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Transform sliceToolTransform = sliceTool.transform;
+        if (sliceType.Equals("Automatic") && shouldExecute == true)
+        {
+            Transform sliceToolTransform = sliceTool.transform;
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(sliceToolTransform.position, sliceToolTransform.forward * 1000.0f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(sliceToolTransform.position, sliceToolTransform.forward * 1000.0f);
+        }
 
         //Gizmos.DrawLine(sliceToolTransform.position, sliceToolTransform.position + sliceToolTransform.forward*5.0f);
         //Gizmos.DrawLine(sliceToolTransform.position + sliceToolTransform.up*0.5f, sliceToolTransform.position + sliceToolTransform.up * 0.5f + sliceToolTransform.forward*5.0f);

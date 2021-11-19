@@ -564,6 +564,14 @@ PrefabInstance:
       propertyPath: fullyAutomaticList.Array.data[5]
       value: 
       objectReference: {fileID: 919132149155446097, guid: d4d2059f98dcfb242a7458a045e7bece, type: 3}
+    - target: {fileID: 7408193045496985863, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: fullyAutomaticList.Array.data[6]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 70bbe043123f404448b60a7c9114e1d8, type: 3}
+    - target: {fileID: 7408193045496985863, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: fullyAutomaticList.Array.data[9]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: c7d02689857ef4249939d20037d37215, type: 3}
     - target: {fileID: 7942366226599760177, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: m_Name
       value: GameManager (1)
