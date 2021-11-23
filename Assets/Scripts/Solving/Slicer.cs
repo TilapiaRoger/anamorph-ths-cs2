@@ -190,7 +190,7 @@ public class Slicer : MonoBehaviour
                 newParent.transform.SetAsFirstSibling();
 
                 target.layer = 0;
-                distributer.Distribute();
+                //distributer.Distribute();
 
                 shouldExecute = false;
             }
