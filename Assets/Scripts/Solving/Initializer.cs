@@ -25,6 +25,8 @@ public class Initializer : MonoBehaviour
 
     private string modelName;
 
+    private bool toInitialize = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,11 @@ public class Initializer : MonoBehaviour
         modelName = modelParameters.modelName;
         modelName = model.name;
 
+        Initialize();
+    }
+
+    public void Initialize()
+    {
         SetD(modelName);
 
         Debug.Log("d: " + d);
@@ -58,12 +65,22 @@ public class Initializer : MonoBehaviour
         wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
         Debug.Log("Winning Point at " + winningPoint.transform.position);
+
+        toInitialize = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*if(GetComponent<Slicer>().isFinishedSlicing() == true)
+        {
+            toInitialize = true;
+        }
 
+        if (toInitialize == true)
+        {
+            Initialize();
+        }*/
     }
 
     float generate(float min, float max)

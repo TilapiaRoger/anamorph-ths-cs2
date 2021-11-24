@@ -38,6 +38,7 @@ public class MeshCut
             mesh_uvs = new Vector2[mesh_vertices.Length];
             for (int i = 0; i < mesh_uvs.Length; i++)
                 mesh_uvs[i] = new Vector2(mesh_vertices[i].x, mesh_vertices[i].z);
+
         }
 
         var mesh_tangents = victimMesh.tangents;

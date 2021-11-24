@@ -26,7 +26,7 @@ public class Slicer : MonoBehaviour
 
     GameObject target;
 
-    bool shouldExecute = false;
+    bool shouldExecute = false, finishedSlicing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -52,12 +52,6 @@ public class Slicer : MonoBehaviour
         selectedModel.GetComponent<MeshRenderer>().material = patchMaterial;
 
         selectedModel.SetActive(false);
-
-        /*if (!selectedModel.GetComponent<MeshFilter>())
-        {
-            selectedModel = modelSpawnPoint.transform.GetChild(1).gameObject;
-            modelMesh = selectedModel.GetComponent<MeshFilter>().mesh;
-        }*/
 
         sliceTool.name = "Slice Tool";
         sliceTool.transform.SetParent(modelSpawnPoint.transform);
@@ -124,6 +118,8 @@ public class Slicer : MonoBehaviour
         }
 
         shouldExecute = true;
+
+        selectedModel.transform.localScale = selectedModel.transform.localScale*3;
     }
 
     // Update is called once per frame
@@ -183,6 +179,7 @@ public class Slicer : MonoBehaviour
                     //newParent.transform.GetChild(i).GetComponent<MeshRenderer>().material = patchMaterial;
                     newParent.transform.GetChild(i).gameObject.layer = 0;
                     Destroy(newParent.transform.GetChild(i).GetComponent<BoxCollider>());
+                    //newParent.transform.GetChild(i).transform.localEulerAngles = new Vector3(0, 150, 0);
                 }
 
                 Destroy(sliceTool);
@@ -190,11 +187,22 @@ public class Slicer : MonoBehaviour
                 newParent.transform.SetAsFirstSibling();
 
                 target.layer = 0;
-                //distributer.Distribute();
+                distributer.Distribute();
 
                 shouldExecute = false;
+                finishedSlicing = true;
+
+                for (int i = 0; i < newParent.transform.childCount; i++)
+                {
+                    newParent.transform.GetChild(i).transform.localEulerAngles = new Vector3(0, modelSpawnPoint.transform.localEulerAngles.y+143.0f, 0);
+                }
             }
         }
+    }
+
+    public bool isFinishedSlicing()
+    {
+        return finishedSlicing;
     }
 
     private (float, float, float, float) GetModelStats()
