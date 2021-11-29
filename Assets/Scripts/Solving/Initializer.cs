@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Initializer : MonoBehaviour
 {
+    [SerializeField] private Transform gameSphere;
+
     public Material modelMaterial;
     private GameObject model;
-    public GameObject modelSpawnPoint,
-                      player,
-                      winningPoint;
+    public GameObject modelSpawnPoint, winningPoint;
 
     public float d;
 
@@ -34,6 +34,11 @@ public class Initializer : MonoBehaviour
         model = modelParameters.GetModel();
         modelName = modelParameters.modelName;
         modelName = model.name;
+
+        /*if (modelParameters.GetSlicingType() == "Automatic")
+        {
+            toInitialize = false;
+        }*/
 
         Initialize();
     }
@@ -65,8 +70,6 @@ public class Initializer : MonoBehaviour
         wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
         Debug.Log("Winning Point at " + winningPoint.transform.position);
-
-        toInitialize = false;
     }
 
     // Update is called once per frame
@@ -79,7 +82,8 @@ public class Initializer : MonoBehaviour
 
         if (toInitialize == true)
         {
-            Initialize();
+            
+            toInitialize = false;
         }*/
     }
 

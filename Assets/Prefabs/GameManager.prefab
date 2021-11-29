@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 4929669007247258539}
   - component: {fileID: 7408193045496985863}
   - component: {fileID: 7942366226599760181}
+  - component: {fileID: 7942366226599760180}
   - component: {fileID: 2481354300349014933}
   - component: {fileID: 3804325212231588146}
   - component: {fileID: 7942366226599760182}
-  - component: {fileID: 7942366226599760180}
   - component: {fileID: 8125868360355868010}
   m_Layer: 0
   m_Name: GameManager
@@ -111,6 +111,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelSpawnPoint: {fileID: 0}
+--- !u!114 &7942366226599760180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7942366226599760177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f8f58f58ec96c4aaf33670c8c883c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelMaterial: {fileID: 0}
+  modelSpawnPoint: {fileID: 0}
+  winningPoint: {fileID: 0}
+  d: 10
 --- !u!114 &2481354300349014933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,23 +172,6 @@ MonoBehaviour:
   modelSpawnPoint: {fileID: 0}
   winningPoint: {fileID: 0}
   target: {fileID: 0}
---- !u!114 &7942366226599760180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7942366226599760177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9f8f58f58ec96c4aaf33670c8c883c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modelMaterial: {fileID: 0}
-  modelSpawnPoint: {fileID: 0}
-  player: {fileID: 0}
-  winningPoint: {fileID: 0}
-  d: 10
 --- !u!114 &8125868360355868010
 MonoBehaviour:
   m_ObjectHideFlags: 0

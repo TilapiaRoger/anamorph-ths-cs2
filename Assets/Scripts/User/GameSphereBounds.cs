@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameSphereBounds : MonoBehaviour
 {
-    [SerializeField] Transform gameSphere;
+    [SerializeField] Transform gameSphere; 
     [SerializeField] Transform player;
 
     private float distance;

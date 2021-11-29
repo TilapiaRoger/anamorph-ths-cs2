@@ -40,10 +40,7 @@ public class Distributer : MonoBehaviour
 
         if (distributionType.Equals("Automatic"))
         {
-            if (sliceType.Equals("Manual"))
-            {
-                Distribute();
-            }
+            Distribute(modelSpawnPoint, winningPoint);
         }
     }
 
@@ -53,7 +50,8 @@ public class Distributer : MonoBehaviour
 
     }
 
-    public void Distribute()
+
+    public void Distribute(GameObject modelSpawnPoint, GameObject winningPoint)
     {
         initializer = GetComponent<Initializer>();
         oldDistance = initializer.d;

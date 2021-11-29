@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Slicer : MonoBehaviour
 {
-    [SerializeField] private GameObject modelSpawnPoint; 
+    [SerializeField] private GameObject modelSpawnPoint, winningPoint; 
     private GameObject selectedModel;
     private Mesh modelMesh; 
 
@@ -26,7 +26,10 @@ public class Slicer : MonoBehaviour
 
     GameObject target;
 
-    bool shouldExecute = false, finishedSlicing = false;
+    private bool shouldExecute = false, finishedSlicing = false;
+
+    private Bounds bounds;
+    private float newScale = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -35,8 +38,13 @@ public class Slicer : MonoBehaviour
         sliceType = modelParameters.GetSlicingType();
         distributer = GetComponent<Distributer>();
 
+
         if (sliceType.Equals("Automatic"))
         {
+            GetComponent<Rotator>().enabled = false;
+            GetComponent<Distributer>().enabled = false;
+            GetComponent<Initializer>().enabled = false;
+
             Slice();
         }
     }
@@ -70,7 +78,7 @@ public class Slicer : MonoBehaviour
 
         selectedModel.AddComponent(typeof(BoxCollider));
 
-        Bounds bounds = modelMesh.bounds;
+        bounds = modelMesh.bounds;
         Debug.Log("Imported model size: " + bounds.size);
         initParent();
 
@@ -80,7 +88,7 @@ public class Slicer : MonoBehaviour
         float newScale = 1;
         if (bounds.size.x >= 10 || bounds.size.y >= 10 || bounds.size.y >= 10)
         {
-            
+
             if ((bounds.size.x <= 1000 && bounds.size.x >= 50)
                 || (bounds.size.y <= 1000 && bounds.size.y >= 50)
                 || (bounds.size.z <= 1000 && bounds.size.z >= 50))
@@ -112,14 +120,18 @@ public class Slicer : MonoBehaviour
             selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
         }
 
-        if (modelMesh.name == "TV Set")
+
+        if (modelMesh.name == "Empire State Building")
         {
-            selectedModel.transform.localEulerAngles = new Vector3(0, -90, 0);
+            selectedModel.transform.localEulerAngles = new Vector3(0, 0, 0);
+            selectedModel.transform.localScale = selectedModel.transform.localScale * 20;
+        }
+        else if (modelMesh.name == "Utah Teapot" || modelMesh.name.StartsWith("08"))
+        {
+            selectedModel.transform.localEulerAngles = new Vector3(0, 180, 0);
         }
 
         shouldExecute = true;
-
-        selectedModel.transform.localScale = selectedModel.transform.localScale*3;
     }
 
     // Update is called once per frame
@@ -178,24 +190,65 @@ public class Slicer : MonoBehaviour
                 {
                     //newParent.transform.GetChild(i).GetComponent<MeshRenderer>().material = patchMaterial;
                     newParent.transform.GetChild(i).gameObject.layer = 0;
-                    Destroy(newParent.transform.GetChild(i).GetComponent<BoxCollider>());
+                    //Destroy(newParent.transform.GetChild(i).GetComponent<BoxCollider>());
                     //newParent.transform.GetChild(i).transform.localEulerAngles = new Vector3(0, 150, 0);
                 }
 
-                Destroy(sliceTool);
+                //Destroy(sliceTool);
 
                 newParent.transform.SetAsFirstSibling();
 
                 target.layer = 0;
-                distributer.Distribute();
 
                 shouldExecute = false;
                 finishedSlicing = true;
 
-                for (int i = 0; i < newParent.transform.childCount; i++)
+                Debug.Log("Distributed automatically.");
+
+
+                newParent.transform.localScale = newParent.transform.localScale * 2;
+
+                GetComponent<Distributer>().enabled = true;
+                GetComponent<Initializer>().enabled = true;
+
+
+                /*if (bounds.size.x >= 10 || bounds.size.y >= 10 || bounds.size.y >= 10)
                 {
-                    newParent.transform.GetChild(i).transform.localEulerAngles = new Vector3(0, modelSpawnPoint.transform.localEulerAngles.y+143.0f, 0);
+
+                    if ((bounds.size.x <= 1000 && bounds.size.x >= 50)
+                        || (bounds.size.y <= 1000 && bounds.size.y >= 50)
+                        || (bounds.size.z <= 1000 && bounds.size.z >= 50))
+                    {
+                        newScale = 0.0010f;
+                        newScale = newScale * 20;
+                        newParent.transform.localScale = selectedModel.transform.localScale * newScale;
+                    }
+                    else if ((bounds.size.x < 50 && bounds.size.x >= 10)
+                        || (bounds.size.y < 50 && bounds.size.y >= 10)
+                        || (bounds.size.z < 50 && bounds.size.z >= 10))
+                    {
+                        newScale = 0.12f;
+                    }
+                    else if ((bounds.size.x > 1000 && bounds.size.x < 100000)
+                        || (bounds.size.y > 1000 && bounds.size.y < 100000)
+                        || (bounds.size.z > 1000 && bounds.size.z < 100000))
+                    {
+                        newScale = 0.0001f;
+                    }
+                    else if (bounds.size.x >= 100000 || bounds.size.y >= 100000 || bounds.size.z >= 100000)
+                    {
+                        newScale = 1.484818e-08f;
+                    }
+
+                    newParent.transform.localScale = selectedModel.transform.localScale * newScale;
                 }
+                else if (bounds.size.x < 1 || bounds.size.y < 1 || bounds.size.y < 1)
+                {
+                    newScale = 1.41f;
+                    newScale = newScale * 20;
+                    newParent.transform.localScale = selectedModel.transform.localScale * newScale;
+                }*/
+
             }
         }
     }
@@ -304,7 +357,7 @@ public class Slicer : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (sliceType.Equals("Automatic") && shouldExecute == true)
+        if (sliceType.Equals("Automatic"))
         {
             Transform sliceToolTransform = sliceTool.transform;
 

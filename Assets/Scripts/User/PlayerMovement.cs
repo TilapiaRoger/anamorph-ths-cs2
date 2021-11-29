@@ -31,13 +31,15 @@ public class PlayerMovement : MonoBehaviour
         GameObject model = modelSpawnPoint.transform.GetChild(0).gameObject;
         string modelName = model.name;
 
-        userTransform = this.gameObject.transform;
+        userTransform = transform;
 
         userTransform.Rotate(0, 0, 0);
 
         GameObject origin = GameObject.Find("Origin");
 
         ModelParameters modelParameters = gameManager.GetComponent<ModelParameters>();
+
+        Transform lookedTarget = GameObject.Find("CriticalPoints").transform;
         if (modelParameters.GetDistributionType() == "Manual"){
             if (modelName.Contains("05") || modelName.Contains("06") || modelName.Contains("07") || modelName.Contains("08") || modelName.Contains("09") || modelName.Contains("10"))
             {
@@ -49,8 +51,17 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
+        else
+        {
+            Transform modelTransform = GameObject.Find("ModelSpawnPoint").transform;
 
-        userTransform.LookAt(target);
+            lookedTarget = modelTransform.GetChild(0).transform;
+
+            userTransform.position = origin.transform.position + new Vector3(modelTransform.position.x + 5, 0, modelTransform.position.z + 10);
+        }
+
+
+        userTransform.LookAt(lookedTarget);
 
         //pitch = userTransform.eulerAngles.x;
         //yaw = userTransform.eulerAngles.y;

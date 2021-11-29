@@ -2032,6 +2032,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2481354300349014933, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: winningPoint
+      value: 
+      objectReference: {fileID: 2035136193}
+    - target: {fileID: 2481354300349014933, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: patchMaterial
       value: 
       objectReference: {fileID: 2100000, guid: efa7d3a0ee772984d82e54050d477cb1, type: 2}
@@ -2144,6 +2148,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7942366226599760180, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: gameSphere
+      value: 
+      objectReference: {fileID: 734933777}
+    - target: {fileID: 7942366226599760180, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: winningPoint
       value: 
       objectReference: {fileID: 2035136193}
@@ -2198,6 +2206,10 @@ PrefabInstance:
     - target: {fileID: 8125868360355868010, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125868360355868010, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: maxDistance
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 8125868360355868010, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: winningPoint

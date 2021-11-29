@@ -54,6 +54,7 @@ public class Rotator : MonoBehaviour
     {
         // Rotate modelSpawnPoint around winningPoint
         modelSpawnPoint.transform.RotateAround(winningPoint.transform.position, Vector3.up, Random.Range(0, 360));
+        Debug.Log("X = " + winningPoint.transform.position + " Y = " + Vector3.up + " Z = " + modelSpawnPoint.transform.eulerAngles.z);
         //modelSpawnPoint.transform.RotateAround(winningPoint.transform.position, Vector3.right, Random.Range(0, 360));
         //modelSpawnPoint.transform.LookAt(winningPoint.transform);
 
