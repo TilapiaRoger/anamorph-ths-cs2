@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +7,8 @@ public class Initializer : MonoBehaviour
     public GameObject model,
                       modelSpawnPoint,
                       player,
-                      winningPoint;
-
+                      winningPoint,
+                      blade;
     public float d;
 
     private GameObject sphere,
@@ -19,8 +19,8 @@ public class Initializer : MonoBehaviour
     // Distances between the origin and specific points
     private float mspDistance,       // model spawn point
                   wpDistance,        // winning point
-                  gbDistance = 100f, // the game bounds
-                  greatestBound;     // size of the largest side of the bounding box of the target.
+                  gbDistance = 10f; // the game bounds
+    public float greatestBound;     // size of the largest side of the bounding box of the target.
 
     private string modelName;
 
@@ -34,8 +34,6 @@ public class Initializer : MonoBehaviour
 
         SetD(modelName);
 
-        Debug.Log("d: " + d);
-
         // Instantiate the model
         model.SetActive(true);
         model.transform.localScale = d / 10 * new Vector3(1, 1, 1);
@@ -45,18 +43,19 @@ public class Initializer : MonoBehaviour
 
         // Instantiate an invisible cylinder at modelSpawnPoint
         mspDistance = generate(d, gbDistance - d);
+        Debug.Log("MSP Distance: " + mspDistance);
         target = GameObject.Find("Target");
-        greatestBound = ResizeTarget(target, model); // also gets the size of the largest side of the bounding box of the target.
-        Debug.Log(greatestBound);
+        // Resizes the target and
+        // Gets the size of the largest side of the bounding box of the target.
+        greatestBound = ResizeTarget(target, model);
+        Debug.Log("Greatest bound: " + greatestBound);
         target.transform.SetParent(modelSpawnPoint.transform);
         target.transform.position += new Vector3(0, 0, greatestBound);
         modelSpawnPoint.transform.position = new Vector3(0f, 0f, mspDistance);
-        Debug.Log("Model Spawn Point at " + modelSpawnPoint.transform.position);
 
         // Initialize the winningPoint
         wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
-        Debug.Log("Winning Point at " + winningPoint.transform.position);
     }
 
     // Update is called once per frame
@@ -104,9 +103,7 @@ public class Initializer : MonoBehaviour
         return Mathf.Max(modelBounds.size.x * model.transform.localScale.x,
                          modelBounds.size.z * model.transform.localScale.z);
     }
-    
-    // Adapted from the code by Unity Forum user, choobyman:
-    // https://forum.unity.com/threads/getting-the-bounds-of-the-group-of-objects.70979/
+
     private Bounds GetBounds(GameObject model)
     {
         Bounds bounds = new Bounds();

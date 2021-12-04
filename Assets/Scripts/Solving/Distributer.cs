@@ -46,7 +46,7 @@ public class Distributer : MonoBehaviour
         
     }
 
-    void Distribute()
+    public void Distribute()
     {
         initializer = GetComponent<Initializer>();
         oldDistance = initializer.d;
@@ -56,16 +56,19 @@ public class Distributer : MonoBehaviour
         mspTransform = modelSpawnPoint.transform;
         modelTransform = mspTransform.GetChild(0);
 
+        int childCount = modelTransform.childCount;
+
         List<int> list = generatePermutation(modelTransform.childCount);
         List<float> sizes = getSizes(modelTransform);
 
-        Debug.Log("Piece number\t\tPivot Position\t\tOld Distance\t\tNew Distance\t\tScale Factor\t\tBounds");
-        for(int i = 0; i < modelTransform.childCount; i++)
+        //Debug.Log("Piece number\t\tPivot Position\t\tOld Distance\t\tNew Distance\t\tScale Factor\t\tBounds");
+        for(int i = 0; i < childCount; i++)
         {
             GameObject piece = modelTransform.GetChild(list[i]).gameObject;
             Mesh mesh = piece.GetComponent<MeshFilter>().mesh;
-            
-            pivotPosition = (i == 0) ? wpPosition.z + 1 : lastPosition + .9f * lastScale;
+
+            //pivotPosition = (i == 0) ? wpPosition.z + 1 : lastPosition + .9f * lastScale;
+            pivotPosition = (i + 1) * 10 / childCount;
 
             // Move piece by a random distance from the model spawn point
             piece.transform.position = new Vector3(0, 0, pivotPosition);
@@ -77,7 +80,7 @@ public class Distributer : MonoBehaviour
             piece.transform.localScale *= scaleFactor;
             lastScale = piece.transform.localScale.z * mesh.bounds.size.z;
 
-            Debug.Log(list[i] + 1 + "\t\t" + pivotPosition + "\t\t" + oldDistance + "\t\t"  + newDistance + "\t\t" + scaleFactor);
+            //Debug.Log(list[i] + 1 + "\t\t" + pivotPosition + "\t\t" + oldDistance + "\t\t"  + newDistance + "\t\t" + scaleFactor);
         }
     }
 
