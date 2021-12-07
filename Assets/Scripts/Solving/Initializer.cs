@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Initializer : MonoBehaviour
 {
-    [SerializeField] private Transform gameSphere;
-
-    public Material modelMaterial;
     private GameObject model;
-    public GameObject modelSpawnPoint, winningPoint;
+    public GameObject modelSpawnPoint,
+                      player,
+                      winningPoint;
 
     public float d;
 
@@ -20,34 +19,24 @@ public class Initializer : MonoBehaviour
     // Distances between the origin and specific points
     private float mspDistance,       // model spawn point
                   wpDistance,        // winning point
-                  gbDistance = 100f, // the game bounds
-                  greatestBound;     // size of the largest side of the bounding box of the target.
+                  gbDistance = 10f; // the game bounds
+    public float greatestBound;     // size of the largest side of the bounding box of the target.
 
     private string modelName;
 
-    private bool toInitialize = true;
+    private System.Random random;
 
+    private GameObject slicedModel;
     // Start is called before the first frame update
     void Start()
     {
+        random = new System.Random();
+
         modelParameters = GetComponent<ModelParameters>();
         model = modelParameters.GetModel();
-        modelName = modelParameters.modelName;
         modelName = model.name;
 
-        /*if (modelParameters.GetSlicingType() == "Automatic")
-        {
-            toInitialize = false;
-        }*/
-
-        Initialize();
-    }
-
-    public void Initialize()
-    {
         SetD(modelName);
-
-        Debug.Log("d: " + d);
 
         // Instantiate the model
         model.SetActive(true);
@@ -58,33 +47,84 @@ public class Initializer : MonoBehaviour
 
         // Instantiate an invisible cylinder at modelSpawnPoint
         mspDistance = generate(d, gbDistance - d);
+        Debug.Log("MSP Distance: " + mspDistance);
         target = GameObject.Find("Target");
-        greatestBound = ResizeTarget(target, model); // also gets the size of the largest side of the bounding box of the target.
-        Debug.Log(greatestBound);
+        // Resizes the target and
+        // Gets the size of the largest side of the bounding box of the target.
+        greatestBound = ResizeTarget(target, model);
+        Debug.Log("Greatest bound: " + greatestBound);
         target.transform.SetParent(modelSpawnPoint.transform);
         target.transform.position += new Vector3(0, 0, greatestBound);
         modelSpawnPoint.transform.position = new Vector3(0f, 0f, mspDistance);
-        Debug.Log("Model Spawn Point at " + modelSpawnPoint.transform.position);
 
         // Initialize the winningPoint
         wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
-        Debug.Log("Winning Point at " + winningPoint.transform.position);
+
+        /*if (modelParameters.GetSlicingType().Equals("Automatic"))
+        {
+            slicedModel = GetComponent<Slicer>().initAutoClone();
+        }
+        else
+        {
+            
+        }*/
+
+        slicedModel = modelSpawnPoint.transform.GetChild(0).gameObject;
+            initTrickSlices();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if(GetComponent<Slicer>().isFinishedSlicing() == true)
+
+    }
+
+    void initTrickSlices()
+    {
+        //Instantiate the fake slices
+        GameObject trickModel = Instantiate(slicedModel);
+        trickModel.transform.SetParent(modelSpawnPoint.transform);
+
+        int trickPiecesCount = trickModel.transform.childCount;
+        int randomSliceCount = Random.Range(1, trickPiecesCount);
+
+        Debug.Log("Trick slices to remove: " + randomSliceCount);
+
+        for (int i = 0; i < randomSliceCount; i++)
         {
-            toInitialize = true;
+            int randomIndex = Random.Range(0, trickPiecesCount - 1);
+            GameObject scrapPiece = trickModel.transform.GetChild(randomIndex).gameObject;
+            Destroy(scrapPiece);
         }
 
-        if (toInitialize == true)
+        float randomDegree;
+        randomDegree = generate(0, 180);
+        trickModel.transform.RotateAround(slicedModel.transform.position, Vector3.up, randomDegree);
+
+        for (int i = 0; i < trickModel.transform.childCount; i++)
         {
-            
-            toInitialize = false;
-        }*/
+            int randomIndex = Random.Range(0, slicedModel.transform.childCount - 1);
+            GameObject trickPiece = trickModel.transform.GetChild(i).gameObject;
+            GameObject realPiece = slicedModel.transform.GetChild(randomIndex).gameObject;
+
+            bool isLeft = (random.Next(2) == 1);
+
+            float combinedBounds = realPiece.GetComponent<Renderer>().bounds.extents.x + trickPiece.GetComponent<Renderer>().bounds.extents.x + 10;
+            if (isLeft)
+            {
+                trickPiece.transform.position = realPiece.transform.position + Vector3.left * combinedBounds;
+            }
+            else
+            {
+                trickPiece.transform.position = realPiece.transform.position + Vector3.right * combinedBounds;
+            }
+
+
+            // Scale the model
+            trickPiece.transform.localScale *= generate(0.50f, 1f);
+        }
     }
 
     float generate(float min, float max)

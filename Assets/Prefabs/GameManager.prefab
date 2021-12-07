@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 7942366226599760179}
   - component: {fileID: 4929669007247258539}
   - component: {fileID: 7408193045496985863}
-  - component: {fileID: 7942366226599760181}
-  - component: {fileID: 7942366226599760180}
   - component: {fileID: 2481354300349014933}
   - component: {fileID: 3804325212231588146}
+  - component: {fileID: 7942366226599760180}
   - component: {fileID: 7942366226599760182}
   - component: {fileID: 8125868360355868010}
   m_Layer: 0
@@ -98,35 +97,6 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 619feede74339a94ca13ec6a81fa0b85, type: 3}
   - {fileID: 919132149155446097, guid: f91d4da649909874e8c9828b1dde824f, type: 3}
   - {fileID: 919132149155446097, guid: 0296d8535f036304094dcb15a68f58e4, type: 3}
---- !u!114 &7942366226599760181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7942366226599760177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a541424ffce8f934e9baeb1ea9f9e660, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modelSpawnPoint: {fileID: 0}
---- !u!114 &7942366226599760180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7942366226599760177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9f8f58f58ec96c4aaf33670c8c883c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modelMaterial: {fileID: 0}
-  modelSpawnPoint: {fileID: 0}
-  winningPoint: {fileID: 0}
-  d: 10
 --- !u!114 &2481354300349014933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +110,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelSpawnPoint: {fileID: 0}
+  winningPoint: {fileID: 0}
   patchMaterial: {fileID: 0}
+  bladeHorizontalLength: 1
+  bladeVerticalLength: 1000
 --- !u!114 &3804325212231588146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +129,23 @@ MonoBehaviour:
   modelSpawnPoint: {fileID: 0}
   winningPoint: {fileID: 0}
   piece: {fileID: 0}
+--- !u!114 &7942366226599760180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7942366226599760177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f8f58f58ec96c4aaf33670c8c883c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelSpawnPoint: {fileID: 0}
+  player: {fileID: 0}
+  winningPoint: {fileID: 0}
+  d: 10
+  greatestBound: 0
 --- !u!114 &7942366226599760182
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -24,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canMove = false;
 
+    private System.Random random;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,32 +42,24 @@ public class PlayerMovement : MonoBehaviour
 
         ModelParameters modelParameters = gameManager.GetComponent<ModelParameters>();
 
-        Transform lookedTarget = GameObject.Find("CriticalPoints").transform;
-        if (modelParameters.GetDistributionType() == "Manual"){
-            if (modelName.Contains("05") || modelName.Contains("06") || modelName.Contains("07") || modelName.Contains("08") || modelName.Contains("09") || modelName.Contains("10"))
-            {
-                userTransform.position = origin.transform.position + new Vector3(500, 0, -80);
-            }
-            else
-            {
-                userTransform.position = origin.transform.position + new Vector3(-45, 0, -400);
-            }
+        Transform modelTransform = GameObject.Find("ModelSpawnPoint").transform;
 
+        random = new System.Random();
+
+        bool isLeft = (random.Next(2) == 1);
+
+        float combinedBoundsX = GetComponent<Renderer>().bounds.extents.x + 10;
+        if (isLeft)
+        {
+            userTransform.position = modelSpawnPoint.transform.position + Vector3.left * combinedBoundsX;
         }
         else
         {
-            Transform modelTransform = GameObject.Find("ModelSpawnPoint").transform;
-
-            lookedTarget = modelTransform.GetChild(0).transform;
-
-            userTransform.position = origin.transform.position + new Vector3(modelTransform.position.x + 5, 0, modelTransform.position.z + 10);
+            userTransform.position = modelSpawnPoint.transform.position + Vector3.right * combinedBoundsX;
         }
 
-
+        Transform lookedTarget = modelSpawnPoint.transform.GetChild(0);
         userTransform.LookAt(lookedTarget);
-
-        //pitch = userTransform.eulerAngles.x;
-        //yaw = userTransform.eulerAngles.y;
 
         SetRotationX(userTransform.eulerAngles.x);
         SetRotationY(userTransform.eulerAngles.y);
@@ -133,5 +128,12 @@ public class PlayerMovement : MonoBehaviour
     public void SetRotateSpeed(float rotationSpeed)
     {
         this.rotateSpeed = rotationSpeed;
+    }
+
+    float generate(float min, float max)
+    {
+        float num = UnityEngine.Random.Range(min, max);
+        while (num == min || num == max) num = UnityEngine.Random.Range(min, max);
+        return num;
     }
 }

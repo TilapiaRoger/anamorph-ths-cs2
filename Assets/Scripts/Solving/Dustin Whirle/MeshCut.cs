@@ -39,9 +39,16 @@ public class MeshCut
             for (int i = 0; i < mesh_uvs.Length; i++)
                 mesh_uvs[i] = new Vector2(mesh_vertices[i].x, mesh_vertices[i].z);
 
+            victimMesh.uv = mesh_uvs;
         }
 
         var mesh_tangents = victimMesh.tangents;
+
+        foreach (Vector4 tangent in mesh_tangents)
+        {
+            Debug.Log("Mesh Tangents: " + tangent);
+        }
+
         if (mesh_tangents != null && mesh_tangents.Length == 0)
             mesh_tangents = null;
 
@@ -72,6 +79,7 @@ public class MeshCut
                     }
                     isLeftSideCache[j] = blade.GetSide(mesh_vertices[index[j]]);
                 }
+
 
                 // whole triangle
                 if (isLeftSideCache[0] == isLeftSideCache[1] && isLeftSideCache[0] == isLeftSideCache[2])

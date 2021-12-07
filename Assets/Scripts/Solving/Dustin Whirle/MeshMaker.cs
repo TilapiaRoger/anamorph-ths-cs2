@@ -72,25 +72,27 @@ public class MeshMaker
 		Vector2 uv = Vector2.zero;
 		Vector4 tangent = Vector4.zero;
 
-		for (int i = 0; i < VertCount; i++)
+		int iterator = 0; ;
+		while (iterator < VertCount)
 		{
-			vertex = vertices[i];
-			normal = normals[i];
-			uv = uvs[i];
+			vertex = vertices[iterator];
+			normal = normals[iterator];
+			uv = uvs[iterator];
 
 			// look backwards for a match
-			for (int backward_iterator = i - 1; backward_iterator >= 0; backward_iterator--)
+			for (int backward_iterator = iterator - 1; backward_iterator >= 0; backward_iterator--)
 			{
 				if (vertex == vertices[backward_iterator] &&
 					normal == normals[backward_iterator] &&
 					uv == uvs[backward_iterator])
 				{
 					dubCount++;
-					DoubleFound(backward_iterator, i);
-					i--;
+					DoubleFound(backward_iterator, iterator);
+					iterator--;
 					break; // there should only be one
 				}
 			}
+			iterator++;
 		} // while
 
 		Debug.LogFormat("Doubles found {0}", dubCount);

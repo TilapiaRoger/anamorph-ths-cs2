@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartSolving : MonoBehaviour
 {
+    [SerializeField] private Button startButton;
     [SerializeField] private GameObject puzzleModelLocation;
 
     [SerializeField] private GameObject player;
@@ -27,7 +29,6 @@ public class StartSolving : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        //playerAvatar.enabled = true;
         playerAvatar.SetMoveStatus(true);
 
         Debug.Log("Player random rotate start.");
@@ -41,8 +42,9 @@ public class StartSolving : MonoBehaviour
         {
             Debug.Log("Slice " + i + ": " + puzzleModelSlices[i].name);
             puzzleModelSlices[i].gameObject.tag = "Slice";
-            //puzzleModelSlices[i].gameObject.AddComponent(typeof(BoxCollider));
         }
+
+        startButton.gameObject.SetActive(false);
     }
 
     

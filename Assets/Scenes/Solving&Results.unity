@@ -275,7 +275,6 @@ Transform:
   - {fileID: 2122820542}
   - {fileID: 1437461782}
   - {fileID: 712142685}
-  - {fileID: 1889112270}
   - {fileID: 734933777}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -499,10 +498,10 @@ Transform:
   m_GameObject: {fileID: 734933776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10000, y: 10000, z: 10000}
+  m_LocalScale: {x: 3000, y: 3000, z: 3000}
   m_Children: []
   m_Father: {fileID: 552589691}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &734933778
 SphereCollider:
@@ -631,7 +630,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 10000
+  far clip plane: 100000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -1275,6 +1274,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2122820537}
     - target: {fileID: 5948536668820357845, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
+      propertyPath: startButton
+      value: 
+      objectReference: {fileID: 1519147543}
+    - target: {fileID: 5948536668820357845, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
       propertyPath: playerAvatar
       value: 
       objectReference: {fileID: 2122820538}
@@ -1315,6 +1318,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f0bfa40d32070744a1db52824614e05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1519147543 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3883905282981268622, guid: dcfee11feec240e418e42a34c8ed602f, type: 3}
+  m_PrefabInstance: {fileID: 1519147539}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1606871412 stripped
@@ -1845,8 +1859,8 @@ Transform:
   - {fileID: 525037210}
   - {fileID: 392145128}
   - {fileID: 2035136194}
-  m_Father: {fileID: 552589691}
-  m_RootOrder: 4
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2035136193
 GameObject:
@@ -1922,7 +1936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20882ec854bc9e141b4c915523124904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 600
+  movementSpeed: 10
   rotateSpeed: 30
   gameManager: {fileID: 1606871412}
   target: {fileID: 1889112270}
@@ -2071,6 +2085,14 @@ PrefabInstance:
       propertyPath: fullyAutomaticList.Array.data[5]
       value: 
       objectReference: {fileID: 919132149155446097, guid: d4d2059f98dcfb242a7458a045e7bece, type: 3}
+    - target: {fileID: 7408193045496985863, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: fullyAutomaticList.Array.data[6]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: 70bbe043123f404448b60a7c9114e1d8, type: 3}
+    - target: {fileID: 7408193045496985863, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: fullyAutomaticList.Array.data[9]
+      value: 
+      objectReference: {fileID: 919132149155446097, guid: c7d02689857ef4249939d20037d37215, type: 3}
     - target: {fileID: 7942366226599760177, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -2209,7 +2231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8125868360355868010, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: maxDistance
-      value: 100000
+      value: 95000
       objectReference: {fileID: 0}
     - target: {fileID: 8125868360355868010, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: winningPoint

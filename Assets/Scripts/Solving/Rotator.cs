@@ -17,6 +17,9 @@ public class Rotator : MonoBehaviour
     private CapsuleCollider capsuleCollider;
 
     private float pi = Mathf.PI;
+
+    Randomizer customRandomizer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,5 +65,20 @@ public class Rotator : MonoBehaviour
         winningPoint.transform.RotateAround(origin.transform.position, Vector3.up, Random.Range(0, 360));
         //winningPoint.transform.RotateAround(origin.transform.position, Vector3.right, Random.Range(0, 360));
         //winningPoint.transform.LookAt(origin.transform);
+
+
+        float randomX, randomY, randomZ;
+        randomX = generate(-180, 180);
+        randomY = generate(-180, 180);
+        randomZ = generate(-180, 180);
+
+        origin.transform.localEulerAngles = new Vector3(randomX, randomY, randomZ);
+    }
+
+    float generate(float min, float max)
+    {
+        float num = UnityEngine.Random.Range(min, max);
+        while (num == min || num == max) num = UnityEngine.Random.Range(min, max);
+        return num;
     }
 }

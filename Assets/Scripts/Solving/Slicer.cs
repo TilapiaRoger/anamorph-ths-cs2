@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System;
 using UnityEngine;
 
 public class Slicer : MonoBehaviour
 {
-    [SerializeField] private GameObject modelSpawnPoint, winningPoint; 
+    [SerializeField] private GameObject modelSpawnPoint, winningPoint;
+    GameObject target;
     private GameObject selectedModel;
     private Mesh modelMesh; 
 
@@ -13,23 +15,30 @@ public class Slicer : MonoBehaviour
     private Distributer distributer;
     private string sliceType;
 
-    private int sliceCount;
+    private GameObject cloneModel;
 
-    [SerializeField] private Material patchMaterial;
-
-    private GameObject sliceTool;
+    [Header("Slicing Settings")]
     private GameObject[] slices;
-
+    [SerializeField] private Material patchMaterial;
+    private int sliceCount;
     private int sliceCtr;
-
     private GameObject newParent;
-
-    GameObject target;
-
     private bool shouldExecute = false, finishedSlicing = false;
 
+    [Header("Blade Settings")]
+    private GameObject sliceTool;
+    Transform sliceToolTransform;
+    public float bladeHorizontalLength = 1;
+    public float bladeVerticalLength = 1000;
+    private int defaultX, defaultY, defaultZ;
+
+    [Header("Model Settings")]
     private Bounds bounds;
     private float newScale = 1;
+
+    private BoxCollider collider;
+    private float modelWidth, modelHeight;
+    private Vector3 size;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +46,6 @@ public class Slicer : MonoBehaviour
         modelParameters = GetComponent<ModelParameters>();
         sliceType = modelParameters.GetSlicingType();
         distributer = GetComponent<Distributer>();
-
 
         if (sliceType.Equals("Automatic"))
         {
@@ -56,27 +64,32 @@ public class Slicer : MonoBehaviour
         selectedModel = modelSpawnPoint.transform.GetChild(0).gameObject;
         modelMesh = selectedModel.GetComponent<MeshFilter>().mesh;
 
+        selectedModel.AddComponent(typeof(BoxCollider));
+        collider = selectedModel.GetComponent<BoxCollider>();
+        size = collider.size;
+
         selectedModel.transform.SetAsFirstSibling();
         selectedModel.GetComponent<MeshRenderer>().material = patchMaterial;
 
         selectedModel.SetActive(false);
 
-        sliceTool.name = "Slice Tool";
-        sliceTool.transform.SetParent(modelSpawnPoint.transform);
-        sliceTool.transform.localPosition = new Vector3(0, 0, -2);
-        sliceTool.transform.localEulerAngles = new Vector3(0, 0, 0);
-        //Instantiate(sliceTool, modelSpawnPoint.transform);
 
-        //System.Random random = new System.Random();
+        defaultX = 35;
+        defaultY = defaultX;
+        defaultZ = 0;
+
+        sliceTool.name = "Slice Tool";
+        sliceToolTransform = sliceTool.transform;
+        sliceToolTransform.SetParent(modelSpawnPoint.transform);
+        sliceToolTransform.localPosition = new Vector3(0, defaultX, defaultZ);
+        sliceToolTransform.localEulerAngles = new Vector3(90, 0, 0);
+
         sliceCount = 6;
-        //sliceCount = random.Next(3, 4);
 
         sliceCtr = 0;
 
         target = GameObject.Find("Target");
         target.layer = 2;
-
-        selectedModel.AddComponent(typeof(BoxCollider));
 
         bounds = modelMesh.bounds;
         Debug.Log("Imported model size: " + bounds.size);
@@ -85,51 +98,7 @@ public class Slicer : MonoBehaviour
         Initializer initializer = GetComponent<Initializer>();
         float distance = initializer.d;
 
-        float newScale = 1;
-        if (bounds.size.x >= 10 || bounds.size.y >= 10 || bounds.size.y >= 10)
-        {
-
-            if ((bounds.size.x <= 1000 && bounds.size.x >= 50)
-                || (bounds.size.y <= 1000 && bounds.size.y >= 50)
-                || (bounds.size.z <= 1000 && bounds.size.z >= 50))
-            {
-                newScale = 0.0010f;
-            }
-            else if ((bounds.size.x < 50 && bounds.size.x >= 10)
-                || (bounds.size.y < 50 && bounds.size.y >= 10)
-                || (bounds.size.z < 50 && bounds.size.z >= 10))
-            {
-                newScale = 0.12f;
-            }
-            else if ((bounds.size.x > 1000 && bounds.size.x < 100000)
-                || (bounds.size.y > 1000 && bounds.size.y < 100000)
-                || (bounds.size.z > 1000 && bounds.size.z < 100000))
-            {
-                newScale = 0.0001f;
-            }
-            else if (bounds.size.x >= 100000 || bounds.size.y >= 100000 || bounds.size.z >= 100000)
-            {
-                newScale = 1.484818e-08f;
-            }
-
-            selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
-        }
-        else if (bounds.size.x < 1 || bounds.size.y < 1 || bounds.size.y < 1)
-        {
-            newScale = 1.41f;
-            selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
-        }
-
-
-        if (modelMesh.name == "Empire State Building")
-        {
-            selectedModel.transform.localEulerAngles = new Vector3(0, 0, 0);
-            selectedModel.transform.localScale = selectedModel.transform.localScale * 20;
-        }
-        else if (modelMesh.name == "Utah Teapot" || modelMesh.name.StartsWith("08"))
-        {
-            selectedModel.transform.localEulerAngles = new Vector3(0, 180, 0);
-        }
+        scaleModel();
 
         shouldExecute = true;
     }
@@ -144,57 +113,45 @@ public class Slicer : MonoBehaviour
                 selectedModel.SetActive(true);
             }
 
-            if (sliceCtr < 6)
+            if (sliceCtr < sliceCount)
             {
-                sliceTool.transform.localPosition = RandomizePositions(sliceCtr);
+                RaycastHit[] hits = Physics.RaycastAll(sliceToolTransform.position, sliceToolTransform.forward, bladeVerticalLength);
 
-                RaycastHit hit;
-                if (Physics.Raycast(sliceTool.transform.position, sliceTool.transform.forward*1000.0f, out hit))
+                foreach (RaycastHit hit in hits)
                 {
                     GameObject victim = hit.collider.gameObject;
-                    Debug.Log("Hit object" + victim);
 
-                    slices = MeshCut.Cut(victim, sliceTool.transform.position, sliceTool.transform.right, patchMaterial);
+                    GameObject[] pieces = MeshCut.Cut(victim, sliceToolTransform.position, sliceToolTransform.right, patchMaterial);
 
-                    if (slices[0].GetComponent<BoxCollider>())
+                    for (int i = 0; i < pieces.Length; i++)
                     {
-                        Destroy(slices[0].GetComponent<BoxCollider>());
-                        slices[0].AddComponent(typeof(BoxCollider));
+                        if (pieces[i].GetComponent<BoxCollider>())
+                            Destroy(pieces[i].GetComponent<BoxCollider>());
+
+                        pieces[i].AddComponent<BoxCollider>();
+                        pieces[i].transform.SetParent(newParent.transform);
                     }
-
-                    if (!slices[1].GetComponent<BoxCollider>())
-                    {
-                        slices[1].AddComponent(typeof(BoxCollider));
-                    }
-                    //Destroy(slices[1], 1);
-
-                    slices[0].transform.SetParent(newParent.transform);
-                    slices[1].transform.SetParent(newParent.transform);
-
-                    for (int i = 0; i < newParent.transform.childCount; i++)
-                    {
-                        newParent.transform.GetChild(i).gameObject.name = "Slice " + (i + 1);
-                    }
-
-                    sliceCtr++;
                 }
-                else
+
+
+                for (int i = 0; i < newParent.transform.childCount; i++)
                 {
-                    Debug.Log("Ray does not hit anything");
+                    newParent.transform.GetChild(i).gameObject.name = "Slice " + (i + 1);
                 }
+
+                sliceCtr++;
+                sliceToolTransform.localPosition = RandomizePositions(sliceCtr);
             }
             else
             {
                 newParent.layer = 0;
                 for (int i = 0; i < newParent.transform.childCount; i++)
                 {
-                    //newParent.transform.GetChild(i).GetComponent<MeshRenderer>().material = patchMaterial;
                     newParent.transform.GetChild(i).gameObject.layer = 0;
-                    //Destroy(newParent.transform.GetChild(i).GetComponent<BoxCollider>());
-                    //newParent.transform.GetChild(i).transform.localEulerAngles = new Vector3(0, 150, 0);
+                    Destroy(newParent.transform.GetChild(i).GetComponent<BoxCollider>());
                 }
 
-                //Destroy(sliceTool);
+                Destroy(sliceTool);
 
                 newParent.transform.SetAsFirstSibling();
 
@@ -205,52 +162,123 @@ public class Slicer : MonoBehaviour
 
                 Debug.Log("Distributed automatically.");
 
-
-                newParent.transform.localScale = newParent.transform.localScale * 2;
-
                 GetComponent<Distributer>().enabled = true;
+
+                ///initTrickSlices();
+
                 GetComponent<Initializer>().enabled = true;
-
-
-                /*if (bounds.size.x >= 10 || bounds.size.y >= 10 || bounds.size.y >= 10)
-                {
-
-                    if ((bounds.size.x <= 1000 && bounds.size.x >= 50)
-                        || (bounds.size.y <= 1000 && bounds.size.y >= 50)
-                        || (bounds.size.z <= 1000 && bounds.size.z >= 50))
-                    {
-                        newScale = 0.0010f;
-                        newScale = newScale * 20;
-                        newParent.transform.localScale = selectedModel.transform.localScale * newScale;
-                    }
-                    else if ((bounds.size.x < 50 && bounds.size.x >= 10)
-                        || (bounds.size.y < 50 && bounds.size.y >= 10)
-                        || (bounds.size.z < 50 && bounds.size.z >= 10))
-                    {
-                        newScale = 0.12f;
-                    }
-                    else if ((bounds.size.x > 1000 && bounds.size.x < 100000)
-                        || (bounds.size.y > 1000 && bounds.size.y < 100000)
-                        || (bounds.size.z > 1000 && bounds.size.z < 100000))
-                    {
-                        newScale = 0.0001f;
-                    }
-                    else if (bounds.size.x >= 100000 || bounds.size.y >= 100000 || bounds.size.z >= 100000)
-                    {
-                        newScale = 1.484818e-08f;
-                    }
-
-                    newParent.transform.localScale = selectedModel.transform.localScale * newScale;
-                }
-                else if (bounds.size.x < 1 || bounds.size.y < 1 || bounds.size.y < 1)
-                {
-                    newScale = 1.41f;
-                    newScale = newScale * 20;
-                    newParent.transform.localScale = selectedModel.transform.localScale * newScale;
-                }*/
+                GetComponent<Rotator>().enabled = true;
 
             }
         }
+    }
+
+    void initTrickSlices()
+    {
+        GameObject trickModel = Instantiate(newParent);
+        trickModel.transform.SetParent(modelSpawnPoint.transform);
+
+        int trickPiecesCount = trickModel.transform.childCount;
+        int randomSliceCount = UnityEngine.Random.Range(1, trickPiecesCount);
+
+        Debug.Log("Trick slices to remove: " + randomSliceCount);
+
+        for (int i = 0; i < randomSliceCount; i++)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, trickPiecesCount - 1);
+            GameObject scrapPiece = trickModel.transform.GetChild(randomIndex).gameObject;
+            Destroy(scrapPiece);
+        }
+
+        float randomDegree;
+        randomDegree = generate(0, 180);
+        trickModel.transform.RotateAround(newParent.transform.position, Vector3.up, randomDegree);
+
+        for (int i = 0; i < trickModel.transform.childCount; i++)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, newParent.transform.childCount - 1);
+            GameObject trickPiece = trickModel.transform.GetChild(i).gameObject;
+            GameObject realPiece = newParent.transform.GetChild(randomIndex).gameObject;
+
+            bool isLeft = (new System.Random().Next(2) == 1);
+
+            float combinedBounds = realPiece.GetComponent<Renderer>().bounds.extents.x + trickPiece.GetComponent<Renderer>().bounds.extents.x + 10;
+            if (isLeft)
+            {
+                trickPiece.transform.position = realPiece.transform.position + Vector3.left * combinedBounds;
+            }
+            else
+            {
+                trickPiece.transform.position = realPiece.transform.position + Vector3.right * combinedBounds;
+            }
+
+
+            // Scale the model
+            trickPiece.transform.localScale *= generate(0.50f, 1f);
+        }
+    }
+
+    float generate(float min, float max)
+    {
+        float num = UnityEngine.Random.Range(min, max);
+        while (num == min || num == max) num = UnityEngine.Random.Range(min, max);
+        return num;
+    }
+
+    public GameObject initAutoClone()
+    {
+        return cloneModel;
+    }
+
+    private void scaleModel()
+    {
+        float newScale = 1;
+        if (Mathf.Max(collider.size.x, collider.size.y, collider.size.z) >= 10)
+        {
+            float[] scaleCoordinates = { collider.size.x, collider.size.y, collider.size.z };
+
+            int biggestScale = (int)scaleCoordinates.Max();
+            Debug.Log("Max: " + biggestScale);
+
+            int digitsCtr = 0;
+            while ((biggestScale /= 10) != 0)
+            {
+                digitsCtr++;
+            }
+
+            newScale = 1 / Mathf.Pow(10, digitsCtr);
+            newScale = newScale * 2;
+        }
+        else if (Mathf.Max(collider.size.x, collider.size.y, collider.size.z) < 1)
+        {
+            if (Mathf.Max(collider.size.x, collider.size.y, collider.size.z) >= 0.1 &&
+                Mathf.Max(collider.size.x, collider.size.y, collider.size.z) < 0.3)
+            {
+                newScale = 10.0f;
+            }
+            else if (Mathf.Max(collider.size.x, collider.size.y, collider.size.z) < 0.1)
+            {
+                newScale = 50.0f;
+            }
+            else
+            {
+                newScale = 7.0f;
+            }
+        }
+
+
+        if (modelMesh.name == "Empire State Building")
+        {
+            selectedModel.transform.localEulerAngles = new Vector3(0, 90, 0);
+        }
+        if (modelMesh.name.StartsWith("08"))
+        {
+            selectedModel.transform.localEulerAngles = new Vector3(0, 180, 0);
+        }
+
+        selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
+
+        size = collider.size * selectedModel.transform.localScale.x;
     }
 
     public bool isFinishedSlicing()
@@ -260,14 +288,15 @@ public class Slicer : MonoBehaviour
 
     private (float, float, float, float) GetModelStats()
     {
-        float modelWidth = 2.0f, modelheight = 1.0f;
+        modelWidth = size.x;
+        modelHeight = size.y;
 
         float modelLeft, modelRight, modelUp, modelDown;
 
         modelLeft = -(modelWidth / 2.0f);
         modelRight = modelWidth / 2.0f;
-        modelUp = modelheight / 2.0f;
-        modelDown = -(modelheight / 2.0f);
+        modelUp = modelHeight / 2.0f;
+        modelDown = -(modelHeight / 2.0f);
 
         return (modelLeft, modelRight, modelUp, modelDown);
     }
@@ -290,8 +319,9 @@ public class Slicer : MonoBehaviour
         x = 0;
         y = 0;
 
-        if (sliceTool.transform.localEulerAngles.z == 0)
+        if (sliceToolTransform.localEulerAngles == new Vector3(90, 0, 0))
         {
+            y = defaultY;
             if (index % 3 == 1)
             {
                 float leftRange = modelCenter - modelLeft;
@@ -311,6 +341,7 @@ public class Slicer : MonoBehaviour
         }
         else
         {
+            x = defaultX;
             if (index % 3 == 1)
             {
                 float downRange = modelCenter - modelDown;
@@ -329,7 +360,7 @@ public class Slicer : MonoBehaviour
             }
         }
 
-        z = -100;
+        z = defaultZ;
 
         return new Vector3(x, y, z);
     }
@@ -338,11 +369,8 @@ public class Slicer : MonoBehaviour
     {
         if (index % 3 == 0 && index != 0)
         {
-            sliceTool.transform.localEulerAngles = new Vector3(0, 0, 90);
-        }
-        else
-        {
-            sliceTool.transform.localEulerAngles = new Vector3(0, 0, 0);
+            sliceToolTransform.localEulerAngles = new Vector3(180, 90, 90);
+            sliceToolTransform.localPosition = new Vector3(3, 0, -2);
         }
     }
 
@@ -357,17 +385,19 @@ public class Slicer : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        
         if (sliceType.Equals("Automatic"))
         {
-            Transform sliceToolTransform = sliceTool.transform;
+            Gizmos.color = Color.cyan;
 
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(sliceToolTransform.position, sliceToolTransform.forward * 1000.0f);
+            Gizmos.DrawLine(sliceToolTransform.position, sliceToolTransform.position + sliceToolTransform.forward * bladeVerticalLength);
+            Gizmos.DrawLine(sliceToolTransform.position + sliceToolTransform.up * bladeHorizontalLength, sliceToolTransform.position + sliceToolTransform.up * bladeHorizontalLength + sliceToolTransform.forward * bladeVerticalLength);
+            Gizmos.DrawLine(sliceToolTransform.position + -sliceToolTransform.up * bladeHorizontalLength, sliceToolTransform.position + -sliceToolTransform.up * bladeHorizontalLength + sliceToolTransform.forward * bladeVerticalLength);
+
+            Gizmos.DrawLine(sliceToolTransform.position, sliceToolTransform.position + sliceToolTransform.up * bladeHorizontalLength);
+            Gizmos.DrawLine(sliceToolTransform.position, sliceToolTransform.position + -sliceToolTransform.up * bladeHorizontalLength);
         }
 
-        //Gizmos.DrawLine(sliceToolTransform.position, sliceToolTransform.position + sliceToolTransform.forward*5.0f);
-        //Gizmos.DrawLine(sliceToolTransform.position + sliceToolTransform.up*0.5f, sliceToolTransform.position + sliceToolTransform.up * 0.5f + sliceToolTransform.forward*5.0f);
-        //Gizmos.DrawLine(sliceToolTransform.position + -sliceToolTransform.up * 0.5f, sliceToolTransform.position + -sliceToolTransform.up * 0.5f + sliceToolTransform.forward * 5.0f);
     }
 
 }
