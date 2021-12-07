@@ -49,6 +49,7 @@ public class Slicer : MonoBehaviour
 
         if (sliceType.Equals("Automatic"))
         {
+            
             GetComponent<Rotator>().enabled = false;
             GetComponent<Distributer>().enabled = false;
             GetComponent<Initializer>().enabled = false;
@@ -163,58 +164,10 @@ public class Slicer : MonoBehaviour
                 Debug.Log("Distributed automatically.");
 
                 GetComponent<Distributer>().enabled = true;
-
-                ///initTrickSlices();
-
                 GetComponent<Initializer>().enabled = true;
                 GetComponent<Rotator>().enabled = true;
 
             }
-        }
-    }
-
-    void initTrickSlices()
-    {
-        GameObject trickModel = Instantiate(newParent);
-        trickModel.transform.SetParent(modelSpawnPoint.transform);
-
-        int trickPiecesCount = trickModel.transform.childCount;
-        int randomSliceCount = UnityEngine.Random.Range(1, trickPiecesCount);
-
-        Debug.Log("Trick slices to remove: " + randomSliceCount);
-
-        for (int i = 0; i < randomSliceCount; i++)
-        {
-            int randomIndex = UnityEngine.Random.Range(0, trickPiecesCount - 1);
-            GameObject scrapPiece = trickModel.transform.GetChild(randomIndex).gameObject;
-            Destroy(scrapPiece);
-        }
-
-        float randomDegree;
-        randomDegree = generate(0, 180);
-        trickModel.transform.RotateAround(newParent.transform.position, Vector3.up, randomDegree);
-
-        for (int i = 0; i < trickModel.transform.childCount; i++)
-        {
-            int randomIndex = UnityEngine.Random.Range(0, newParent.transform.childCount - 1);
-            GameObject trickPiece = trickModel.transform.GetChild(i).gameObject;
-            GameObject realPiece = newParent.transform.GetChild(randomIndex).gameObject;
-
-            bool isLeft = (new System.Random().Next(2) == 1);
-
-            float combinedBounds = realPiece.GetComponent<Renderer>().bounds.extents.x + trickPiece.GetComponent<Renderer>().bounds.extents.x + 10;
-            if (isLeft)
-            {
-                trickPiece.transform.position = realPiece.transform.position + Vector3.left * combinedBounds;
-            }
-            else
-            {
-                trickPiece.transform.position = realPiece.transform.position + Vector3.right * combinedBounds;
-            }
-
-
-            // Scale the model
-            trickPiece.transform.localScale *= generate(0.50f, 1f);
         }
     }
 

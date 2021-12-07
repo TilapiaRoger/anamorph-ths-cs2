@@ -24,13 +24,16 @@ public class PlayerMovement : MonoBehaviour
 
 
     private bool canMove = false;
+    private bool isLookingAtModel = false;
 
     private System.Random random;
+
+    private GameObject modelSpawnPoint;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject modelSpawnPoint = GameObject.Find("ModelSpawnPoint");
+        modelSpawnPoint = GameObject.Find("ModelSpawnPoint");
         GameObject model = modelSpawnPoint.transform.GetChild(0).gameObject;
         string modelName = model.name;
 
@@ -48,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
         bool isLeft = (random.Next(2) == 1);
 
-        float combinedBoundsX = GetComponent<Renderer>().bounds.extents.x + 10;
+        float combinedBoundsX = GetComponent<Renderer>().bounds.extents.x;
         if (isLeft)
         {
             userTransform.position = modelSpawnPoint.transform.position + Vector3.left * combinedBoundsX;
@@ -58,12 +61,11 @@ public class PlayerMovement : MonoBehaviour
             userTransform.position = modelSpawnPoint.transform.position + Vector3.right * combinedBoundsX;
         }
 
-        Transform lookedTarget = modelSpawnPoint.transform.GetChild(0);
-        userTransform.LookAt(lookedTarget);
-
         SetRotationX(userTransform.eulerAngles.x);
         SetRotationY(userTransform.eulerAngles.y);
         userTransform.eulerAngles = new Vector3(pitch, yaw, 0);
+
+        isLookingAtModel = true;
     }
 
     public void SetRotationX(float rotationX)
@@ -83,6 +85,14 @@ public class PlayerMovement : MonoBehaviour
         {
             Pan();
             Rotate();
+        }
+
+        if (isLookingAtModel)
+        {
+            Transform lookedTarget = modelSpawnPoint.transform.GetChild(0);
+            userTransform.LookAt(lookedTarget);
+
+            isLookingAtModel = false;
         }
     }
 

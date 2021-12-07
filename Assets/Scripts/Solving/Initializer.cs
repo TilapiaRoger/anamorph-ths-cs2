@@ -24,13 +24,13 @@ public class Initializer : MonoBehaviour
 
     private string modelName;
 
-    private System.Random random;
+    private bool isReadyForTrickSlices = false;
 
-    private GameObject slicedModel;
+    //private bool spawnTrickSlices = false;
     // Start is called before the first frame update
     void Start()
     {
-        random = new System.Random();
+        //GetComponent<TrickSliceSpawner>().enabled = false;
 
         modelParameters = GetComponent<ModelParameters>();
         model = modelParameters.GetModel();
@@ -61,69 +61,17 @@ public class Initializer : MonoBehaviour
         wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
 
-        /*if (modelParameters.GetSlicingType().Equals("Automatic"))
-        {
-            slicedModel = GetComponent<Slicer>().initAutoClone();
-        }
-        else
-        {
-            
-        }*/
-
-        slicedModel = modelSpawnPoint.transform.GetChild(0).gameObject;
-            initTrickSlices();
-
+        isReadyForTrickSlices = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    void initTrickSlices()
-    {
-        //Instantiate the fake slices
-        GameObject trickModel = Instantiate(slicedModel);
-        trickModel.transform.SetParent(modelSpawnPoint.transform);
-
-        int trickPiecesCount = trickModel.transform.childCount;
-        int randomSliceCount = Random.Range(1, trickPiecesCount);
-
-        Debug.Log("Trick slices to remove: " + randomSliceCount);
-
-        for (int i = 0; i < randomSliceCount; i++)
+        if (isReadyForTrickSlices)
         {
-            int randomIndex = Random.Range(0, trickPiecesCount - 1);
-            GameObject scrapPiece = trickModel.transform.GetChild(randomIndex).gameObject;
-            Destroy(scrapPiece);
-        }
-
-        float randomDegree;
-        randomDegree = generate(0, 180);
-        trickModel.transform.RotateAround(slicedModel.transform.position, Vector3.up, randomDegree);
-
-        for (int i = 0; i < trickModel.transform.childCount; i++)
-        {
-            int randomIndex = Random.Range(0, slicedModel.transform.childCount - 1);
-            GameObject trickPiece = trickModel.transform.GetChild(i).gameObject;
-            GameObject realPiece = slicedModel.transform.GetChild(randomIndex).gameObject;
-
-            bool isLeft = (random.Next(2) == 1);
-
-            float combinedBounds = realPiece.GetComponent<Renderer>().bounds.extents.x + trickPiece.GetComponent<Renderer>().bounds.extents.x + 10;
-            if (isLeft)
-            {
-                trickPiece.transform.position = realPiece.transform.position + Vector3.left * combinedBounds;
-            }
-            else
-            {
-                trickPiece.transform.position = realPiece.transform.position + Vector3.right * combinedBounds;
-            }
-
-
-            // Scale the model
-            trickPiece.transform.localScale *= generate(0.50f, 1f);
+            GameObject slicedModel = modelSpawnPoint.transform.GetChild(0).gameObject;
+            GetComponent<TrickSliceSpawner>().initTrickSlices(modelSpawnPoint, slicedModel);
+            isReadyForTrickSlices = false;
         }
     }
 
