@@ -61,9 +61,7 @@ public class PlayerMovement : MonoBehaviour
             userTransform.position = modelSpawnPoint.transform.position + Vector3.right * combinedBoundsX;
         }
 
-        SetRotationX(userTransform.eulerAngles.x);
-        SetRotationY(userTransform.eulerAngles.y);
-        userTransform.eulerAngles = new Vector3(pitch, yaw, 0);
+        
 
         isLookingAtModel = true;
     }
@@ -81,18 +79,23 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(canMove == true)
-        {
-            Pan();
-            Rotate();
-        }
-
         if (isLookingAtModel)
         {
             Transform lookedTarget = modelSpawnPoint.transform.GetChild(0);
             userTransform.LookAt(lookedTarget);
 
+            SetRotationX(userTransform.eulerAngles.x);
+            SetRotationY(userTransform.eulerAngles.y);
+            userTransform.eulerAngles = new Vector3(pitch, yaw, 0);
+
             isLookingAtModel = false;
+        }
+
+
+        if (canMove == true)
+        {
+            Pan();
+            Rotate();
         }
     }
 
