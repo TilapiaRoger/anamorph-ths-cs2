@@ -9,9 +9,9 @@ public class Initializer : MonoBehaviour
                       player,
                       winningPoint,
                       blade;
-    public float d;
+    public float d = 5;
 
-    private GameObject sphere,
+    private GameObject winningSphere,
                        target;
 
     private ModelParameters modelParameters;
@@ -31,24 +31,25 @@ public class Initializer : MonoBehaviour
         modelName = modelParameters.modelName;
 
         modelName = model.name;
-
-        SetD(modelName);
+        
+        //SetD(modelName);
 
         // Instantiate the model
         model.SetActive(true);
         model.transform.localScale = d / 10 * new Vector3(1, 1, 1);
         model.transform.localEulerAngles = new Vector3(0, 180, 0);
         Instantiate(model, modelSpawnPoint.transform);
+        model.name = "Model";
         model.transform.SetAsFirstSibling();
 
         // Instantiate an invisible cylinder at modelSpawnPoint
         mspDistance = generate(d, gbDistance - d);
         Debug.Log("MSP Distance: " + mspDistance);
         target = GameObject.Find("Target");
+
         // Resizes the target and
         // Gets the size of the largest side of the bounding box of the target.
-        greatestBound = ResizeTarget(target, model);
-        Debug.Log("Greatest bound: " + greatestBound);
+        ResizeTarget(target, model);
         target.transform.SetParent(modelSpawnPoint.transform);
         target.transform.position += new Vector3(0, 0, greatestBound);
         modelSpawnPoint.transform.position = new Vector3(0f, 0f, mspDistance);
@@ -56,6 +57,11 @@ public class Initializer : MonoBehaviour
         // Initialize the winningPoint
         wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
+        Debug.Log("wpDistance: " + wpDistance);
+        // Instantiate an invisible sphere at winningPoint
+        winningSphere = GameObject.Find("WinningSphere");
+        winningSphere.transform.position = winningPoint.transform.position;
+        winningSphere.transform.SetParent(winningPoint.transform);
     }
 
     // Update is called once per frame
@@ -94,14 +100,18 @@ public class Initializer : MonoBehaviour
         Debug.Log("Model name contains a number between" + range + ", therefore d = " + d);
     }
     
-    private float ResizeTarget(GameObject target, GameObject model)
+    private void ResizeTarget(GameObject target, GameObject model)
     {
         Bounds modelBounds = GetBounds(model);
-        target.transform.localScale = new Vector3(modelBounds.size.x * model.transform.localScale.x,
-                                                  0,
-                                                  modelBounds.size.z * model.transform.localScale.z);
-        return Mathf.Max(modelBounds.size.x * model.transform.localScale.x,
-                         modelBounds.size.z * model.transform.localScale.z);
+
+        float xprod = modelBounds.size.x * model.transform.localScale.x,
+              zprod = modelBounds.size.z * model.transform.localScale.z,
+              max = Mathf.Max(xprod, zprod);
+
+        target.transform.localScale = new Vector3(max, 0, max);
+
+        Debug.Log("x: " + modelBounds.size.x + " * " + model.transform.localScale.x + " = " + xprod);
+        Debug.Log("z: " + modelBounds.size.z + " * " + model.transform.localScale.z + " = " + zprod);
     }
 
     private Bounds GetBounds(GameObject model)
@@ -112,17 +122,15 @@ public class Initializer : MonoBehaviour
         if(renderers.Length > 0)
         {
             //Find first enabled renderer to start encapsulate from it
-            foreach(Renderer renderer in renderers)
-                if(renderer.enabled)
-                {
-                    bounds = renderer.bounds;
-                    break;
-                }
+            foreach(Renderer renderer in renderers) if(renderer.enabled)
+            {
+                bounds = renderer.bounds;
+                break;
+            }
 
             //Encapsulate for all renderers
-            foreach(Renderer renderer in renderers)
-                if(renderer.enabled) 
-                    bounds.Encapsulate(renderer.bounds);
+            foreach(Renderer renderer in renderers) if(renderer.enabled) 
+                bounds.Encapsulate(renderer.bounds);
         }
 
         return bounds;
