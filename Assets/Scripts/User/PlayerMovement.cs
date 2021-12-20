@@ -50,18 +50,33 @@ public class PlayerMovement : MonoBehaviour
         random = new System.Random();
 
         bool isLeft = (random.Next(2) == 1);
+        bool isDown = (random.Next(2) == 1);
 
+        float randomX = 0;
         float combinedBoundsX = GetComponent<Renderer>().bounds.extents.x;
         if (isLeft)
         {
-            userTransform.position = modelSpawnPoint.transform.position + Vector3.left * combinedBoundsX;
+            randomX = generate(-5f, 0);
+            userTransform.position = modelSpawnPoint.transform.position + (Vector3.left * combinedBoundsX) + new Vector3(randomX, 0, 0);
         }
         else
         {
-            userTransform.position = modelSpawnPoint.transform.position + Vector3.right * combinedBoundsX;
+            randomX = generate(0, 5f);
+            userTransform.position = modelSpawnPoint.transform.position + (Vector3.right * combinedBoundsX) + new Vector3(randomX, 0, 0);
         }
 
-        
+        float randomY = 0;
+        float combinedBoundsY = GetComponent<Renderer>().bounds.extents.y;
+        if (isDown)
+        {
+            randomY = generate(-5f, 0);
+            userTransform.position = userTransform.position + (Vector3.down * combinedBoundsY) + new Vector3(0, randomY, 0);
+        }
+        else
+        {
+            randomY = generate(0, 5f);
+            userTransform.position = userTransform.position + (Vector3.up * combinedBoundsY) + new Vector3(0, randomY, 0);
+        }
 
         isLookingAtModel = true;
     }
@@ -82,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
         if (isLookingAtModel)
         {
             Transform lookedTarget = modelSpawnPoint.transform.GetChild(0);
+            //lookedTarget = selectedModel.transform.GetChild(UnityEngine.Random.Range(0, selectedModel.transform.childCount-1));
             userTransform.LookAt(lookedTarget);
 
             SetRotationX(userTransform.eulerAngles.x);
@@ -90,7 +106,6 @@ public class PlayerMovement : MonoBehaviour
 
             isLookingAtModel = false;
         }
-
 
         if (canMove == true)
         {

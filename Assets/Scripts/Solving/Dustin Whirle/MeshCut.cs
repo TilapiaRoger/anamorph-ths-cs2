@@ -33,11 +33,16 @@ public class MeshCut
         var mesh_normals = victimMesh.normals;
         var mesh_uvs = victimMesh.uv;
 
+        Debug.Log("UV: " + mesh_uvs);
         if (mesh_uvs != null && mesh_uvs.Length == 0)
         {
             mesh_uvs = new Vector2[mesh_vertices.Length];
             for (int i = 0; i < mesh_uvs.Length; i++)
+            {
                 mesh_uvs[i] = new Vector2(mesh_vertices[i].x, mesh_vertices[i].z);
+                Debug.Log("Vertices on UV's: " + mesh_vertices[i].x + ", " + mesh_vertices[i].z);
+            }
+
 
             victimMesh.uv = mesh_uvs;
         }
@@ -53,6 +58,7 @@ public class MeshCut
         {
             // Triangles
             var indices = victimMesh.GetTriangles(submeshIterator);
+            Debug.Log("Current indices" + indices);
 
             for (int i = 0; i < indices.Length; i += 3)
             {

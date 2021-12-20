@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class StartSolving : MonoBehaviour
 {
     [SerializeField] private Button startButton;
+    [SerializeField] private Image blackBackground;
     [SerializeField] private GameObject puzzleModelLocation;
 
     [SerializeField] private GameObject player;
@@ -45,6 +46,7 @@ public class StartSolving : MonoBehaviour
         }
 
         startButton.gameObject.SetActive(false);
+        blackBackground.gameObject.SetActive(false);
     }
 
     

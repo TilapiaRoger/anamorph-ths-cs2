@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class ChooseModelUI : MonoBehaviour
 {
+    [SerializeField] 
+
     List<string> automaticDistributeOptions;
 
     [SerializeField] private Dropdown modelListDropdown;
@@ -53,12 +55,14 @@ public class ChooseModelUI : MonoBehaviour
                 distributeTypeDropdown.ClearOptions();
                 distributeTypeDropdown.AddOptions(automaticDistributeOptions);
                 modelParams.distributeType = distributeTypeDropdown.options[distributeTypeDropdown.value].text;
+                distributeTypeDropdown.interactable = false;
             }
             else if (modelParams.sliceType == "Manual")
             {
                 automaticDistributeOptions = new List<string>() { "Manual", "Automatic" };
                 distributeTypeDropdown.ClearOptions();
                 distributeTypeDropdown.AddOptions(automaticDistributeOptions);
+                distributeTypeDropdown.interactable = true;
             }
 
         });

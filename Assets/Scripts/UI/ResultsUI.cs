@@ -19,16 +19,24 @@ public class ResultsUI : MonoBehaviour
 
     [SerializeField] private GameObject modelUsed;
 
+    private GameObject player;
+    private PlayerMovement playerMovement;
+
+    private float timer = 0.0f;
+
+    private bool finishSolve = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
+        playerMovement = player.GetComponent<PlayerMovement>();
         resultsWindow.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void FinishSolving()
@@ -39,16 +47,16 @@ public class ResultsUI : MonoBehaviour
 
         sFinalTimeSolved = solveUI.getFinalTime();
 
-        modelLabel.text = "Model solved: " + modelName;
-        timeLabel.text = "Time to solve: " + sFinalTimeSolved;
+        modelLabel.text = modelName;
+        timeLabel.text = sFinalTimeSolved;
 
         resultsWindow.gameObject.SetActive(true);
 
-        Time.timeScale = 0;
     }
 
     public void ReturnToMainMenu()
     {
+        Time.timeScale = 0;
         SceneManager.LoadScene("MainMenuScene");
     }
 }

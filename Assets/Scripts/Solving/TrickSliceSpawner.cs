@@ -55,7 +55,7 @@ public class TrickSliceSpawner : MonoBehaviour
 
 
             // Scale the model
-            trickPiece.transform.localScale *= generate(0.50f, 1f);
+            trickPiece.transform.localScale *= generate(0.1f, 0.5f);
         }
     }
 

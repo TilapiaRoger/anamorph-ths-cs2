@@ -15,6 +15,7 @@ public class Solver : MonoBehaviour
     private float lookAccuracy,
                   positionAccuracy;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +41,7 @@ public class Solver : MonoBehaviour
 
     private void results()
     {
-        if (checkPosition() && checkAngle())
+        if (checkPosition() && checkAngle() && Time.timeScale == 1)
         {
             Debug.Log("Congratulations.\n" +
                       "Positions: " + hitPosition + ", " + playerPosition + "\n" +

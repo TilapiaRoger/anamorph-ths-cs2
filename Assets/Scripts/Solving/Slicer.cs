@@ -96,10 +96,9 @@ public class Slicer : MonoBehaviour
         Debug.Log("Imported model size: " + bounds.size);
         initParent();
 
-        Initializer initializer = GetComponent<Initializer>();
-        float distance = initializer.d;
-
         scaleModel();
+
+        size = collider.size * selectedModel.transform.localScale.x;
 
         shouldExecute = true;
     }
@@ -163,12 +162,17 @@ public class Slicer : MonoBehaviour
 
                 Debug.Log("Distributed automatically.");
 
-                GetComponent<Distributer>().enabled = true;
                 GetComponent<Initializer>().enabled = true;
+                GetComponent<Distributer>().enabled = true;
                 GetComponent<Rotator>().enabled = true;
 
             }
         }
+    }
+
+    public bool isFinishedSlicing()
+    {
+        return finishedSlicing;
     }
 
     float generate(float min, float max)
@@ -232,11 +236,6 @@ public class Slicer : MonoBehaviour
         selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
 
         size = collider.size * selectedModel.transform.localScale.x;
-    }
-
-    public bool isFinishedSlicing()
-    {
-        return finishedSlicing;
     }
 
     private (float, float, float, float) GetModelStats()
@@ -339,7 +338,7 @@ public class Slicer : MonoBehaviour
     private void OnDrawGizmos()
     {
         
-        if (sliceType.Equals("Automatic"))
+        if (sliceType.Equals("Automatic") && sliceTool != null)
         {
             Gizmos.color = Color.cyan;
 
