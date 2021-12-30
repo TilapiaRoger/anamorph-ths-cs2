@@ -205,6 +205,8 @@ public class Slicer : MonoBehaviour
 
             newScale = 1 / Mathf.Pow(10, digitsCtr);
             newScale = newScale * 2;
+
+            Debug.Log("New scale: " + newScale);
         }
         else if (Mathf.Max(collider.size.x, collider.size.y, collider.size.z) < 1)
         {
@@ -228,12 +230,18 @@ public class Slicer : MonoBehaviour
         {
             selectedModel.transform.localEulerAngles = new Vector3(0, 90, 0);
         }
-        if (modelMesh.name.StartsWith("08"))
+        else if (modelMesh.name.StartsWith("08"))
         {
             selectedModel.transform.localEulerAngles = new Vector3(0, 180, 0);
         }
+        else if (modelMesh.name.StartsWith("10"))
+        {
+            selectedModel.transform.localEulerAngles = new Vector3(90, 0, 0);
+            Debug.Log("Rotate Phleg Dragon");
+        }
 
         selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
+
 
         size = collider.size * selectedModel.transform.localScale.x;
     }

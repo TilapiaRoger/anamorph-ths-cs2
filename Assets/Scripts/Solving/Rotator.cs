@@ -67,12 +67,22 @@ public class Rotator : MonoBehaviour
         //winningPoint.transform.LookAt(origin.transform);
 
 
-        float randomX, randomY, randomZ;
-        randomX = generate(-180, 180);
-        randomY = generate(-180, 180);
-        randomZ = generate(-180, 180);
+        float randomYPos, randomYRotation;
+        float randomXRotation, randomZRotation;
+        randomYPos = generate(-30, 30);
+        randomYRotation = generate(-180, 180);
+        randomXRotation = 180;
+        randomZRotation = 90;
 
-        origin.transform.localEulerAngles = new Vector3(randomX, randomY, randomZ);
+        int isNegativeZ = Random.Range(0, 1);
+
+        if(isNegativeZ == 0)
+        {
+            randomZRotation = -90;
+        }
+
+        origin.transform.Rotate(0, randomYRotation, 0);
+        //origin.transform.localPosition = origin.transform.localPosition + new Vector3(0, randomYPos, 0);
     }
 
     float generate(float min, float max)

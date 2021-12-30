@@ -7391,7 +7391,7 @@ GameObject:
   - component: {fileID: 2055380434}
   - component: {fileID: 2055380433}
   - component: {fileID: 2055380432}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: WinningSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

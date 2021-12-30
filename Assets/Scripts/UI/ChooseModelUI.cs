@@ -11,8 +11,7 @@ public class ChooseModelUI : MonoBehaviour
     List<string> automaticDistributeOptions;
 
     [SerializeField] private Dropdown modelListDropdown;
-    [SerializeField] private Dropdown sliceTypeDropdown;
-    [SerializeField] private Dropdown distributeTypeDropdown;
+    [SerializeField] private Dropdown sliceDistributeTypeDropdown;
 
     [SerializeField] private GameObject gameManager;
     ModelList modelList;
@@ -34,8 +33,8 @@ public class ChooseModelUI : MonoBehaviour
         initModelDropdown();
         modelList.initPuzzleModelTable();
 
-        modelParams.sliceType = sliceTypeDropdown.options[0].text;
-        modelParams.distributeType = distributeTypeDropdown.options[0].text;
+        modelParams.sliceType = "Manual";
+        modelParams.distributeType = "Manual";
         modelParams.modelName = modelListDropdown.options[0].text;
 
         //modelParams.setModel(modelParams.sliceType, modelParams.distributeType, modelParams.modelName);
@@ -45,33 +44,29 @@ public class ChooseModelUI : MonoBehaviour
             modelParams.modelName = modelListDropdown.options[modelListDropdown.value].text;
         });
 
-        sliceTypeDropdown.onValueChanged.AddListener(delegate
+        sliceDistributeTypeDropdown.onValueChanged.AddListener(delegate
         {
-            modelParams.sliceType = sliceTypeDropdown.options[sliceTypeDropdown.value].text;
+            modelParams.sliceType = sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text;
 
-            if (modelParams.sliceType == "Automatic")
+            if (modelParams.sliceType == "Manual Slicing and Distribution")
             {
-                automaticDistributeOptions.Remove("Manual");
-                distributeTypeDropdown.ClearOptions();
-                distributeTypeDropdown.AddOptions(automaticDistributeOptions);
-                modelParams.distributeType = distributeTypeDropdown.options[distributeTypeDropdown.value].text;
-                distributeTypeDropdown.interactable = false;
+                modelParams.sliceType = "Manual";
+                modelParams.distributeType = "Manual";
+
             }
-            else if (modelParams.sliceType == "Manual")
+            else if (modelParams.sliceType == "Auto Slicing and Distribution")
             {
-                automaticDistributeOptions = new List<string>() { "Manual", "Automatic" };
-                distributeTypeDropdown.ClearOptions();
-                distributeTypeDropdown.AddOptions(automaticDistributeOptions);
-                distributeTypeDropdown.interactable = true;
+                modelParams.sliceType = "Automatic";
+                modelParams.distributeType = "Automatic";
+            }
+            else if (modelParams.sliceType == "Manual Slicing, Auto Distribution")
+            {
+                modelParams.sliceType = "Manual";
+                modelParams.distributeType = "Automatic";
             }
 
         });
 
-        distributeTypeDropdown.onValueChanged.AddListener(delegate
-        {
-            modelParams.distributeType = distributeTypeDropdown.options[distributeTypeDropdown.value].text;
-
-        });
 
         modelParams.setModel(modelParams.sliceType, modelParams.distributeType, modelParams.modelName);
         modelParams.SetDistributeStatus(modelParams.distributeType);
