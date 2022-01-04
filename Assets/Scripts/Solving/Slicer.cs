@@ -40,6 +40,18 @@ public class Slicer : MonoBehaviour
     private float modelWidth, modelHeight;
     private Vector3 size;
 
+    private bool isReadyForInit = false;
+
+    public bool ReadyForInit()
+    {
+        return isReadyForInit;
+    }
+
+    public void SetInitStatus(bool toInit)
+    {
+        isReadyForInit = toInit;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,10 +61,8 @@ public class Slicer : MonoBehaviour
 
         if (sliceType.Equals("Automatic"))
         {
-            
             GetComponent<Rotator>().enabled = false;
             GetComponent<Distributer>().enabled = false;
-            GetComponent<Initializer>().enabled = false;
 
             Slice();
         }
@@ -162,7 +172,7 @@ public class Slicer : MonoBehaviour
 
                 Debug.Log("Distributed automatically.");
 
-                GetComponent<Initializer>().enabled = true;
+                SetInitStatus(true);
                 GetComponent<Distributer>().enabled = true;
                 GetComponent<Rotator>().enabled = true;
 
@@ -237,7 +247,6 @@ public class Slicer : MonoBehaviour
         else if (modelMesh.name.StartsWith("10"))
         {
             selectedModel.transform.localEulerAngles = new Vector3(90, 0, 0);
-            Debug.Log("Rotate Phleg Dragon");
         }
 
         selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;

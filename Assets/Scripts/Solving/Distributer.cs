@@ -31,6 +31,7 @@ public class Distributer : MonoBehaviour
     private Vector3 mspPosition,
                     wpPosition;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +42,7 @@ public class Distributer : MonoBehaviour
             Distribute();
         }
     }
+
 
     // Update is called once per frame
     void Update()

@@ -6,9 +6,7 @@ using UnityEngine.UI;
 
 public class ChooseModelUI : MonoBehaviour
 {
-    [SerializeField] 
-
-    List<string> automaticDistributeOptions;
+    [SerializeField] List<string> automaticDistributeOptions;
 
     [SerializeField] private Dropdown modelListDropdown;
     [SerializeField] private Dropdown sliceDistributeTypeDropdown;
@@ -19,6 +17,9 @@ public class ChooseModelUI : MonoBehaviour
 
     private float ticks = 0.0f;
     private float SPAWN_INTERVAL = 1.0f;
+
+    [SerializeField] Image selectedModelImage;
+    [SerializeField] List<Sprite> modelImages;
 
     // Start is called before the first frame update
     void Start()
@@ -42,33 +43,36 @@ public class ChooseModelUI : MonoBehaviour
         modelListDropdown.onValueChanged.AddListener(delegate
         {
             modelParams.modelName = modelListDropdown.options[modelListDropdown.value].text;
+            selectedModelImage.sprite = modelImages[modelListDropdown.value];
         });
 
         sliceDistributeTypeDropdown.onValueChanged.AddListener(delegate
         {
-            modelParams.sliceType = sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text;
-
-            if (modelParams.sliceType == "Manual Slicing and Distribution")
+            if (sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text == "Manual Slicing and Distribution")
             {
                 modelParams.sliceType = "Manual";
                 modelParams.distributeType = "Manual";
 
             }
-            else if (modelParams.sliceType == "Auto Slicing and Distribution")
+            else if (sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text == "Auto Slicing and Distribution")
             {
                 modelParams.sliceType = "Automatic";
                 modelParams.distributeType = "Automatic";
             }
-            else if (modelParams.sliceType == "Manual Slicing, Auto Distribution")
+            else if (sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text == "Manual Slicing, Auto Distribution")
             {
                 modelParams.sliceType = "Manual";
                 modelParams.distributeType = "Automatic";
+
             }
 
+            Debug.Log("Slice: " + modelParams.sliceType);
+            Debug.Log("Distribute: " + modelParams.distributeType);
         });
 
 
         modelParams.setModel(modelParams.sliceType, modelParams.distributeType, modelParams.modelName);
+        modelParams.SetSliceStatus(modelParams.sliceType);
         modelParams.SetDistributeStatus(modelParams.distributeType);
 
     }
@@ -77,11 +81,9 @@ public class ChooseModelUI : MonoBehaviour
     void Update()
     {
         modelParams.setModel(modelParams.sliceType, modelParams.distributeType, modelParams.modelName);
+        modelParams.SetSliceStatus(modelParams.sliceType);
         modelParams.SetDistributeStatus(modelParams.distributeType);
 
-
-        Debug.Log("Slice: " + modelParams.sliceType);
-        Debug.Log("Distribute: " + modelParams.distributeType);
     }
 
     void initModelDropdown()

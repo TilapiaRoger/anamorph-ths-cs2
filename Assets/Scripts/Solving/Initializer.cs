@@ -27,7 +27,7 @@ public class Initializer : MonoBehaviour
     private string modelName;
 
     private bool isReadyForTrickSlices = false;
-    private bool isReadyForInit = true;
+    private bool isReadyForInit = false;
     private bool isAutomaticallySliced = false;
 
 
@@ -59,20 +59,27 @@ public class Initializer : MonoBehaviour
 
         winningSphere = GameObject.Find("WinningSphere");
 
-        Debug.Log("Distribution type: " + modelParameters.GetDistributionType());
+        Debug.Log("In game slicing type: " + modelParameters.GetSlicingType());
         if (modelParameters.GetSlicingType() == "Manual")
         {
             InitializeConditions();
         }
+        else if (modelParameters.GetSlicingType() == "Automatic")
+        {
+            isReadyForInit = GetComponent<Slicer>().ReadyForInit();
+            Debug.Log("Is ready for init? " + isReadyForInit);
+        }
+
+        /*if (modelParameters.GetDistributionType() == "Automatic")
+        {
+            InitializeConditions();
+        }*/
         //isReadyForTrickSlices = true;
     }
 
     private void OnEnable()
     {
-        if (modelParameters.GetSlicingType() == "Automatic")
-        {
-            InitializeConditions();
-        }
+        
     }
 
     void InitializeConditions()
@@ -82,7 +89,7 @@ public class Initializer : MonoBehaviour
         Debug.Log("MSP Distance: " + mspDistance);
 
         //modelParameters = GetComponent<ModelParameters>();
-        newModel = model;
+        newModel = modelSpawnPoint.transform.GetChild(0).gameObject;
         /*if (modelParameters.GetSlicingType() == "Automatic")
         {
             newModel = modelSpawnPoint.transform.GetChild(0).gameObject;
@@ -123,6 +130,12 @@ public class Initializer : MonoBehaviour
             }
         }*/
 
+        if (modelParameters.GetSlicingType() == "Automatic" && GetComponent<Slicer>().ReadyForInit() == true)
+        {
+            InitializeConditions();
+            GetComponent<Slicer>().SetInitStatus(false);
+            Debug.Log("Still ready for init? " + GetComponent<Slicer>().ReadyForInit());
+        }
     }
 
 
@@ -175,11 +188,13 @@ public class Initializer : MonoBehaviour
         Bounds bounds = new Bounds();
         Renderer[] renderers = model.GetComponentsInChildren<Renderer>();
 
+
         if (renderers.Length > 0)
         {
             //Find first enabled renderer to start encapsulate from it
             foreach (Renderer renderer in renderers) if (renderer.enabled)
                 {
+                    Debug.Log("Current renderer: " + renderer);
                     bounds = renderer.bounds;
                     break;
                 }
