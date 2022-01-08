@@ -56,10 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
         do
         {
-            float combinedBoundsZ = GetComponent<Renderer>().bounds.extents.z;
-
             playerSpawnPoint = modelSpawnPoint.transform.position + UnityEngine.Random.onUnitSphere * posRadius;
-            //playerSpawnPoint.z = -Math.Abs(playerSpawnPoint.z);
         }
         while (Vector3.Distance(playerSpawnPoint, Vector3.zero) >= sphereRadius);
 
@@ -81,21 +78,18 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (Input.GetMouseButton(0))
-        {
-            userTransform.position = modelSpawnPoint.transform.position + UnityEngine.Random.onUnitSphere * posRadius;
-            isLookingAtModel = true;
-        }*/
-
         if (isLookingAtModel)
         {
             Transform lookedTarget = modelSpawnPoint.transform.GetChild(0);
             //lookedTarget = selectedModel.transform.GetChild(UnityEngine.Random.Range(0, selectedModel.transform.childCount-1));
-            userTransform.LookAt(lookedTarget);
+
+            userTransform.LookAt(modelSpawnPoint.transform);
 
             SetRotationX(userTransform.eulerAngles.x);
             SetRotationY(userTransform.eulerAngles.y);
             userTransform.eulerAngles = new Vector3(pitch, yaw, 0);
+
+
 
             isLookingAtModel = false;
         }

@@ -198,15 +198,15 @@ public class Initializer : MonoBehaviour
             if (Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z) >= 0.1 &&
                 Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z) < 0.3)
             {
-                newScale = 10.0f;
+                newScale = 30.0f;
             }
             else if (Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z) < 0.1)
             {
-                newScale = 50.0f;
+                newScale = 150.0f;
             }
             else
             {
-                newScale = 7.0f;
+                newScale = 10.0f;
             }
         }
 

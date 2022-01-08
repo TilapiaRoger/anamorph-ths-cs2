@@ -53,6 +53,7 @@ public class Slicer : MonoBehaviour
 
         if (sliceType.Equals("Automatic"))
         {
+            GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = false;
             GetComponent<Distributer>().enabled = false;
             GetComponent<Rotator>().enabled = false;
 
@@ -171,6 +172,7 @@ public class Slicer : MonoBehaviour
 
                 GetComponent<Distributer>().enabled = true;
                 GetComponent<Rotator>().enabled = true;
+                GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = true;
 
             }
         }
@@ -219,15 +221,15 @@ public class Slicer : MonoBehaviour
             if (Mathf.Max(collider.size.x, collider.size.y, collider.size.z) >= 0.1 &&
                 Mathf.Max(collider.size.x, collider.size.y, collider.size.z) < 0.3)
             {
-                newScale = 10.0f;
+                newScale = 30.0f;
             }
             else if (Mathf.Max(collider.size.x, collider.size.y, collider.size.z) < 0.1)
             {
-                newScale = 50.0f;
+                newScale = 150.0f;
             }
             else
             {
-                newScale = 7.0f;
+                newScale = 10.0f;
             }
         }
 
@@ -236,15 +238,7 @@ public class Slicer : MonoBehaviour
         {
             selectedModel.transform.localEulerAngles = new Vector3(0, 90, 0);
         }
-        else if (modelMesh.name.StartsWith("07"))
-        {
-            selectedModel.transform.localEulerAngles = new Vector3(90, 0, 0);
-        }
-        else if (modelMesh.name.StartsWith("08"))
-        {
-            selectedModel.transform.localEulerAngles = new Vector3(0, 180, 0);
-        }
-        else if (modelMesh.name.StartsWith("10"))
+        else if (modelMesh.name.StartsWith("07") || modelMesh.name.StartsWith("10"))
         {
             selectedModel.transform.localEulerAngles = new Vector3(90, 180, 0);
         }

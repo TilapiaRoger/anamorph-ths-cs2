@@ -20,6 +20,7 @@ public class SceneTransition : MonoBehaviour
     public void NextScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        Time.timeScale = 1;
     }
 
     public void QuitApp()

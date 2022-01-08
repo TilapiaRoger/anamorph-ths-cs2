@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -56,13 +57,13 @@ public class Rotator : MonoBehaviour
     void rotate()
     {
         // Rotate modelSpawnPoint around winningPoint
-        modelSpawnPoint.transform.RotateAround(winningPoint.transform.position, Vector3.up, Random.Range(0, 360));
+        modelSpawnPoint.transform.RotateAround(winningPoint.transform.position, Vector3.up, UnityEngine.Random.Range(0, 360));
         Debug.Log("X = " + winningPoint.transform.position + " Y = " + Vector3.up + " Z = " + modelSpawnPoint.transform.eulerAngles.z);
         //modelSpawnPoint.transform.RotateAround(winningPoint.transform.position, Vector3.right, Random.Range(0, 360));
         //modelSpawnPoint.transform.LookAt(winningPoint.transform);
 
         // Rotate modelSpawnPoint and winningPoint around origin
-        winningPoint.transform.RotateAround(origin.transform.position, Vector3.up, Random.Range(0, 360));
+        winningPoint.transform.RotateAround(origin.transform.position, Vector3.up, UnityEngine.Random.Range(0, 360));
         //winningPoint.transform.RotateAround(origin.transform.position, Vector3.right, Random.Range(0, 360));
         //winningPoint.transform.LookAt(origin.transform);
 
@@ -70,18 +71,13 @@ public class Rotator : MonoBehaviour
         float randomYPos, randomYRotation;
         float randomXRotation, randomZRotation;
         randomYPos = generate(-30, 30);
-        randomYRotation = generate(-180, 180);
-        randomXRotation = 180;
-        randomZRotation = 90;
-
-        int isNegativeZ = Random.Range(0, 1);
-
-        if(isNegativeZ == 0)
-        {
-            randomZRotation = -90;
-        }
+        randomYRotation = UnityEngine.Random.Range(-180, 180);
+        randomZRotation = UnityEngine.Random.Range(-180, 180);
 
         origin.transform.Rotate(0, randomYRotation, 0);
+        origin.transform.Rotate(0, 0, randomZRotation);
+
+        modelSpawnPoint.transform.GetChild(0).Rotate(0, 0, -Math.Abs(randomZRotation));
         //origin.transform.localPosition = origin.transform.localPosition + new Vector3(0, randomYPos, 0);
     }
 
