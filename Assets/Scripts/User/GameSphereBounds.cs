@@ -41,7 +41,6 @@ public class GameSphereBounds : MonoBehaviour
 
             curPosition *= sphereRadius / distance;
             player.position = centerPosition + curPosition;
-            //transform.position = player.position;
 
             Debug.Log("Player gets out of bounds!");
         }

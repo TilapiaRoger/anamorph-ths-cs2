@@ -30,11 +30,7 @@ public class Initializer : MonoBehaviour
     private bool isReadyForInit = false;
     private bool isAutomaticallySliced = false;
 
-
-    private void Awake()
-    {
-        
-    }
+    private float newScale = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -60,26 +56,30 @@ public class Initializer : MonoBehaviour
         winningSphere = GameObject.Find("WinningSphere");
 
         Debug.Log("In game slicing type: " + modelParameters.GetSlicingType());
+
         if (modelParameters.GetSlicingType() == "Manual")
         {
-            InitializeConditions();
-        }
-        else if (modelParameters.GetSlicingType() == "Automatic")
-        {
-            isReadyForInit = GetComponent<Slicer>().ReadyForInit();
-            Debug.Log("Is ready for init? " + isReadyForInit);
+            if (modelParameters.GetDistributionType() == "Manual")
+            {
+                d = d - 3;
+            }
         }
 
-        /*if (modelParameters.GetDistributionType() == "Automatic")
+        InitializeConditions();
+
+
+        /*modelParameters = GetComponent<ModelParameters>();
+
+        if (modelParameters.GetSlicingType() == "Automatic")
         {
             InitializeConditions();
         }*/
-        //isReadyForTrickSlices = true;
     }
 
-    private void OnEnable()
+    void Awake()
     {
         
+
     }
 
     void InitializeConditions()
@@ -121,21 +121,6 @@ public class Initializer : MonoBehaviour
             isReadyForTrickSlices = false;
         }*/
 
-        /*if (isAutomaticallySliced)
-        {
-            if (GetComponent<Slicer>().isFinishedSlicing())
-            {
-                model = modelSpawnPoint.transform.GetChild(0).gameObject;
-                isAutomaticallySliced = false;
-            }
-        }*/
-
-        if (modelParameters.GetSlicingType() == "Automatic" && GetComponent<Slicer>().ReadyForInit() == true)
-        {
-            InitializeConditions();
-            GetComponent<Slicer>().SetInitStatus(false);
-            Debug.Log("Still ready for init? " + GetComponent<Slicer>().ReadyForInit());
-        }
     }
 
 
@@ -173,14 +158,59 @@ public class Initializer : MonoBehaviour
     {
         Bounds modelBounds = GetBounds(model);
 
-        float xprod = modelBounds.size.x * model.transform.localScale.x,
-              zprod = modelBounds.size.z * model.transform.localScale.z,
+        if(modelParameters.GetSlicingType() == "Automatic")
+        {
+            newScale = newScaleTarget(modelBounds);
+        }
+
+        float xprod = modelBounds.size.x * model.transform.localScale.x * newScale,
+              zprod = modelBounds.size.z * model.transform.localScale.z * newScale,
               max = Mathf.Max(xprod, zprod);
 
         target.transform.localScale = new Vector3(max, 0, max);
 
         Debug.Log("x: " + modelBounds.size.x + " * " + model.transform.localScale.x + " = " + xprod);
         Debug.Log("z: " + modelBounds.size.z + " * " + model.transform.localScale.z + " = " + zprod);
+    }
+
+    private float newScaleTarget(Bounds bounds)
+    {
+        if (Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z) >= 10)
+        {
+            float[] scaleCoordinates = { bounds.size.x, bounds.size.y, bounds.size.z };
+
+            int biggestScale = (int)scaleCoordinates.Max();
+            Debug.Log("Max: " + biggestScale);
+
+            int digitsCtr = 0;
+            while ((biggestScale /= 10) != 0)
+            {
+                digitsCtr++;
+            }
+
+            newScale = 1 / Mathf.Pow(10, digitsCtr);
+            newScale = newScale * 2;
+
+            Debug.Log("New scale: " + newScale);
+        }
+        else if (Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z) < 1)
+        {
+            if (Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z) >= 0.1 &&
+                Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z) < 0.3)
+            {
+                newScale = 10.0f;
+            }
+            else if (Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z) < 0.1)
+            {
+                newScale = 50.0f;
+            }
+            else
+            {
+                newScale = 7.0f;
+            }
+        }
+
+        return newScale;
     }
 
     private Bounds GetBounds(GameObject model)

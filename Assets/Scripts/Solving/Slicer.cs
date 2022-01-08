@@ -34,23 +34,13 @@ public class Slicer : MonoBehaviour
 
     [Header("Model Settings")]
     private Bounds bounds;
-    private float newScale = 1;
+    public float newScale = 1;
 
     private BoxCollider collider;
     private float modelWidth, modelHeight;
     private Vector3 size;
 
-    private bool isReadyForInit = false;
-
-    public bool ReadyForInit()
-    {
-        return isReadyForInit;
-    }
-
-    public void SetInitStatus(bool toInit)
-    {
-        isReadyForInit = toInit;
-    }
+    private bool isReadyForInit = false, isDistributing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -59,13 +49,20 @@ public class Slicer : MonoBehaviour
         sliceType = modelParameters.GetSlicingType();
         distributer = GetComponent<Distributer>();
 
+        Debug.Log("Slicer.cs activated.");
+
         if (sliceType.Equals("Automatic"))
         {
-            GetComponent<Rotator>().enabled = false;
             GetComponent<Distributer>().enabled = false;
+            GetComponent<Rotator>().enabled = false;
 
             Slice();
         }
+    }
+
+    void Awake()
+    {
+        
     }
 
     void Slice()
@@ -172,7 +169,6 @@ public class Slicer : MonoBehaviour
 
                 Debug.Log("Distributed automatically.");
 
-                SetInitStatus(true);
                 GetComponent<Distributer>().enabled = true;
                 GetComponent<Rotator>().enabled = true;
 
@@ -240,13 +236,17 @@ public class Slicer : MonoBehaviour
         {
             selectedModel.transform.localEulerAngles = new Vector3(0, 90, 0);
         }
+        else if (modelMesh.name.StartsWith("07"))
+        {
+            selectedModel.transform.localEulerAngles = new Vector3(90, 0, 0);
+        }
         else if (modelMesh.name.StartsWith("08"))
         {
             selectedModel.transform.localEulerAngles = new Vector3(0, 180, 0);
         }
         else if (modelMesh.name.StartsWith("10"))
         {
-            selectedModel.transform.localEulerAngles = new Vector3(90, 0, 0);
+            selectedModel.transform.localEulerAngles = new Vector3(90, 180, 0);
         }
 
         selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;

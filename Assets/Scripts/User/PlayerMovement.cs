@@ -15,6 +15,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Transform userTransform;
 
+    [SerializeField] Transform gameSphere;
+    private float sphereRadius;
+    private Vector3 centerPosition;
+
     private float yaw = 0.0f;
     private float pitch = 0.0f;
 
@@ -30,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject modelSpawnPoint;
 
+    public float posRadius = 5;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,42 +47,23 @@ public class PlayerMovement : MonoBehaviour
 
         userTransform.Rotate(0, 0, 0);
 
-        GameObject origin = GameObject.Find("Origin");
-
-        ModelParameters modelParameters = gameManager.GetComponent<ModelParameters>();
-
-        Transform modelTransform = GameObject.Find("ModelSpawnPoint").transform;
-
         random = new System.Random();
 
-        bool isLeft = (random.Next(2) == 1);
-        bool isDown = (random.Next(2) == 1);
+        sphereRadius = gameSphere.localScale.x / 2;
+        centerPosition = gameSphere.position;
 
-        float randomX = 0;
-        float combinedBoundsX = GetComponent<Renderer>().bounds.extents.x;
-        if (isLeft)
-        {
-            randomX = generate(-5f, 0);
-            userTransform.position = modelSpawnPoint.transform.position + (Vector3.left * combinedBoundsX) + new Vector3(randomX, 0, 0);
-        }
-        else
-        {
-            randomX = generate(0, 5f);
-            userTransform.position = modelSpawnPoint.transform.position + (Vector3.right * combinedBoundsX) + new Vector3(randomX, 0, 0);
-        }
+        Vector3 playerSpawnPoint;
 
-        float randomY = 0;
-        float combinedBoundsY = GetComponent<Renderer>().bounds.extents.y;
-        if (isDown)
+        do
         {
-            randomY = generate(-5f, 0);
-            userTransform.position = userTransform.position + (Vector3.down * combinedBoundsY) + new Vector3(0, randomY, 0);
+            float combinedBoundsZ = GetComponent<Renderer>().bounds.extents.z;
+
+            playerSpawnPoint = modelSpawnPoint.transform.position + UnityEngine.Random.onUnitSphere * posRadius;
+            //playerSpawnPoint.z = -Math.Abs(playerSpawnPoint.z);
         }
-        else
-        {
-            randomY = generate(0, 5f);
-            userTransform.position = userTransform.position + (Vector3.up * combinedBoundsY) + new Vector3(0, randomY, 0);
-        }
+        while (Vector3.Distance(playerSpawnPoint, Vector3.zero) >= sphereRadius);
+
+        userTransform.position = playerSpawnPoint;
 
         isLookingAtModel = true;
     }
@@ -94,6 +81,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*if (Input.GetMouseButton(0))
+        {
+            userTransform.position = modelSpawnPoint.transform.position + UnityEngine.Random.onUnitSphere * posRadius;
+            isLookingAtModel = true;
+        }*/
+
         if (isLookingAtModel)
         {
             Transform lookedTarget = modelSpawnPoint.transform.GetChild(0);

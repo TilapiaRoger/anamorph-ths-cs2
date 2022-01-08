@@ -26,28 +26,33 @@ public class Distributer : MonoBehaviour
                   lastPosition,
                   lastScale;
 
-    private string distributionType;
+    private string sliceType, distributionType;
 
     private Vector3 mspPosition,
                     wpPosition;
-
 
     // Start is called before the first frame update
     void Start()
     {
         modelParameters = GetComponent<ModelParameters>();
+        sliceType = modelParameters.GetSlicingType();
         distributionType = modelParameters.GetDistributionType();
+
+        Debug.Log("Slice: " + sliceType + "\n" + "Distribute: " + distributionType);
+
+        Debug.Log("Distributer.cs activated.");
+
         if (distributionType.Equals("Automatic"))
         {
+            Debug.Log("Is automatically distributed.");
+
             Distribute();
         }
     }
 
-
-    // Update is called once per frame
-    void Update()
+    void Awake()
     {
-
+        
     }
 
     public void Distribute()
