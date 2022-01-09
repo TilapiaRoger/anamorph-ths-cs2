@@ -39,8 +39,18 @@ public class Initializer : MonoBehaviour
         model.transform.localScale = d / 10 * new Vector3(1, 1, 1);
         model.transform.localEulerAngles = new Vector3(0, 180, 0);
         Instantiate(model, modelSpawnPoint.transform);
+        GameObject modelClone = Instantiate(model, modelSpawnPoint.transform);
         model.name = "Model";
         model.transform.SetAsFirstSibling();
+
+        int childCount = modelClone.transform.childCount;
+        Debug.Log("Child Count: " + childCount);
+        
+        // Add box colliders to the slices or model
+        if (childCount == 0)
+            modelClone.AddComponent<BoxCollider>();
+        else foreach (Transform child in modelClone.transform)
+            child.gameObject.AddComponent<BoxCollider>();
 
         // Instantiate an invisible cylinder at modelSpawnPoint
         mspDistance = generate(d, gbDistance - d);
