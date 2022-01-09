@@ -70,12 +70,16 @@ public class Solver : MonoBehaviour
     {
         RaycastHit[] hits = Physics.RaycastAll(playerPosition, player.transform.forward, 5000.0F);
 
-        foreach(RaycastHit hit in hits)
+        foreach (RaycastHit hit in hits)
+        {
             if (hit.collider.GetComponent<CapsuleCollider>() != null)
             {
                 hitPosition = hit.point;
                 return true;
             }
+
+            if (hit.collider.GetComponent<BoxCollider>() != null) Debug.Log("Looking at model");
+        }
 
         return false;
     }
