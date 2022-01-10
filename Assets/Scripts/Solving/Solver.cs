@@ -19,14 +19,12 @@ public class Solver : MonoBehaviour
                     mspPosition,
                     wpPosition;
     private float lookAccuracy,
-                  positionAccuracy,
-                  greatestBound;
+                  positionAccuracy;
 
     // Start is called before the first frame update
     void Start()
     {
         initializer = GetComponent<Initializer>();
-        greatestBound = initializer.greatestBound;
 
         mspPosition = modelSpawnPoint.transform.position;
         wpPosition = winningPoint.transform.position;
@@ -56,8 +54,7 @@ public class Solver : MonoBehaviour
         vision.text = "You're " + visionVerdict + "looking at the target\n" +
                       "Model spawn point is at: " + mspPosition + "\n" +
                       "You're looking at " + hitPosition + "\n" +
-                      "Accuracy: " + lookAccuracy + "\n" +
-                      "Greatest Bound:" + greatestBound;
+                      "Accuracy: " + lookAccuracy;
     }
 
     private bool checkPosition()
@@ -72,7 +69,8 @@ public class Solver : MonoBehaviour
 
         foreach (RaycastHit hit in hits)
         {
-            if (hit.collider.GetComponent<CapsuleCollider>() != null)
+            if (hit.collider.GetComponent<CapsuleCollider>() != null ||
+                hit.collider.GetComponent<BoxCollider>() != null)
             {
                 hitPosition = hit.point;
                 return true;

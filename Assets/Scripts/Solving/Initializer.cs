@@ -17,10 +17,9 @@ public class Initializer : MonoBehaviour
     private ModelParameters modelParameters;
 
     // Distances between the origin and specific points
-    private float mspDistance,       // model spawn point
-                  wpDistance,        // winning point
+    private float mspDistance,      // model spawn point
+                  wpDistance,       // winning point
                   gbDistance = 10f; // the game bounds
-    public float greatestBound;     // size of the largest side of the bounding box of the target.
 
     private string modelName;
 
@@ -29,49 +28,26 @@ public class Initializer : MonoBehaviour
     {
         modelParameters = GetComponent<ModelParameters>();
         modelName = modelParameters.modelName;
-
-        modelName = model.name;
-        
+        //modelName = model.name;
         //SetD(modelName);
 
-        // Instantiate the model
-        model.SetActive(true);
-        model.transform.localScale = d / 10 * new Vector3(1, 1, 1);
-        model.transform.localEulerAngles = new Vector3(0, 180, 0);
-        Instantiate(model, modelSpawnPoint.transform);
-        GameObject modelClone = Instantiate(model, modelSpawnPoint.transform);
-        model.name = "Model";
-        model.transform.SetAsFirstSibling();
-
-        int childCount = modelClone.transform.childCount;
-        Debug.Log("Child Count: " + childCount);
-        
-        // Add box colliders to the slices or model
-        if (childCount == 0)
-            modelClone.AddComponent<BoxCollider>();
-        else foreach (Transform child in modelClone.transform)
-            child.gameObject.AddComponent<BoxCollider>();
-
-        // Instantiate an invisible cylinder at modelSpawnPoint
+        // Initialize modelSpawnPoint
         mspDistance = generate(d, gbDistance - d);
-        Debug.Log("MSP Distance: " + mspDistance);
-        target = GameObject.Find("Target");
-
-        // Resizes the target and
-        // Gets the size of the largest side of the bounding box of the target.
-        ResizeTarget(target, model);
-        target.transform.SetParent(modelSpawnPoint.transform);
-        target.transform.position += new Vector3(0, 0, greatestBound);
         modelSpawnPoint.transform.position = new Vector3(0f, 0f, mspDistance);
+        Debug.Log("Model spawn point is at " + modelSpawnPoint.transform.position);
 
-        // Initialize the winningPoint
+        // Initialize winningPoint
         wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
-        Debug.Log("wpDistance: " + wpDistance);
-        // Instantiate an invisible sphere at winningPoint
-        winningSphere = GameObject.Find("WinningSphere");
-        winningSphere.transform.position = winningPoint.transform.position;
-        winningSphere.transform.SetParent(winningPoint.transform);
+        Debug.Log("Winning point is at " + winningPoint.transform.position);
+
+        // Instantiate the model
+        instantiateModel();
+
+        // Instantiate an invisible cylinder at modelSpawnPoint
+        instantiateTarget();
+
+        Debug.Log("Model is at " + model.transform.position);
     }
 
     // Update is called once per frame
@@ -110,21 +86,18 @@ public class Initializer : MonoBehaviour
         Debug.Log("Model name contains a number between" + range + ", therefore d = " + d);
     }
     
-    private void ResizeTarget(GameObject target, GameObject model)
+    private void ResizeTarget()
     {
-        Bounds modelBounds = GetBounds(model);
+        Bounds modelBounds = GetBounds();
 
         float xprod = modelBounds.size.x * model.transform.localScale.x,
               zprod = modelBounds.size.z * model.transform.localScale.z,
               max = Mathf.Max(xprod, zprod);
 
         target.transform.localScale = new Vector3(max, 0, max);
-
-        Debug.Log("x: " + modelBounds.size.x + " * " + model.transform.localScale.x + " = " + xprod);
-        Debug.Log("z: " + modelBounds.size.z + " * " + model.transform.localScale.z + " = " + zprod);
     }
 
-    private Bounds GetBounds(GameObject model)
+    private Bounds GetBounds()
     {
         Bounds bounds = new Bounds();
         Renderer[] renderers = model.GetComponentsInChildren<Renderer>();
@@ -144,5 +117,38 @@ public class Initializer : MonoBehaviour
         }
 
         return bounds;
+    }
+
+    private void addBoxColliders(GameObject model)
+    {
+        int childCount = model.transform.childCount;
+        if (childCount == 0)
+            model.AddComponent<BoxCollider>();
+        else foreach (Transform child in model.transform)
+                child.gameObject.AddComponent<BoxCollider>();
+    }
+
+    private void instantiateModel()
+    {
+        model.SetActive(true);
+        model.transform.localScale = d / 10 * new Vector3(1, 1, 1);
+        model.transform.localEulerAngles = new Vector3(0, 180, 0);
+        GameObject modelClone = Instantiate(model, modelSpawnPoint.transform);
+        //modelClone.transform.position = new Vector3(0f, 0f, mspDistance);
+        model.name = "Model";
+        model.transform.SetAsFirstSibling();
+
+        // Add box colliders to the slices or model
+        addBoxColliders(modelClone);
+    }
+
+    private void instantiateTarget()
+    {
+        target = GameObject.Find("Target");
+
+        // Resizes the target and
+        // Gets the size of the largest side of the bounding box of the target.
+        ResizeTarget();
+        target.transform.SetParent(modelSpawnPoint.transform);
     }
 }

@@ -6,8 +6,7 @@ using UnityEngine;
 public class Distributer : MonoBehaviour
 {
     public GameObject modelSpawnPoint,
-                      winningPoint,
-                      piece;
+                      winningPoint;
 
     private GameObject gameManager;
 
@@ -22,9 +21,7 @@ public class Distributer : MonoBehaviour
                   minDistance,
                   maxDistance,
                   scaleFactor,
-                  pivotPosition,
-                  lastPosition,
-                  lastScale;
+                  pivotPosition;
 
     private string distributionType;
 
@@ -59,7 +56,6 @@ public class Distributer : MonoBehaviour
         int childCount = modelTransform.childCount;
 
         List<int> list = generatePermutation(modelTransform.childCount);
-        List<float> sizes = getSizes(modelTransform);
 
         //Debug.Log("Piece number\t\tPivot Position\t\tOld Distance\t\tNew Distance\t\tScale Factor\t\tBounds");
         for(int i = 0; i < childCount; i++)
@@ -67,18 +63,15 @@ public class Distributer : MonoBehaviour
             GameObject piece = modelTransform.GetChild(list[i]).gameObject;
             Mesh mesh = piece.GetComponent<MeshFilter>().mesh;
 
-            //pivotPosition = (i == 0) ? wpPosition.z + 1 : lastPosition + .9f * lastScale;
             pivotPosition = (i + 1) * 10 / childCount;
 
-            // Move piece by a random distance from the model spawn point
+            // Move piece by the formula above
             piece.transform.position = new Vector3(0, 0, pivotPosition);
-            lastPosition = pivotPosition;
             newDistance = Mathf.Abs(wpPosition.z - pivotPosition);
 
             // Scale the model
             scaleFactor = newDistance / oldDistance;
             piece.transform.localScale *= scaleFactor;
-            lastScale = piece.transform.localScale.z * mesh.bounds.size.z;
 
             //Debug.Log(list[i] + 1 + "\t\t" + pivotPosition + "\t\t" + oldDistance + "\t\t"  + newDistance + "\t\t" + scaleFactor);
         }
@@ -90,27 +83,5 @@ public class Distributer : MonoBehaviour
         for (int i = 0; i < childCount; i++) holder.Add(i);
         holder = holder.OrderBy(i => Random.value).ToList();
         return holder;
-    }
-
-    List<float> getSizes(Transform model)
-    {
-        List<float> holder = new List<float>();
-        foreach(Transform child in model) 
-        {
-            GameObject piece = child.gameObject;
-            Mesh mesh = piece.GetComponent<MeshFilter>().mesh;
-            float size = piece.transform.localScale.z * mesh.bounds.size.z;
-            //float size = mesh.bounds.size.z;
-            holder.Add(size);
-        }
-
-        return holder;
-    }
-
-    float generate(float min, float max)
-    {
-        float num = Random.Range(min, max);
-        while (num == min || num == max) num = Random.Range(min, max);
-        return num;
     }
 }
