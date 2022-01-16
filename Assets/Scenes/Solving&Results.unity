@@ -1501,6 +1501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9799aef6b41de0e42a9abecc3e82e18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelSpawnPoint: {fileID: 525037209}
   playerAvatar: {fileID: 2122820538}
   winningPoint: {fileID: 2035136193}
   solvingWindow: {fileID: 1519147541}
@@ -7818,6 +7819,10 @@ PrefabInstance:
       propertyPath: modelSpawnPoint
       value: 
       objectReference: {fileID: 525037209}
+    - target: {fileID: 8125868360355868010, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
+      propertyPath: origin
+      value: 
+      objectReference: {fileID: 392145127}
     - target: {fileID: 8125868360355868010, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: player
       value: 

@@ -17,9 +17,15 @@ public class Rotator : MonoBehaviour
 
     private CapsuleCollider capsuleCollider;
 
+    private Transform originalTransform;
+
     private float pi = Mathf.PI;
 
     Randomizer customRandomizer;
+
+    public bool rotateZ = false;
+
+    public float zAngle = 180;
 
     // Start is called before the first frame update
     void Start()
@@ -32,9 +38,11 @@ public class Rotator : MonoBehaviour
 
         rotate();
 
+        originalTransform = winningPoint.transform;
+
         ModelParameters modelParameters = GetComponent<ModelParameters>();
 
-        if (modelParameters.GetDistributionType() == "Automatic")
+        /*if (modelParameters.GetDistributionType() == "Automatic")
         {
             //player.transform.Rotate(0, 0, 0);
             player.transform.position = winningPoint.transform.position + new Vector3(5, 0, -2);
@@ -44,7 +52,9 @@ public class Rotator : MonoBehaviour
 
             playerMovement.SetRotationX(player.transform.eulerAngles.x);
             playerMovement.SetRotationY(player.transform.eulerAngles.y);
-        }
+        }*/
+
+        rotateZ = true;
     }
 
     // Update is called once per frame
@@ -52,6 +62,15 @@ public class Rotator : MonoBehaviour
     {
         //modelSpawnPoint.transform.RotateAround(winningPoint.transform.position, Vector3.up, 10f * Time.deltaTime);
         //winningPoint.transform.RotateAround(origin.transform.position, Vector3.up, 10f * Time.deltaTime);
+
+        //modelSpawnPoint.transform.GetChild(0).position = originalTransform.position; 
+
+        //winningPoint.transform.rotation = Quaternion.AngleAxis(originalTransform.rotation.y, Vector3.forward);
+
+
+        //origin.transform.rotation = Quaternion.AngleAxis(debugZ, Vector3.forward);
+        //modelSpawnPoint.transform.GetChild(0).localEulerAngles = originalRotation + new Vector3(0, 0, debugZ - debugSubtrahend);
+        //modelSpawnPoint.transform.localEulerAngles = new Vector3(0, debugZ, 0);
     }
 
     void rotate()
@@ -68,17 +87,47 @@ public class Rotator : MonoBehaviour
         //winningPoint.transform.LookAt(origin.transform);
 
 
+
         float randomYPos, randomYRotation;
         float randomXRotation, randomZRotation;
         randomYPos = generate(-30, 30);
         randomYRotation = UnityEngine.Random.Range(-180, 180);
-        randomZRotation = UnityEngine.Random.Range(-180, 180);
+        randomZRotation = 90 * UnityEngine.Random.Range(-2, 2);
 
-        origin.transform.Rotate(0, randomYRotation, 0);
-        origin.transform.Rotate(0, 0, randomZRotation);
+        //float modelSpawnAngleY = modelSpawnPoint.transform.localEulerAngles.y;
+        //float angleZSubtrahend = Math.Abs(winningPoint.transform.localEulerAngles.y) - Math.Abs(modelSpawnPoint.transform.localEulerAngles.y);
 
-        modelSpawnPoint.transform.GetChild(0).Rotate(0, 0, -Math.Abs(randomZRotation));
-        //origin.transform.localPosition = origin.transform.localPosition + new Vector3(0, randomYPos, 0);
+        //origin.transform.Rotate(randomZRotation, randomYRotation, 0);
+
+        origin.transform.localRotation = Quaternion.Euler(0, randomYRotation, randomZRotation);
+
+        float convertedAngle = convertAngle(origin.transform.localEulerAngles.z);
+        zAngle = -1 * convertedAngle;
+
+        if (Math.Abs(convertedAngle) == 90) 
+        {
+            zAngle = Math.Abs(convertedAngle); 
+        }
+        else if(origin.transform.localEulerAngles.z == 180)
+        {
+            zAngle = 180;
+        }
+
+        modelSpawnPoint.transform.GetChild(0).localEulerAngles = modelSpawnPoint.transform.GetChild(0).localEulerAngles + new Vector3(0, 0, zAngle);
+
+        
+    }
+
+    float convertAngle(float eulerAngles)
+    {
+        float resultAngle = eulerAngles - Mathf.CeilToInt(eulerAngles / 360f) * 360f;
+
+        if(resultAngle < 0)
+        {
+            resultAngle += 360f;
+        }
+
+        return resultAngle;
     }
 
     float generate(float min, float max)

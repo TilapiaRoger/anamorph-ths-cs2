@@ -7,7 +7,8 @@ public class Solver : MonoBehaviour
     public float maxDistance = 10000.0f;
     public GameObject modelSpawnPoint,
                       player,
-                      winningPoint;
+                      winningPoint,
+                      origin;
     private Vector3 hitPosition,
                     playerPosition,
                     mspPosition,
@@ -41,14 +42,60 @@ public class Solver : MonoBehaviour
 
     private void results()
     {
+        if (Vector3.Dot(player.transform.up, Vector3.down) > 0)
+        {
+            Debug.Log("Player is upside down");
+        }
+
+        if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
+        {
+            Debug.Log("Object is upside down");
+        }
+
         if (checkPosition() && checkAngle() && Time.timeScale == 1)
         {
-            Debug.Log("Congratulations.\n" +
-                      "Positions: " + hitPosition + ", " + playerPosition + "\n" +
-                      "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
+            /*if(Vector3.Dot(player.transform.up, Vector3.down) <= 0)
+            {
+                if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
+                {
+                    Debug.Log("Orientation is wrong.");
+                }
+            }
+            else
+            {
+                Debug.Log("Congratulations.\n" +
+                                  "Positions: " + hitPosition + ", " + playerPosition + "\n" +
+                                  "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
 
-            FinishSolving finishSolving = GetComponent<FinishSolving>();
-            finishSolving.WinPuzzle();
+                FinishSolving finishSolving = GetComponent<FinishSolving>();
+                finishSolving.WinPuzzle();
+            }*/
+
+            if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
+            {
+                if (Vector3.Dot(player.transform.up, Vector3.down) > 0)
+                {
+                    Debug.Log("Congratulations.\n" +
+                                      "Positions: " + hitPosition + ", " + playerPosition + "\n" +
+                                      "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
+
+                    FinishSolving finishSolving = GetComponent<FinishSolving>();
+                    finishSolving.WinPuzzle();
+                }
+                else
+                {
+                    Debug.Log("Orientation is wrong.");
+                }
+            }
+            else
+            {
+                Debug.Log("Congratulations.\n" +
+                                      "Positions: " + hitPosition + ", " + playerPosition + "\n" +
+                                      "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
+
+                FinishSolving finishSolving = GetComponent<FinishSolving>();
+                finishSolving.WinPuzzle();
+            }
         }
         else if (!checkPosition() && checkAngle())
             Debug.Log("Winning point is at " + wpPosition + "\nCurrently at " + playerPosition + "\n Accuracy: " + positionAccuracy);
@@ -70,6 +117,16 @@ public class Solver : MonoBehaviour
         foreach (RaycastHit hit in hits)
             if (hit.collider.GetComponent<CapsuleCollider>() != null)
                 return true;
+
+        return false;
+    }
+
+    private bool checkRotation()
+    {
+        /*if (winningPoint.transform.rotation.eulerAngles.)
+        {
+
+        }*/
 
         return false;
     }
