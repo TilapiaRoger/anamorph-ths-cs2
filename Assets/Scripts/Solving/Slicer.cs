@@ -56,8 +56,9 @@ public class Slicer : MonoBehaviour
             GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = false;
             GetComponent<Distributer>().enabled = false;
             GetComponent<Rotator>().enabled = false;
+            GetComponent<Solver>().enabled = false;
 
-            Slice();
+            Slice();  
         }
     }
 
@@ -68,20 +69,21 @@ public class Slicer : MonoBehaviour
 
     void Slice()
     {
-        sliceTool = new GameObject();
-
         selectedModel = modelSpawnPoint.transform.GetChild(0).gameObject;
+        selectedModel.transform.localScale = new Vector3(newScale, newScale, newScale);
+
         modelMesh = selectedModel.GetComponent<MeshFilter>().mesh;
 
-        selectedModel.AddComponent(typeof(BoxCollider));
+        ///selectedModel.AddComponent(typeof(BoxCollider));
         collider = selectedModel.GetComponent<BoxCollider>();
         size = collider.size;
 
-        selectedModel.transform.SetAsFirstSibling();
+        //selectedModel.transform.SetAsFirstSibling();
         selectedModel.GetComponent<MeshRenderer>().material = patchMaterial;
 
         selectedModel.SetActive(false);
 
+        sliceTool = new GameObject();
 
         defaultX = 35;
         defaultY = defaultX;
@@ -97,8 +99,8 @@ public class Slicer : MonoBehaviour
 
         sliceCtr = 0;
 
-        target = GameObject.Find("Target");
-        target.layer = 2;
+        /*target = GameObject.Find("Target");
+        target.layer = 2;*/
 
         bounds = modelMesh.bounds;
         Debug.Log("Imported model size: " + bounds.size);
@@ -156,22 +158,24 @@ public class Slicer : MonoBehaviour
                 for (int i = 0; i < newParent.transform.childCount; i++)
                 {
                     newParent.transform.GetChild(i).gameObject.layer = 0;
-                    Destroy(newParent.transform.GetChild(i).GetComponent<BoxCollider>());
+                    //Destroy(newParent.transform.GetChild(i).GetComponent<BoxCollider>());
                 }
 
-                Destroy(sliceTool);
+                //Destroy(sliceTool);
 
                 newParent.transform.SetAsFirstSibling();
 
-                target.layer = 0;
+                //target.layer = 0;
 
                 shouldExecute = false;
                 finishedSlicing = true;
 
                 Debug.Log("Distributed automatically.");
 
+                //GetComponent<Initializer>().enabled = true;
                 GetComponent<Distributer>().enabled = true;
                 GetComponent<Rotator>().enabled = true;
+                GetComponent<Solver>().enabled = true;
                 GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = true;
 
             }
@@ -197,6 +201,7 @@ public class Slicer : MonoBehaviour
 
     private void scaleModel()
     {
+
         float newScale = 1;
         if (Mathf.Max(collider.size.x, collider.size.y, collider.size.z) >= 10)
         {
@@ -244,7 +249,6 @@ public class Slicer : MonoBehaviour
         }
 
         selectedModel.transform.localScale = selectedModel.transform.localScale * newScale;
-
 
         size = collider.size * selectedModel.transform.localScale.x;
     }

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Solver : MonoBehaviour
 {
-    public float maxDistance = 10000.0f;
+    public float maxDistance = 5000.0f;
+
     public GameObject modelSpawnPoint,
                       player,
-                      winningPoint,
-                      origin;
+                      winningPoint;
+
+    private Initializer initializer;
+
     private Vector3 hitPosition,
                     playerPosition,
                     mspPosition,
@@ -20,6 +23,8 @@ public class Solver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        initializer = GetComponent<Initializer>();
+
         mspPosition = modelSpawnPoint.transform.position;
         wpPosition = winningPoint.transform.position;
     }
@@ -42,6 +47,19 @@ public class Solver : MonoBehaviour
 
     private void results()
     {
+        string positionVerdict = checkPosition() ? "" : "not ",
+               visionVerdict = checkAngle() ? "" : "not ";
+
+        Debug.Log("You're " + positionVerdict + "at the winning point\n" +
+                        "Winning point is at: " + wpPosition + "\n" +
+                        "You're at " + playerPosition + "\n" +
+                        "Accuracy: " + positionAccuracy);
+
+        Debug.Log("You're " + visionVerdict + "looking at the target\n" +
+                      "Model spawn point is at: " + mspPosition + "\n" +
+                      "You're looking at " + hitPosition + "\n" +
+                      "Accuracy: " + lookAccuracy);
+
         if (Vector3.Dot(player.transform.up, Vector3.down) > 0)
         {
             Debug.Log("Player is upside down");
@@ -54,31 +72,10 @@ public class Solver : MonoBehaviour
 
         if (checkPosition() && checkAngle() && Time.timeScale == 1)
         {
-            /*if(Vector3.Dot(player.transform.up, Vector3.down) <= 0)
-            {
-                if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
-                {
-                    Debug.Log("Orientation is wrong.");
-                }
-            }
-            else
-            {
-                Debug.Log("Congratulations.\n" +
-                                  "Positions: " + hitPosition + ", " + playerPosition + "\n" +
-                                  "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
-
-                FinishSolving finishSolving = GetComponent<FinishSolving>();
-                finishSolving.WinPuzzle();
-            }*/
-
             if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
             {
                 if (Vector3.Dot(player.transform.up, Vector3.down) > 0)
                 {
-                    Debug.Log("Congratulations.\n" +
-                                      "Positions: " + hitPosition + ", " + playerPosition + "\n" +
-                                      "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
-
                     FinishSolving finishSolving = GetComponent<FinishSolving>();
                     finishSolving.WinPuzzle();
                 }
@@ -115,18 +112,16 @@ public class Solver : MonoBehaviour
         RaycastHit[] hits = Physics.RaycastAll(playerPosition, player.transform.forward, maxDistance);
 
         foreach (RaycastHit hit in hits)
-            if (hit.collider.GetComponent<CapsuleCollider>() != null)
-                return true;
-
-        return false;
-    }
-
-    private bool checkRotation()
-    {
-        /*if (winningPoint.transform.rotation.eulerAngles.)
         {
+            if (hit.collider.GetComponent<CapsuleCollider>() != null ||
+                hit.collider.GetComponent<BoxCollider>() != null)
+            {
+                hitPosition = hit.point;
+                return true;
+            }
 
-        }*/
+            if (hit.collider.GetComponent<BoxCollider>() != null) Debug.Log("Looking at model");
+        }
 
         return false;
     }

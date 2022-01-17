@@ -11,7 +11,7 @@ public class Initializer : MonoBehaviour
                       winningPoint;
 
 
-    public float d = 5;
+    public float d;
 
     private GameObject winningSphere,
                        target;
@@ -21,7 +21,8 @@ public class Initializer : MonoBehaviour
     // Distances between the origin and specific points
     private float mspDistance,       // model spawn point
                   wpDistance,        // winning point
-                  gbDistance = 10f; // the game bounds
+                  spawnMax = 10f;   // the maximum distance from the origin
+                                    // the model can spawn at
     public float greatestBound;     // size of the largest side of the bounding box of the target.
 
     private string modelName;
@@ -41,10 +42,8 @@ public class Initializer : MonoBehaviour
         model = modelParameters.GetModel();
         modelName = model.name;
 
-        //SetD(modelName);
-
         // Instantiate the model
-        model.SetActive(true);
+        /*model.SetActive(true);
         model.transform.localScale = d / 10 * new Vector3(1, 1, 1);
         model.transform.localEulerAngles = new Vector3(0, 180, 0);
         Instantiate(model, modelSpawnPoint.transform);
@@ -53,27 +52,25 @@ public class Initializer : MonoBehaviour
 
         target = GameObject.Find("Target");
 
-        winningSphere = GameObject.Find("WinningSphere");
+        winningSphere = GameObject.Find("WinningSphere");*/
 
+        model.SetActive(true);
+        //model.transform.localScale = d / 10 * new Vector3(1, 1, 1);
+        model.transform.localEulerAngles = new Vector3(0, 180, 0);
+        model.transform.position = Vector3.zero;
+        model.transform.SetAsFirstSibling();
+         
         Debug.Log("In game slicing type: " + modelParameters.GetSlicingType());
 
         if (modelParameters.GetSlicingType() == "Manual")
         {
             if (modelParameters.GetDistributionType() == "Manual")
             {
-                d = d - 3;
+                d = d - 5;
             }
         }
 
         InitializeConditions();
-
-
-        /*modelParameters = GetComponent<ModelParameters>();
-
-        if (modelParameters.GetSlicingType() == "Automatic")
-        {
-            InitializeConditions();
-        }*/
     }
 
     void Awake()
@@ -84,16 +81,27 @@ public class Initializer : MonoBehaviour
 
     void InitializeConditions()
     {
+        // Initialize modelSpawnPoint
+        mspDistance = generate(d, spawnMax);
+        modelSpawnPoint.transform.position = new Vector3(0, 0, mspDistance);
+        Debug.Log("d: " + d);
+
+        // Initialize winningPoint
+        wpDistance = mspDistance - d;
+        winningPoint.transform.position = new Vector3(0, 0, wpDistance);
+
+        // Instantiate the model
+        instantiateModel();
+
+        Debug.Log("Model is at " + model.transform.position);
+
         // Instantiate an invisible cylinder at modelSpawnPoint
-        mspDistance = generate(d, gbDistance - d);
-        Debug.Log("MSP Distance: " + mspDistance);
+        /*mspDistance = generate(d, spawnMax);
+        modelSpawnPoint.transform.position = new Vector3(0, 0, mspDistance);
+        Debug.Log("d: " + d);
 
         //modelParameters = GetComponent<ModelParameters>();
         newModel = modelSpawnPoint.transform.GetChild(0).gameObject;
-        /*if (modelParameters.GetSlicingType() == "Automatic")
-        {
-            newModel = modelSpawnPoint.transform.GetChild(0).gameObject;
-        }*/
 
         // Resizes the target and
         // Gets the size of the largest side of the bounding box of the target.
@@ -108,7 +116,7 @@ public class Initializer : MonoBehaviour
         Debug.Log("wpDistance: " + wpDistance);
         // Instantiate an invisible sphere at winningPoint
         winningSphere.transform.position = winningPoint.transform.position;
-        winningSphere.transform.SetParent(winningPoint.transform);
+        winningSphere.transform.SetParent(winningPoint.transform);*/
     }
 
     // Update is called once per frame
@@ -126,8 +134,11 @@ public class Initializer : MonoBehaviour
 
     float generate(float min, float max)
     {
-        float num = Random.Range(min, max);
-        while (num == min || num == max) num = Random.Range(min, max);
+        float num;
+        do 
+            num = Random.Range(min, max);
+        while (num == min || num == max);
+
         return num;
     }
 
@@ -213,6 +224,7 @@ public class Initializer : MonoBehaviour
         return newScale;
     }
 
+
     private Bounds GetBounds(GameObject model)
     {
         Bounds bounds = new Bounds();
@@ -235,5 +247,21 @@ public class Initializer : MonoBehaviour
         }
 
         return bounds;
+    }
+
+    private void addBoxColliders(GameObject model)
+    {
+        int childCount = model.transform.childCount;
+        if (childCount == 0)
+            model.AddComponent<BoxCollider>();
+        else foreach (Transform child in model.transform)
+                child.gameObject.AddComponent<BoxCollider>();
+    }
+
+    private void instantiateModel()
+    {
+        GameObject modelClone = Instantiate(model, modelSpawnPoint.transform);
+        // Add box colliders to the slices or model
+        addBoxColliders(modelClone);
     }
 }

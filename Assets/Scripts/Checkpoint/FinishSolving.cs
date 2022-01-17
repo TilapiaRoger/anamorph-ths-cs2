@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,31 +35,89 @@ public class FinishSolving : MonoBehaviour
 
         Transform model = modelSpawnPoint.transform.GetChild(0);
 
-        float curScale = GetComponent<Slicer>().newScale;
-
-        for(int i = 0; i < model.childCount; i++)
-        {
-            Transform slice = model.GetChild(i);
-
-            slice.localPosition = new Vector3(1, 0, 1);
-
-            
-            if (GetComponent<ModelParameters>().GetDistributionType() == "Automatic")
-            {
-                if (GetComponent<ModelParameters>().GetSlicingType() == "Manual")
-                {
-                    slice.localScale = new Vector3(100, 100, 100);
-                }
-                else
-                {
-                    slice.localScale = new Vector3(curScale, curScale, curScale);
-                }
-            }
-        }
+        assembleModel(model);
 
         congratsParticles.SetActive(true);
 
 
+    }
+
+    private void assembleModel(Transform model)
+    {
+        float curScale = GetComponent<Slicer>().newScale;
+
+        float[] distancesOrdered = getDistanceZ(model);
+        float[] scalesOrdered = getScales(model);
+
+        for (int i = 0; i < model.transform.childCount; i++)
+        {
+            Transform slice = model.GetChild(i);
+
+            /*if (model.name.StartsWith("02") || model.name.StartsWith("06"))
+            {
+                slice.localPosition = new Vector3(0, 0, distancesOrdered[0] - 10);
+            }
+            else if (model.name.StartsWith("01") || model.name.StartsWith("03"))
+            {
+                slice.localPosition = new Vector3(0, 0, distancesOrdered[model.transform.childCount - 1]);
+            } 
+            else
+            {
+                slice.localPosition = new Vector3(0, 0, distancesOrdered[(model.transform.childCount/2)-1]);
+            }*/
+
+            slice.localPosition = new Vector3(0, 0, distancesOrdered[(model.transform.childCount / 2) - 1]);
+
+            /*if (GetComponent<ModelParameters>().GetDistributionType() == "Manual")
+            {
+                
+            }*/
+
+            float finalScale = scalesOrdered[scalesOrdered.Length - 1];
+            slice.localScale = new Vector3(finalScale, finalScale, finalScale);
+        }
+    }
+
+    private float[] getDistanceZ(Transform model)
+    {
+        float[] distances = new float[model.transform.childCount];
+
+        for (int i = 0; i < model.transform.childCount; i++)
+        {
+            Transform slice = model.transform.GetChild(i);
+            distances[i] = slice.transform.localPosition.z;
+        }
+
+        distances = distances.OrderBy(z => z).ToArray();
+
+        for (int i = 0; i < model.transform.childCount; i++)
+        {
+            Transform slice = model.transform.GetChild(i);
+            Debug.Log("Slice distance: " + distances[i]);
+        }
+
+        return distances;
+    }
+
+    private float[] getScales(Transform model)
+    {
+        float[] scales = new float[model.transform.childCount];
+
+        for (int i = 0; i < model.transform.childCount; i++)
+        {
+            Transform slice = model.transform.GetChild(i);
+            scales[i] = slice.transform.localScale.x;
+        }
+
+        scales = scales.OrderBy(x => x).ToArray();
+
+        for (int i = 0; i < model.transform.childCount; i++)
+        {
+            Transform slice = model.transform.GetChild(i);
+            Debug.Log("Slice distance: " + scales[i]);
+        }
+
+        return scales;
     }
 
     private void OnCollisionEnter(Collision collision)
