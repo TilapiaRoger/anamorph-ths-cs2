@@ -14,7 +14,7 @@ public class Solver : MonoBehaviour
     public Text position,
                 vision;
 
-    private Vector3 hitPosition,
+    private Vector3 playerAngle,
                     playerPosition,
                     mspPosition,
                     wpPosition;
@@ -35,9 +35,6 @@ public class Solver : MonoBehaviour
     {
         mspPosition = modelSpawnPoint.transform.position;
         wpPosition = winningPoint.transform.position;
-
-        lookAccuracy = Vector3.Distance(mspPosition, hitPosition);
-        positionAccuracy = Vector3.Distance(wpPosition, playerPosition);
         results();
     }
 
@@ -46,15 +43,11 @@ public class Solver : MonoBehaviour
         string positionVerdict = checkPosition() ? "" : "not ",
                visionVerdict = checkAngle() ? "" : "not ";
 
-        position.text = "You're " + positionVerdict + "at the winning point\n" + 
-                        "Winning point is at: " + wpPosition + "\n" +
-                        "You're at " + playerPosition + "\n" +
-                        "Accuracy: " + positionAccuracy;
+        position.text = "You're " + positionVerdict + "at the winning point\n" +
+                        "Position: " + playerPosition;
 
         vision.text = "You're " + visionVerdict + "looking at the target\n" +
-                      "Model spawn point is at: " + mspPosition + "\n" +
-                      "You're looking at " + hitPosition + "\n" +
-                      "Accuracy: " + lookAccuracy;
+                      "Angle: " + playerAngle;
     }
 
     private bool checkPosition()
@@ -66,19 +59,20 @@ public class Solver : MonoBehaviour
     private bool checkAngle()
     {
         RaycastHit[] hits = Physics.RaycastAll(playerPosition, player.transform.forward, 5000.0F);
-
+        playerAngle = clamp(player.transform.eulerAngles);
         foreach (RaycastHit hit in hits)
-        {
-            if (hit.collider.GetComponent<CapsuleCollider>() != null ||
-                hit.collider.GetComponent<BoxCollider>() != null)
-            {
-                hitPosition = hit.point;
+            if (hit.collider.GetComponent<BoxCollider>() != null) 
                 return true;
-            }
-
-            if (hit.collider.GetComponent<BoxCollider>() != null) Debug.Log("Looking at model");
-        }
 
         return false;
+    }
+
+    // Clamp angles between -180 and 180
+    private Vector3 clamp(Vector3 angles)
+    {
+        for(int i = 0; i < 3; i++)
+            if(angles[i] > 180) 
+                angles[i] -= 360;
+        return angles;
     }
 }
