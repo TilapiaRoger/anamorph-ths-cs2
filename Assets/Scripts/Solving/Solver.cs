@@ -33,8 +33,6 @@ public class Solver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mspPosition = modelSpawnPoint.transform.position;
-        wpPosition = winningPoint.transform.position;
         results();
     }
 
