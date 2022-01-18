@@ -7525,7 +7525,7 @@ MonoBehaviour:
   gameManager: {fileID: 1606871412}
   target: {fileID: 1889112270}
   gameSphere: {fileID: 734933777}
-  posRadius: 0.25
+  posRadius: 0.15
 --- !u!135 &2122820539
 SphereCollider:
   m_ObjectHideFlags: 0

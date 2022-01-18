@@ -52,13 +52,18 @@ public class PlayerMovement : MonoBehaviour
         sphereRadius = gameSphere.localScale.x / 2;
         centerPosition = gameSphere.position;
 
-        Vector3 playerSpawnPoint;
+        Vector3 playerSpawnPoint, additionalPoint;
+
+        additionalPoint = new Vector3(0, 0, 0);
+
+
+        Vector3 basePoint = modelSpawnPoint.transform.position;
 
         do
         {
-            playerSpawnPoint = modelSpawnPoint.transform.position + UnityEngine.Random.onUnitSphere * posRadius;
+            playerSpawnPoint = basePoint + UnityEngine.Random.onUnitSphere * posRadius;
         }
-        while (Vector3.Distance(playerSpawnPoint, Vector3.zero) >= sphereRadius);
+        while ((Vector3.Distance(playerSpawnPoint, Vector3.zero) >= sphereRadius));
 
         userTransform.position = playerSpawnPoint;
 
@@ -131,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
             yaw += rotateSpeed * Input.GetAxis("Mouse X");
             pitch -= rotateSpeed * Input.GetAxis("Mouse Y");
         }
-
+        
         userTransform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
     }
 

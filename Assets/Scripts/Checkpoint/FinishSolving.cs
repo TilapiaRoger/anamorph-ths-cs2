@@ -68,10 +68,10 @@ public class FinishSolving : MonoBehaviour
 
             slice.localPosition = new Vector3(0, 0, distancesOrdered[(model.transform.childCount / 2) - 1]);
 
-            /*if (GetComponent<ModelParameters>().GetDistributionType() == "Manual")
+            if (GetComponent<ModelParameters>().GetDistributionType() == "Manual")
             {
                 
-            }*/
+            }
 
             float finalScale = scalesOrdered[scalesOrdered.Length - 1];
             slice.localScale = new Vector3(finalScale, finalScale, finalScale);
