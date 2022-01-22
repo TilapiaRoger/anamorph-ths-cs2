@@ -632,7 +632,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 100000
+  far clip plane: 10000000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -1503,7 +1503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelSpawnPoint: {fileID: 525037209}
   playerAvatar: {fileID: 2122820538}
-  winningPoint: {fileID: 2035136193}
+  winningPoint: {fileID: 2055380431}
   solvingWindow: {fileID: 1519147541}
   resultsWindow: {fileID: 2085180897}
   congratsParticles: {fileID: 1648837169}
@@ -1600,7 +1600,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1648837169}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 8
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -2536,7 +2536,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 2000
+        scalar: 3500
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6443,6 +6443,10 @@ PrefabInstance:
       value: 0.39657593
       objectReference: {fileID: 0}
     - target: {fileID: 1906558595899828063, guid: 1951572e734e2df4d86cbf10a07bcef6, type: 3}
+      propertyPath: m_Text
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1906558595899828063, guid: 1951572e734e2df4d86cbf10a07bcef6, type: 3}
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
@@ -6944,7 +6948,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: b91f994839da03b49b36903fd821ef36, type: 3}
     - target: {fileID: 1906558596802666016, guid: 1951572e734e2df4d86cbf10a07bcef6, type: 3}
       propertyPath: m_MaxValue
-      value: 600
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1906558596802666017, guid: 1951572e734e2df4d86cbf10a07bcef6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7083,12 +7087,8 @@ PrefabInstance:
       value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 1906558597277757028, guid: 1951572e734e2df4d86cbf10a07bcef6, type: 3}
-      propertyPath: m_Value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1906558597277757028, guid: 1951572e734e2df4d86cbf10a07bcef6, type: 3}
       propertyPath: m_MaxValue
-      value: 80
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1906558597277757029, guid: 1951572e734e2df4d86cbf10a07bcef6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7160,7 +7160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1906558597584563106, guid: 1951572e734e2df4d86cbf10a07bcef6, type: 3}
       propertyPath: m_Text
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1906558597584563107, guid: 1951572e734e2df4d86cbf10a07bcef6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7471,7 +7471,7 @@ Transform:
   m_GameObject: {fileID: 2055380431}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -6.44, y: 0.010986842, z: 0.0024431646}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 552589691}
   m_RootOrder: 1
@@ -7520,8 +7520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20882ec854bc9e141b4c915523124904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
-  rotateSpeed: 30
+  movementSpeed: 5
+  rotateSpeed: 10
   gameManager: {fileID: 1606871412}
   target: {fileID: 1889112270}
   gameSphere: {fileID: 734933777}
@@ -7642,7 +7642,7 @@ PrefabInstance:
     - target: {fileID: 2481354300349014933, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: winningPoint
       value: 
-      objectReference: {fileID: 2035136193}
+      objectReference: {fileID: 2055380431}
     - target: {fileID: 2481354300349014933, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: patchMaterial
       value: 
@@ -7778,7 +7778,7 @@ PrefabInstance:
     - target: {fileID: 7942366226599760180, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: winningPoint
       value: 
-      objectReference: {fileID: 2035136193}
+      objectReference: {fileID: 2055380431}
     - target: {fileID: 7942366226599760180, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: modelMaterial
       value: 
@@ -7818,7 +7818,7 @@ PrefabInstance:
     - target: {fileID: 7942366226599760182, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: winningPoint
       value: 
-      objectReference: {fileID: 2035136193}
+      objectReference: {fileID: 2055380431}
     - target: {fileID: 7942366226599760182, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: modelSpawnPoint
       value: 
@@ -7842,7 +7842,7 @@ PrefabInstance:
     - target: {fileID: 8125868360355868010, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: winningPoint
       value: 
-      objectReference: {fileID: 2035136193}
+      objectReference: {fileID: 2055380431}
     - target: {fileID: 8125868360355868010, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: modelSpawnPoint
       value: 

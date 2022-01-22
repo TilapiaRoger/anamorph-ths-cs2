@@ -26,7 +26,6 @@ public class SettingsUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         numRegex = new Regex(@"\d+");
 
         errorMessage.gameObject.SetActive(false);
@@ -72,11 +71,19 @@ public class SettingsUI : MonoBehaviour
         {
             errorMessage.gameObject.SetActive(false);
 
-            moveSpeed = float.Parse(moveValField.text);
             rotateSpeed = float.Parse(rotateValField.text);
 
             updatePlayerStats();
         }
+        if (numRegex.IsMatch(moveValField.text))
+        {
+            errorMessage.gameObject.SetActive(false);
+
+            moveSpeed = float.Parse(moveValField.text);
+
+            updatePlayerStats();
+        }
+
         else
         {
             errorMessage.gameObject.SetActive(true);
@@ -97,7 +104,6 @@ public class SettingsUI : MonoBehaviour
 
     public void CloseWindow()
     {
-        //Time.timeScale = 1;
         GameObject player = GameObject.Find("Player");
         PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
         

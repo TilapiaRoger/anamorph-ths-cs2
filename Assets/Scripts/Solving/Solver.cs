@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Solver : MonoBehaviour
@@ -12,18 +14,27 @@ public class Solver : MonoBehaviour
 
     private Initializer initializer;
 
-    private Vector3 hitPosition,
+    private Vector3 playerAngle,
                     playerPosition,
                     mspPosition,
                     wpPosition;
     private float lookAccuracy,
                   positionAccuracy;
 
+    private bool atWinning,
+                 lookingAtModel;
+
+    private FinishSolving finishSolving;
+    private float curTime = 0f; 
+    private float delayCountDown = 4f; 
+    private bool showFinishPrompt = false;
+    private bool isFinishedPuzzle = false;
 
     // Start is called before the first frame update
     void Start()
     {
         initializer = GetComponent<Initializer>();
+        finishSolving = GetComponent<FinishSolving>();
 
         mspPosition = modelSpawnPoint.transform.position;
         wpPosition = winningPoint.transform.position;
@@ -32,12 +43,37 @@ public class Solver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mspPosition = modelSpawnPoint.transform.position;
-        wpPosition = winningPoint.transform.position;
+        atWinning = checkPosition();
+        lookingAtModel = checkAngle();
 
-        lookAccuracy = Vector3.Distance(mspPosition, hitPosition);
-        positionAccuracy = Vector3.Distance(wpPosition, playerPosition);
+        // For debug purposes
         results();
+
+        if (atWinning && lookingAtModel && Vector3.Distance(playerPosition, wpPosition) != 0f && Time.timeScale == 1)
+        {
+            //int delayTimeSeconds = 20;
+            if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
+            {
+                if (Vector3.Dot(player.transform.up, Vector3.down) > 0)
+                {
+                    Debug.Log("Cognrats!");
+                    FinishPuzzle();
+                }
+                else
+                {
+                    Debug.Log("Orientation is wrong.");
+                }
+            }
+            else
+            {
+                Debug.Log("Cognrats!");
+                FinishPuzzle();
+            }
+
+            
+        }
+
+        //ShowResults();
         //Debug.Log("In winning sphere? " + checkPosition() + " Looking at target? " + checkAngle());
         //checkPosition();
         //checkAngle();
@@ -45,20 +81,55 @@ public class Solver : MonoBehaviour
         //          "\nCurrent Points: " + playerPosition + ", " + hitPosition);
     }
 
+    void ShowResults()
+    {
+        if (isFinishedPuzzle == true)
+        {
+            if (showFinishPrompt == true)
+            {
+                finishSolving.WinPuzzle();
+                finishSolving.ActivateParticles();
+            }
+            else
+            {
+                curTime = curTime + 1f * Time.deltaTime;
+
+                if (curTime >= delayCountDown)
+                {
+                    showFinishPrompt = true;
+                }
+            }
+        }
+    }
+
+    void FinishPuzzle()
+    {
+        animate();
+        finishSolving.FreezePlayer();
+        finishSolving.DisableTimer();
+        isFinishedPuzzle = true;
+    }
+
     private void results()
     {
-        string positionVerdict = checkPosition() ? "" : "not ",
-               visionVerdict = checkAngle() ? "" : "not ";
+        string positionVerdict = atWinning ? "" : "not ",
+               visionVerdict = lookingAtModel ? "" : "not ";
+
+        /*position.text = "You're " + positionVerdict + "at the winning point\n" +
+                        "Winning Point is at: " + wpPosition + "\n" +
+                        "Position: " + playerPosition;
+
+        vision.text = "You're " + visionVerdict + "looking at the target\n" +
+                      "Model Spawn Point is at: " + mspPosition + "\n" +
+                      "Angle: " + playerAngle;*/
 
         Debug.Log("You're " + positionVerdict + "at the winning point\n" +
-                        "Winning point is at: " + wpPosition + "\n" +
-                        "You're at " + playerPosition + "\n" +
-                        "Accuracy: " + positionAccuracy);
+                        "Winning Point is at: " + wpPosition + "\n" +
+                        "Position: " + playerPosition);
 
         Debug.Log("You're " + visionVerdict + "looking at the target\n" +
-                      "Model spawn point is at: " + mspPosition + "\n" +
-                      "You're looking at " + hitPosition + "\n" +
-                      "Accuracy: " + lookAccuracy);
+                      "Model Spawn Point is at: " + mspPosition + "\n" +
+                      "Angle: " + playerAngle);
 
         if (Vector3.Dot(player.transform.up, Vector3.down) > 0)
         {
@@ -70,60 +141,54 @@ public class Solver : MonoBehaviour
             Debug.Log("Object is upside down");
         }
 
-        if (checkPosition() && checkAngle() && Time.timeScale == 1)
-        {
-            if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
-            {
-                if (Vector3.Dot(player.transform.up, Vector3.down) > 0)
-                {
-                    FinishSolving finishSolving = GetComponent<FinishSolving>();
-                    finishSolving.WinPuzzle();
-                }
-                else
-                {
-                    Debug.Log("Orientation is wrong.");
-                }
-            }
-            else
-            {
-                Debug.Log("Congratulations.\n" +
-                                      "Positions: " + hitPosition + ", " + playerPosition + "\n" +
-                                      "Accuracy: " + lookAccuracy + ", " + positionAccuracy);
-
-                FinishSolving finishSolving = GetComponent<FinishSolving>();
-                finishSolving.WinPuzzle();
-            }
-        }
-        else if (!checkPosition() && checkAngle())
-            Debug.Log("Winning point is at " + wpPosition + "\nCurrently at " + playerPosition + "\n Accuracy: " + positionAccuracy);
-        else if (checkPosition() && !checkAngle())
-            Debug.Log("Model spawn point is at " + mspPosition + "\nLooking at " + hitPosition + "\nAccuracy:" + lookAccuracy);
-
     }
 
     private bool checkPosition()
     {
         playerPosition = player.transform.position;
-        return (Vector3.Distance(playerPosition, wpPosition) <= 1) ? true : false;
+        return (Vector3.Distance(playerPosition, wpPosition) <= 0.23f) ? true : false;
     }
 
     private bool checkAngle()
     {
-        RaycastHit[] hits = Physics.RaycastAll(playerPosition, player.transform.forward, maxDistance);
-
+        RaycastHit[] hits = Physics.RaycastAll(playerPosition, player.transform.forward, 5000.0F);
+        playerAngle = clamp(player.transform.eulerAngles);
         foreach (RaycastHit hit in hits)
-        {
-            if (hit.collider.GetComponent<CapsuleCollider>() != null ||
-                hit.collider.GetComponent<BoxCollider>() != null)
-            {
-                hitPosition = hit.point;
+            if (hit.collider.GetComponent<BoxCollider>() != null)
                 return true;
-            }
-
-            if (hit.collider.GetComponent<BoxCollider>() != null) Debug.Log("Looking at model");
-        }
 
         return false;
+    }
+
+    // Clamp angles displayed between -180 and 180
+    private Vector3 clamp(Vector3 angles)
+    {
+        for (int i = 0; i < 3; i++)
+            if (angles[i] > 180)
+                angles[i] -= 360;
+        return angles;
+    }
+
+    void animate()
+    {
+        // Set animation speed
+        float speed = 0.5f,
+              step = speed * Time.deltaTime;
+
+        // move the player
+        player.transform.position = Vector3.MoveTowards(playerPosition, wpPosition, step);
+        playerPosition = player.transform.position;
+
+        // Rotate the player's forward vector towards the model's direction by one step
+        Vector3 newDirection = Vector3.RotateTowards(player.transform.forward, mspPosition - playerPosition, step, 0f);
+
+        // rotate the player towards the model
+        player.transform.rotation = Quaternion.LookRotation(newDirection);
+
+        if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
+        {
+            player.transform.RotateAround(player.transform.position, player.transform.forward, 180);
+        }
     }
 
     private void OnDrawGizmos()
