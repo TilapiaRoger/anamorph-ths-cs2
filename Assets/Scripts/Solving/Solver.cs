@@ -58,6 +58,7 @@ public class Solver : MonoBehaviour
                 {
                     Debug.Log("Cognrats!");
                     FinishPuzzle();
+                    ShowResults();
                 }
                 else
                 {
@@ -68,6 +69,7 @@ public class Solver : MonoBehaviour
             {
                 Debug.Log("Cognrats!");
                 FinishPuzzle();
+                ShowResults();
             }
 
             
