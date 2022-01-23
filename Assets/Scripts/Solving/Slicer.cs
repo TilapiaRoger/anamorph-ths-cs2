@@ -245,7 +245,7 @@ public class Slicer : MonoBehaviour
         }
         else if (modelMesh.name.StartsWith("08"))
         {
-            selectedModel.transform.localEulerAngles = new Vector3(0, -180, 0); 
+            selectedModel.transform.localEulerAngles = new Vector3(0, 360, 0); 
         }
         else if (modelMesh.name.StartsWith("07") || modelMesh.name.StartsWith("10"))
         {

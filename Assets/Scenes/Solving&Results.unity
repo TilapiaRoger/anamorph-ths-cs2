@@ -7849,7 +7849,7 @@ PrefabInstance:
       objectReference: {fileID: 525037209}
     - target: {fileID: 8125868360355868010, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}
       propertyPath: minimumSolveDistance
-      value: 0.055
+      value: 0.065
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7942366226599760178, guid: 23184eafb4720944499006cfa6e7be7f, type: 3}

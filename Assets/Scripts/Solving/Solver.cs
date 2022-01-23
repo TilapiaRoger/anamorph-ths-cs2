@@ -79,7 +79,7 @@ public class Solver : MonoBehaviour
             
         }
 
-        //ShowResults();
+        ShowResults();
         //Debug.Log("In winning sphere? " + checkPosition() + " Looking at target? " + checkAngle());
         //checkPosition();
         //checkAngle();
@@ -89,11 +89,12 @@ public class Solver : MonoBehaviour
 
     void ShowResults()
     {
-        /*if (isFinishedPuzzle == true)
+        if (isFinishedPuzzle == true)
         {
             if (showFinishPrompt == true)
             {
-                
+                finishSolving.WinPuzzle();
+                finishSolving.ActivateParticles();
             }
             else
             {
@@ -105,12 +106,6 @@ public class Solver : MonoBehaviour
                     showFinishPrompt = true;
                 }
             }
-        }*/
-
-        if (finishedAnimation)
-        {
-            finishSolving.WinPuzzle();
-            finishSolving.ActivateParticles();
         }
     }
 
@@ -119,8 +114,7 @@ public class Solver : MonoBehaviour
         animate();
         finishSolving.FreezePlayer();
         finishSolving.DisableTimer();
-        //isFinishedPuzzle = true;
-        finishedAnimation = true;
+        isFinishedPuzzle = true;
     }
 
     private void results()
