@@ -79,10 +79,18 @@ public class Distributer : MonoBehaviour
             //pivotPosition = (i == 0) ? wpPosition.z + 1 : lastPosition + .9f * lastScale;
             pivotPosition = (i + 1) * 10 / childCount;
 
+            Debug.Log("Slice: " + piece.name + ". Pivot position: " + (i + 1) * 10 + "/" + "childCount(" + childCount + ") = " + pivotPosition);
+            if(pivotPosition < 1)
+            {
+                pivotPosition = 1;
+            }
+
             // Move piece by a random distance from the model spawn point
             piece.transform.position = new Vector3(0, 0, pivotPosition);
             lastPosition = pivotPosition;
             newDistance = Mathf.Abs(wpPosition.z - pivotPosition);
+
+            //Debug.Log("Slice: " + piece.name + ". New distance:" + "wpPosition.z (" + wpPosition.z + ") - " + "pivotPosition(" + pivotPosition + ")");
 
             // Scale the model
             scaleFactor = newDistance / oldDistance;
