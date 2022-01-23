@@ -12,6 +12,8 @@ public class Solver : MonoBehaviour
                       player,
                       winningPoint;
 
+    public float minimumSolveDistance = 0.12f;
+
     private Initializer initializer;
 
     private Vector3 playerAngle,
@@ -26,9 +28,11 @@ public class Solver : MonoBehaviour
 
     private FinishSolving finishSolving;
     private float curTime = 0f; 
-    private float delayCountDown = 4f; 
+    private float delayCountDown = 2f;
     private bool showFinishPrompt = false;
     private bool isFinishedPuzzle = false;
+    private bool finishedAnimation = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +62,7 @@ public class Solver : MonoBehaviour
                 {
                     Debug.Log("Cognrats!");
                     FinishPuzzle();
-                    ShowResults();
+                    ShowResults(); 
                 }
                 else
                 {
@@ -69,8 +73,8 @@ public class Solver : MonoBehaviour
             {
                 Debug.Log("Cognrats!");
                 FinishPuzzle();
-                ShowResults();
-            }
+                ShowResults(); 
+            } 
 
             
         }
@@ -85,22 +89,28 @@ public class Solver : MonoBehaviour
 
     void ShowResults()
     {
-        if (isFinishedPuzzle == true)
+        /*if (isFinishedPuzzle == true)
         {
             if (showFinishPrompt == true)
             {
-                finishSolving.WinPuzzle();
-                finishSolving.ActivateParticles();
+                
             }
             else
             {
                 curTime = curTime + 1f * Time.deltaTime;
+                Debug.Log("Seconds: " + curTime);
 
                 if (curTime >= delayCountDown)
                 {
                     showFinishPrompt = true;
                 }
             }
+        }*/
+
+        if (finishedAnimation)
+        {
+            finishSolving.WinPuzzle();
+            finishSolving.ActivateParticles();
         }
     }
 
@@ -109,7 +119,8 @@ public class Solver : MonoBehaviour
         animate();
         finishSolving.FreezePlayer();
         finishSolving.DisableTimer();
-        isFinishedPuzzle = true;
+        //isFinishedPuzzle = true;
+        finishedAnimation = true;
     }
 
     private void results()
@@ -148,7 +159,7 @@ public class Solver : MonoBehaviour
     private bool checkPosition()
     {
         playerPosition = player.transform.position;
-        return (Vector3.Distance(playerPosition, wpPosition) <= 0.23f) ? true : false;
+        return (Vector3.Distance(playerPosition, wpPosition) <= minimumSolveDistance) ? true : false;
     }
 
     private bool checkAngle()
@@ -174,7 +185,7 @@ public class Solver : MonoBehaviour
     void animate()
     {
         // Set animation speed
-        float speed = 0.5f,
+        float speed = 0.6f,
               step = speed * Time.deltaTime;
 
         // move the player
