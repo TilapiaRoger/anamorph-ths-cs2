@@ -27,7 +27,8 @@ public class Solver : MonoBehaviour
                  lookingAtModel;
 
     private FinishSolving finishSolving;
-    private float curTime = 0f; 
+    private float curTime = 0f;
+    private float curAnimateTime = 0f;
     private float delayCountDown = 2f;
     private bool showFinishPrompt = false;
     private bool isFinishedPuzzle = false;
@@ -60,9 +61,8 @@ public class Solver : MonoBehaviour
             {
                 if (Vector3.Dot(player.transform.up, Vector3.down) > 0)
                 {
-                    Debug.Log("Cognrats!");
-                    FinishPuzzle();
-                    ShowResults(); 
+                    Debug.Log("Congrats!");
+                    //FinishPuzzle();
                 }
                 else
                 {
@@ -71,20 +71,14 @@ public class Solver : MonoBehaviour
             }
             else
             {
-                Debug.Log("Cognrats!");
-                FinishPuzzle();
-                ShowResults(); 
+                Debug.Log("Congrats!");
+                //FinishPuzzle();
             } 
 
             
         }
 
-        ShowResults();
-        //Debug.Log("In winning sphere? " + checkPosition() + " Looking at target? " + checkAngle());
-        //checkPosition();
-        //checkAngle();
-        //Debug.Log("Winning Points: " + wpPosition + ", " + mspPosition  + 
-        //          "\nCurrent Points: " + playerPosition + ", " + hitPosition);
+        //ShowResults();
     }
 
     void ShowResults()
@@ -179,7 +173,7 @@ public class Solver : MonoBehaviour
     void animate()
     {
         // Set animation speed
-        float speed = 0.6f,
+        float speed = 0.7f,
               step = speed * Time.deltaTime;
 
         // move the player
