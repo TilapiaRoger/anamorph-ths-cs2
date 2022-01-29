@@ -105,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
 
             X = transform.rotation.eulerAngles.x;
             Y = transform.rotation.eulerAngles.y;
-
             
             transform.rotation = Quaternion.Euler(X, Y, 0);
         }
