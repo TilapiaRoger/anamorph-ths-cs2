@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,15 +23,18 @@ public class PlayerMovement : MonoBehaviour
                     mspPosition,
                     nsPosition;
 
+    private Solver solver;
+
     private Transform nearestSlice;
 
     private bool canMove = false,
                  shouldSolve = false,
-                 blegh = true;
+                 lookingAtModel;
 
     // Start is called before the first frame update
     void Start()
     {
+        solver = GetComponent<Solver>();
         StartMove();
         SetPlayerTransform();
     }
@@ -39,8 +42,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey) blegh = false;
-
         if (canMove)
         {
             Pan();
@@ -95,18 +96,20 @@ public class PlayerMovement : MonoBehaviour
         float xRotation = transform.localEulerAngles.x,
               yRotation = transform.localEulerAngles.y;
 
-
-        if (Input.GetMouseButton(1))
+        if(Input.GetMouseButton(1) && -60 <= clamp(xRotation) && clamp(xRotation) <= 60)
         {
             yaw   = rotateSpeed * Input.GetAxis("Mouse X");
             pitch = rotateSpeed * Input.GetAxis("Mouse Y");
+            
             transform.Rotate(new Vector3(-pitch, yaw, 0));
 
             X = transform.rotation.eulerAngles.x;
             Y = transform.rotation.eulerAngles.y;
 
+            
             transform.rotation = Quaternion.Euler(X, Y, 0);
         }
+        else transform.Rotate(new Vector3(pitch, yaw, 0));
     }
 
     public void SetMoveSpeed(float moveSpeed)
@@ -151,5 +154,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return nearest;
+    }
+
+    private float clamp(float angle)
+    {
+        if (angle > 180)
+            angle -= 360;
+        return angle;
     }
 }
