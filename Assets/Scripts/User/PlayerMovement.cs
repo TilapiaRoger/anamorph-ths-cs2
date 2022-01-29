@@ -10,9 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject modelSpawnPoint,
                       winningPoint;
 
-    private GameObject model,
-                       target,
-                       origin;
+    private GameObject model;
 
     private float yaw = 0.0f,
                   pitch = 0.0f,
@@ -22,7 +20,8 @@ public class PlayerMovement : MonoBehaviour
                     linearVelocity,
                     angularVelocity,
                     wpPosition,
-                    mspPosition;
+                    mspPosition,
+                    nsPosition;
 
     private Transform nearestSlice;
 
@@ -33,8 +32,6 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.Find("Target");
-        origin = GameObject.Find("Origin");
         StartMove();
         SetPlayerTransform();
     }
@@ -72,10 +69,7 @@ public class PlayerMovement : MonoBehaviour
         // point the camera towards the nearest slice
         model = GameObject.Find("Model");
         Transform nearestSlice = findNearest(model.transform);
-        target.transform.position = nearestSlice.position;
-        
-        Debug.Log("Nearest slice: " + nearestSlice.gameObject.name);
-        Debug.Log("Nearest slice Position: " + nearestSlice.position);
+        nsPosition = nearestSlice.position;
         transform.LookAt(nearestSlice);
     }
 
@@ -112,7 +106,6 @@ public class PlayerMovement : MonoBehaviour
             Y = transform.rotation.eulerAngles.y;
 
             transform.rotation = Quaternion.Euler(X, Y, 0);
-
         }
     }
 
@@ -136,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, wpPosition, step);
 
         // rotate the player's forward vector towards the model's direction by one step
-        Vector3 newDirection = (target.transform.position - transform.position).normalized;
+        Vector3 newDirection = nsPosition - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(newDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, step);
     }
