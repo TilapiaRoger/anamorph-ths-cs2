@@ -1,6 +1,10 @@
 # Automatic Slicing and Distribution of 3D Models Using Anamorphosis
-The thesis is mainly about solving automated anamorphic puzzles using automatic slicing and distribution algorithms. However, the associated software, Anamorph Puzzle, allows the user to solve a model in any of the 3 model processing methods, or solving modes:
-1. Manual Slicing and Distribution
+The application associated with the thesis, **Anamorph Puzzle** is mainly about solving automated models automatically sliced and then distributed in an anamorphic manner using algorithms. The application was developed in Unity 2021.1.12f1 using C#, and runs on Windows personal computers. Although the automatic distribution algorithm used is entirely developed by the thesis researchers, the base automatic slicing algorithm used is by Whirle (2021). The base slicing algorithm was used along with an algorithm for the slicing blade that slices six times. The first three times are sliced vertically, and the last three times are sliced horizontally. 
+
+The winning conditions 
+
+The application allows the user to solve a model in any of the 3 model processing methods, or solving modes:
+1. Manual Slicing and Distribution 
 2. Manual Slicing and Automatic Distribution, or Manual Slicing, Auto Distribution
 3. Automatic or Auto Slicing and Distribution
 
@@ -17,11 +21,17 @@ The models were pre-sliced in Blender, but automatically distributed in the appl
 ### Automatic Slicing and Distribution
 The models were both automatically sliced and distributed in the application with algorithms.
 
+### Other Notes
+The skyboxes used in the user manual were downloaded from the 
 
 ## Getting Started
-
 ### Installation 
-1. Click on the Google Drive link provided below:
+1. Click on [this Google Drive link](https://drive.google.com/drive/folders/1QaYy-SKNvhFxNSrBXMH7rque4I_qqR2U?usp=sharing).
 2. Install the ZIP file in the link. Save to a directory of your choice.
 3. Once download is finished, find and unzip the file in the selected directory.
 4. Go inside the folder from the unzipped file, and click on **Lao-Lapan Anamorphosis THS-CS2** to run the application.
+
+### User Manual
+
+
+### References
