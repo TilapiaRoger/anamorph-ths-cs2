@@ -11,7 +11,7 @@ The application allows the user to solve a model in any of the 3 model processin
 ## Test Models
 The test models are the following 10 models available for solving in each of of the 3 solving modes. They are already provided inside the application. Thus, the user no longer needs to download the models.
 
-## Applications of the Solving Modes
+## Samples of the Solving Modes
 ### Manual Slicing and Distribution
 The models were both pre-sliced and pre-distributed in Blender before being imported to the application's Unity project.
 
@@ -21,8 +21,17 @@ The models were pre-sliced in Blender, but automatically distributed in the appl
 ### Automatic Slicing and Distribution
 The models were both automatically sliced and distributed in the application with algorithms.
 
-### Other Notes
-The skyboxes used in the user manual were downloaded from the 
+## Skyboxes
+The following skyboxes were used in the application:
+
+### AllSky Free - 10 Sky / Skybox Set by rpgwhitelock (2021)
+
+
+### Fantasy Skybox FREE by Render Knight (2020)
+
+
+### 3D Skybox PRO - Mediterranean Freebies by Crosstales (2020)
+
 
 ## Getting Started
 ### Installation 
@@ -32,6 +41,7 @@ The skyboxes used in the user manual were downloaded from the
 4. Go inside the folder from the unzipped file, and click on **Lao-Lapan Anamorphosis THS-CS2** to run the application.
 
 ### User Manual
-
+[User Manual](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/629bb780557568ec4cd4e856c9b5cc53a7225122/%5BTHS-CS3%5D%20User%20Manual%20for%20Automatic%20Slicing%20and%20Distribution%20of%203D%20Models%20For%20Puzzles%20Using%20Anamorphosis.pdf)
 
 ### References
+- Whirle,  D. (2021). Unity assets.https://github.com/BLINDED-AM-ME/UnityAssets. GitHub
