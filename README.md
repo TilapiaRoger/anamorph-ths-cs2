@@ -33,7 +33,7 @@ The following skyboxes were used in the application:
 ### 3D Skybox PRO - Mediterranean Freebies by Crosstales (2020)
 
 
-### City Street Skyboxes Vol. 1 (2019)
+### City Street Skyboxes Vol. 1 by MoodWare (2019)
 
 
 ## Getting Started
