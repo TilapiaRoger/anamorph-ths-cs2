@@ -33,6 +33,9 @@ The following skyboxes were used in the application:
 ### 3D Skybox PRO - Mediterranean Freebies by Crosstales (2020)
 
 
+### City Street Skyboxes Vol. 1 (2019)
+
+
 ## Getting Started
 ### Installation 
 1. Click on [this Google Drive link](https://drive.google.com/drive/folders/1QaYy-SKNvhFxNSrBXMH7rque4I_qqR2U?usp=sharing).
@@ -46,5 +49,6 @@ The following skyboxes were used in the application:
 ### References
 - Whirle,  D. (2021). Unity assets. https://github.com/BLINDED-AM-ME/UnityAssets. GitHub
 - Crosstales (2020). 3D Skybox PRO - Mediterranean Freebies. https://assetstore.unity.com/packages/2d/textures-materials/sky/3d-skybox-pro-mediterranean-freebies-98721. Unity Asset Store
+- MoodWare (2019). City Street Skyboxes Vol. 1. https://assetstore.unity.com/packages/2d/textures-materials/sky/city-street-skyboxes-vol-1-157401. Unity Asset Store
 - Render Knight (2020). Fantasy Skybox FREE. https://assetstore.unity.com/packages/2d/textures-materials/sky/fantasy-skybox-free-18353. Unity Asset Store
 - rpgwhitelock (2021). AllSky Free - 10 Sky / Skybox Set. https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-free-10-sky-skybox-set-146014. Unity Asset Store
