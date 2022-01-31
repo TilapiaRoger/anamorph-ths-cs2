@@ -75,6 +75,8 @@ public class Initializer : MonoBehaviour
         // Instantiate the model
         instantiateModel();
 
+        //adjustCamera();
+
         Debug.Log("Model is at " + model.transform.position);
     }
 
@@ -136,5 +138,35 @@ public class Initializer : MonoBehaviour
         GameObject modelClone = Instantiate(model, modelSpawnPoint.transform);
         // Add box colliders to the slices or model
         addBoxColliders(modelClone);
+    }
+    private void adjustCamera()
+    {
+        Bounds modelBounds = GetBounds(model);
+        //Camera.main.rect = new Rect(0, 0, modelBounds.size.x, modelBounds.size.z);
+        Camera.main.fieldOfView = modelBounds.size.x * modelBounds.size.y;
+    }
+
+    private Bounds GetBounds(GameObject model)
+    {
+        Bounds bounds = new Bounds();
+        Renderer[] renderers = model.GetComponentsInChildren<Renderer>();
+
+
+        if (renderers.Length > 0)
+        {
+            //Find first enabled renderer to start encapsulate from it
+            foreach (Renderer renderer in renderers) if (renderer.enabled)
+                {
+                    Debug.Log("Current renderer: " + renderer);
+                    bounds = renderer.bounds;
+                    break;
+                }
+
+            //Encapsulate for all renderers
+            foreach (Renderer renderer in renderers) if (renderer.enabled)
+                    bounds.Encapsulate(renderer.bounds);
+        }
+
+        return bounds;
     }
 }

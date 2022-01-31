@@ -9,55 +9,82 @@ public class SettingsUI : MonoBehaviour
 
     [SerializeField] private PlayerMovement player;
 
-    [SerializeField] private Slider moveSlider;
-    [SerializeField] private Slider rotateSlider;
+    [SerializeField] private Slider moveSpeedSlider;
+    [SerializeField] private Slider rotateSpeedSlider;
 
     [SerializeField] private InputField moveValField;
     [SerializeField] private InputField rotateValField;
 
-    [SerializeField] private Text errorMessage;
-
     private float moveSpeed;
     private float rotateSpeed;
 
+    private float curPlayerZrotation;
+
     private Regex numRegex;
 
+    [SerializeField] private Slider zRotateSlider;
+
+    public GameObject modelSpawnPoint;
+    public Image rotatorModelImage;
+    [SerializeField] public Sprite[] modelImageList;
+
+    private bool startsUpsideDown = true;
 
     // Start is called before the first frame update
     void Start()
     {
         numRegex = new Regex(@"\d+");
 
-        errorMessage.gameObject.SetActive(false);
-
         moveSpeed = player.movementSpeed;
-        rotateSpeed = player.rotateSpeed;
+        moveSpeedSlider.value = moveSpeed;
 
-        moveSlider.value = moveSpeed;
-        rotateSlider.value = rotateSpeed;
+        rotateSpeed = player.rotateSpeed;
+        rotateSpeedSlider.value = rotateSpeed;
+
+        Debug.Log("Rotate Speed: " + rotateSpeed);
+
+        moveValField.text = moveSpeed.ToString();
+        rotateValField.text = rotateSpeed.ToString();
 
         player.SetMoveSpeed(moveSpeed);
         player.SetRotateSpeed(rotateSpeed);
 
-        moveValField.text = moveSpeed.ToString();
-        rotateValField.text = rotateSpeed.ToString();
+        curPlayerZrotation = zRotateSlider.value;
+
+        for (int i = 0; i < modelImageList.Length; i++)
+        {
+            Debug.Log("Model name: " + modelSpawnPoint.transform.GetChild(0).name);
+            if (modelSpawnPoint.transform.GetChild(0).name.StartsWith(modelImageList[i].name))
+            {
+                rotatorModelImage.sprite = modelImageList[i];
+            }
+        }
+        
+        /*if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
+        {
+            zRotateSlider.value = 180;
+            rotatorModelImage.transform.localEulerAngles = new Vector3(0, 0, -zRotateSlider.value);
+        }*/
+    }
+    public void RotateZModel()
+    {
+        curPlayerZrotation = zRotateSlider.value;
+        //rotatorModelImage.transform.Rotate(Vector3.forward * curPlayerZrotation);
+
+        rotatorModelImage.transform.localEulerAngles = new Vector3(0, 0, -curPlayerZrotation);
+
+        player.SetPlayerZRotation(curPlayerZrotation);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RealTimeInputTextChange()
     {
-        
+        moveValField.text = moveSpeedSlider.value.ToString();
+        rotateValField.text = rotateSpeedSlider.value.ToString();
     }
 
     public void ChangeSliderVal()
     {
-        moveSpeed = moveSlider.value;
-        rotateSpeed = rotateSlider.value;
-
-        moveValField.text = moveSpeed.ToString();
-        rotateValField.text = rotateSpeed.ToString();
-
-        updatePlayerStats();
+        updatePlayerStats(moveSpeedSlider.value, rotateSpeedSlider.value);
     }
 
     public void ChangeInputFieldVal()
@@ -67,47 +94,28 @@ public class SettingsUI : MonoBehaviour
         prevMoveSpeed = moveSpeed;
         prevRotateSpeed = rotateSpeed;
 
-        if (numRegex.IsMatch(rotateValField.text))
+        if (numRegex.IsMatch(rotateValField.text) || !(rotateValField.text == "0." || rotateValField.text == "."))
         {
-            errorMessage.gameObject.SetActive(false);
-
             rotateSpeed = float.Parse(rotateValField.text);
-
-            updatePlayerStats();
+            rotateSpeedSlider.value = rotateSpeed;
+            updatePlayerStats(moveSpeed, rotateSpeed);
         }
-        if (numRegex.IsMatch(moveValField.text))
+        if (numRegex.IsMatch(moveValField.text) || !(moveValField.text == "0." || moveValField.text == "."))
         {
-            errorMessage.gameObject.SetActive(false);
-
             moveSpeed = float.Parse(moveValField.text);
-
-            updatePlayerStats();
+            moveSpeedSlider.value = moveSpeed;
+            updatePlayerStats(moveSpeed, rotateSpeed);
         }
-
         else
         {
-            errorMessage.gameObject.SetActive(true);
-
             moveValField.text = prevMoveSpeed.ToString();
             rotateValField.text = prevRotateSpeed.ToString();
         }
-
-        moveSlider.value = moveSpeed;
-        rotateSlider.value = rotateSpeed;
     }
 
-    void updatePlayerStats()
+    void updatePlayerStats(float newMoveSpeed, float newRotateSpeed)
     {
-        player.SetMoveSpeed(moveSpeed);
-        player.SetRotateSpeed(rotateSpeed);
-    }
-
-    public void CloseWindow()
-    {
-        GameObject player = GameObject.Find("Player");
-        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
-        
-        this.gameObject.SetActive(false);
-        playerMovement.SetMoveStatus(true);
+        player.SetMoveSpeed(newMoveSpeed);
+        player.SetRotateSpeed(newRotateSpeed);
     }
 }

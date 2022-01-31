@@ -1,159 +1,164 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float movementSpeed = 1.0f;
-    public float rotateSpeed = 1.0f;
+    public float movementSpeed = 1.0f,
+                 rotateSpeed = 1.0f;
 
-    public GameObject gameManager;
-    //public GameObject origin;
+    public GameObject modelSpawnPoint,
+                      winningPoint;
 
-    public Transform target;
+    private GameObject model;
 
-    private Transform userTransform;
-
-    [SerializeField] Transform gameSphere;
-    private float sphereRadius;
-    private Vector3 centerPosition;
-
-    private float yaw = 0.0f;
-    private float pitch = 0.0f;
+    private float yaw = 0.0f,  
+                  pitch = 0.0f,
+                  X, Y;
+    public float minRotationLimit = -75;
+    public float maxRotationLimit = 75;
 
     private Vector3 offset,
                     linearVelocity,
-                    angularVelocity;
+                    angularVelocity,
+                    wpPosition,
+                    mspPosition,
+                    nsPosition;
 
+    private Transform nearestSlice;
 
-    private bool canMove = false;
-    private bool isLookingAtModel = false;
+    private float zPlayerRotation = 0;
 
-    private System.Random random;
-
-    private GameObject modelSpawnPoint;
-
-    public float posRadius = 5;
+    private bool canMove = false,
+                 shouldSolve = false,
+                 blegh = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        modelSpawnPoint = GameObject.Find("ModelSpawnPoint");
-        GameObject model = modelSpawnPoint.transform.GetChild(0).gameObject;
-        string modelName = model.name;
-
-        userTransform = transform;
-
-        userTransform.Rotate(0, 0, 0);
-
-        random = new System.Random();
-
-        sphereRadius = gameSphere.localScale.x / 2;
-        centerPosition = gameSphere.position;
-
-        Vector3 playerSpawnPoint, additionalPoint;
-
-        additionalPoint = new Vector3(0, 0, 0);
-
-
-        Vector3 basePoint = modelSpawnPoint.transform.position;
-
-        do
-        {
-            playerSpawnPoint = basePoint + UnityEngine.Random.onUnitSphere * posRadius;
-        }
-        while ((Vector3.Distance(playerSpawnPoint, Vector3.zero) >= sphereRadius));
-
-        userTransform.position = playerSpawnPoint;
-
-        isLookingAtModel = true;
-    }
-
-    public void SetRotationX(float rotationX)
-    {
-        pitch = rotationX;
-    }
-
-    public void SetRotationY(float rotationY)
-    {
-        yaw = rotationY;
+        SetMoveStatus(true);
+        SetPlayerTransform();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isLookingAtModel)
-        {
-            Transform lookedTarget = modelSpawnPoint.transform.GetChild(0);
-            //lookedTarget = selectedModel.transform.GetChild(UnityEngine.Random.Range(0, selectedModel.transform.childCount-1));
-
-            userTransform.LookAt(modelSpawnPoint.transform);
-
-            SetRotationX(userTransform.eulerAngles.x);
-            SetRotationY(userTransform.eulerAngles.y);
-            userTransform.eulerAngles = new Vector3(pitch, yaw, 0);
-
-
-
-            isLookingAtModel = false;
-        }
-
-        if (canMove == true)
+        if (canMove)
         {
             Pan();
             Rotate();
+
+            //transform.Rotate(Vector3.forward, zPlayerRotation);
         }
+
     }
 
-    public void SetMoveStatus(bool moveStatus)
+    public void SetMoveStatus(bool canMove)
     {
-        canMove = moveStatus; 
+        this.canMove = canMove;
+    }
+
+    private void SetPlayerTransform()
+    {
+        // Cache relevant data for optimization purposes.
+        mspPosition = modelSpawnPoint.transform.position;
+        wpPosition = winningPoint.transform.position;
+
+        // set the player’s position 1 unit to the right of the modelSpawnPoint
+        transform.position = mspPosition + modelSpawnPoint.transform.right;
+
+        // point the camera towards the nearest slice
+        model = modelSpawnPoint.transform.GetChild(0).gameObject;
+        Transform nearestSlice = findNearest(model.transform);
+        nsPosition = nearestSlice.position;
+        transform.LookAt(nearestSlice);
     }
 
     private void Pan()
     {
-        linearVelocity = new Vector3(0, 0, 0);
-        if (Input.GetKey(KeyCode.Q)) linearVelocity = Vector3.up; 
-        if (Input.GetKey(KeyCode.W)) linearVelocity = Vector3.forward; 
-        if (Input.GetKey(KeyCode.E)) linearVelocity = -Vector3.up; 
-        if (Input.GetKey(KeyCode.A)) linearVelocity = -Vector3.right; 
-        if (Input.GetKey(KeyCode.S)) linearVelocity = -Vector3.forward; 
-        if (Input.GetKey(KeyCode.D)) linearVelocity = Vector3.right;
+        if (Vector3.Distance(gameObject.transform.position, Vector3.zero) < 15)
+        {
+            linearVelocity = new Vector3(0, 0, 0);
+            if (Input.GetKey(KeyCode.Q)) linearVelocity = Vector3.up;
+            if (Input.GetKey(KeyCode.W)) linearVelocity = Vector3.forward;
+            if (Input.GetKey(KeyCode.E)) linearVelocity = -Vector3.up;
+            if (Input.GetKey(KeyCode.A)) linearVelocity = -Vector3.right;
+            if (Input.GetKey(KeyCode.S)) linearVelocity = -Vector3.forward;
+            if (Input.GetKey(KeyCode.D)) linearVelocity = Vector3.right;
 
-        userTransform.Translate(linearVelocity * Time.deltaTime * movementSpeed);
-
-
-        Debug.Log("MOVE.");
-
+            transform.Translate(linearVelocity * Time.deltaTime * movementSpeed);
+        }
+        else transform.Translate(-linearVelocity * Time.deltaTime * movementSpeed);
     }
 
     private void Rotate()
     {
+        float xRotation = transform.localEulerAngles.x,
+              yRotation = transform.localEulerAngles.y;
+
 
         if (Input.GetMouseButton(1))
         {
-            yaw += rotateSpeed * Input.GetAxis("Mouse X");
+            /*yaw += rotateSpeed * Input.GetAxis("Mouse X");
             pitch -= rotateSpeed * Input.GetAxis("Mouse Y");
+
+            pitch = Mathf.Clamp(pitch, minRotationLimit, maxRotationLimit);
+
+            transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);*/
+
+            yaw = rotateSpeed * Input.GetAxis("Mouse X");
+            pitch = rotateSpeed * Input.GetAxis("Mouse Y");
+
+            transform.Rotate(new Vector3(-pitch, yaw, 0));
+
+            X = transform.rotation.eulerAngles.x;
+            Y = transform.rotation.eulerAngles.y;
+
+            transform.rotation = Quaternion.Euler(X, Y, 0);
         }
-        
-        userTransform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
     }
+
+    private float clamp(float angle)
+    {
+        if (angle > 180)
+        {
+            angle -= 360;
+        }
+        return angle;
+    }
+
 
     public void SetMoveSpeed(float moveSpeed)
     {
         this.movementSpeed = moveSpeed;
     }
 
-    public void SetRotateSpeed(float rotationSpeed)
+    public void SetRotateSpeed(float rotateSpeed)
     {
-        this.rotateSpeed = rotationSpeed;
+        this.rotateSpeed = rotateSpeed;
     }
 
-    float generate(float min, float max)
+    public void SetPlayerZRotation(float zPlayerRotation)
     {
-        float num = UnityEngine.Random.Range(min, max);
-        while (num == min || num == max) num = UnityEngine.Random.Range(min, max);
-        return num;
+        transform.rotation = Quaternion.Euler(X, Y, zPlayerRotation);
+    }
+
+    Transform findNearest(Transform model)
+    {
+        Transform nearest = null;
+        float min = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        foreach (Transform child in model)
+        {
+            Vector3 directionToTarget = child.position - currentPosition;
+            float distanceSquared = directionToTarget.sqrMagnitude;
+            if (distanceSquared < min)
+            {
+                min = distanceSquared;
+                nearest = child;
+            }
+        }
+
+        return nearest;
     }
 }

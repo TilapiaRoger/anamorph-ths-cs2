@@ -11,9 +11,9 @@ public class ExampleMeshSlicer : MonoBehaviour
 
 	[Header("Slicing Settings")]
 	public int sliceCtr;
-    public int defaultX = 3;
-    public int defaultY = 3;
-    public int defaultZ = 0;
+    public float defaultX = 3;
+    public float defaultY = 3;
+    public float defaultZ = 0;
 	private int index = 0;
     private bool shouldExectute = false;
 
@@ -39,7 +39,7 @@ public class ExampleMeshSlicer : MonoBehaviour
 
         Debug.Log("Original size: " + collider.size);
 
-        for(int i = 0; i < models.Length; i++)
+        for (int i = 0; i < models.Length; i++)
         {
             BoxCollider modelCollider;
 
@@ -69,15 +69,15 @@ public class ExampleMeshSlicer : MonoBehaviour
             if (Mathf.Max(collider.size.x, collider.size.y, collider.size.z) >= 0.1 &&
                 Mathf.Max(collider.size.x, collider.size.y, collider.size.z) < 0.3)
             {
-                newScale = 10.0f;
+                newScale = 30.0f;
             }
             else if (Mathf.Max(collider.size.x, collider.size.y, collider.size.z) < 0.1)
             {
-                newScale = 50.0f;
+                newScale = 150.0f;
             }
             else
             {
-                newScale = 7.0f;
+                newScale = 10.0f;
             }
         }
 
@@ -86,12 +86,19 @@ public class ExampleMeshSlicer : MonoBehaviour
         size = collider.size * currentModel.transform.localScale.x;
         Debug.Log("Imported size: " + size);
 
+
+        float combinedBoundsX = size.x;
+        defaultX = currentModel.transform.position.x + combinedBoundsX + 10;
+
+        float combinedBoundsY = size.y;
+        defaultY = currentModel.transform.position.y + combinedBoundsY + 10;
+
         shouldExectute = true;
     }
 
 	void Update()
 	{
-        if (index < sliceCtr && shouldExectute == true)
+        /*if (index < sliceCtr && shouldExectute == true)
         {
             RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, bladeVerticalLength);
 
@@ -118,9 +125,46 @@ public class ExampleMeshSlicer : MonoBehaviour
             }
 
             index++;
+            Debug.Log("Index: " + index);
             transform.localPosition = RandomizePositions(index);
+        }*/
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (index < sliceCtr)
+            {
+                RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, bladeVerticalLength);
+
+                foreach (RaycastHit hit in hits)
+                {
+                    GameObject victim = hit.collider.gameObject;
+
+                    GameObject[] pieces = MeshCut.Cut(victim, transform.position, transform.right, capMaterial);
+
+                    for (int i = 0; i < pieces.Length; i++)
+                    {
+                        if (pieces[i].GetComponent<BoxCollider>())
+                            Destroy(pieces[i].GetComponent<BoxCollider>());
+
+                        pieces[i].AddComponent<BoxCollider>();
+                        pieces[i].transform.SetParent(parent.transform);
+                    }
+                }
+
+
+                for (int i = 0; i < parent.transform.childCount; i++)
+                {
+                    parent.transform.GetChild(i).gameObject.name = "Slice " + (i + 1);
+                }
+
+                index++;
+                Debug.Log("Index: " + index);
+                transform.localPosition = RandomizePositions(index);
+            }
 
         }
+
     }
 
     private (float, float, float, float) GetModelStats()

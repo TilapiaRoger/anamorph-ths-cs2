@@ -62,7 +62,7 @@ public class Solver : MonoBehaviour
                 if (Vector3.Dot(player.transform.up, Vector3.down) > 0)
                 {
                     Debug.Log("Congrats!");
-                    //FinishPuzzle();
+                    FinishPuzzle(); 
                 }
                 else
                 {
@@ -72,13 +72,13 @@ public class Solver : MonoBehaviour
             else
             {
                 Debug.Log("Congrats!");
-                //FinishPuzzle();
-            } 
+                FinishPuzzle();
+            }  
 
             
         }
 
-        //ShowResults();
+        ShowResults();
     }
 
     void ShowResults()
@@ -147,6 +147,12 @@ public class Solver : MonoBehaviour
     private bool checkPosition()
     {
         playerPosition = player.transform.position;
+
+        if(GetComponent<ModelParameters>().GetDistributionType() == "Manual")
+        {
+            minimumSolveDistance = 0.25f;
+        }
+
         return (Vector3.Distance(playerPosition, wpPosition) <= minimumSolveDistance) ? true : false;
     }
 

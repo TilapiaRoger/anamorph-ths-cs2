@@ -88,11 +88,9 @@ public class Rotator : MonoBehaviour
 
 
 
-        float randomYPos, randomYRotation;
-        float randomXRotation, randomZRotation;
-        randomYPos = generate(-30, 30);
-        randomYRotation = UnityEngine.Random.Range(-180, 180);
-        randomZRotation = 90 * UnityEngine.Random.Range(-2, 2);
+        float randomYRotation, randomZRotation;
+        randomYRotation = UnityEngine.Random.Range(-60, 60);
+        randomZRotation = 90 * UnityEngine.Random.Range(-1, 1);
 
         //float modelSpawnAngleY = modelSpawnPoint.transform.localEulerAngles.y;
         //float angleZSubtrahend = Math.Abs(winningPoint.transform.localEulerAngles.y) - Math.Abs(modelSpawnPoint.transform.localEulerAngles.y);

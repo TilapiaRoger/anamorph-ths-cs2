@@ -19,7 +19,7 @@ public class SolvingUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        settingsUI.gameObject.SetActive(false);
+        //settingsUI.gameObject.SetActive(false);
         startSolveTime = Time.time;
     }
 
