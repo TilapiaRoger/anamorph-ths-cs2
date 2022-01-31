@@ -15,38 +15,38 @@ The test models are the following 10 models available for solving in each of of 
 #### Manual Slicing and Distribution
 The models were both pre-sliced and pre-distributed in Blender before being imported to the application's Unity project. The charts show the views of the player upon starting a puzzle and of upon the player finishing the puzzle. Both views show the Player's first person view in game and the Bird's Eye View in the scene view at Unity, respectively. The sphere in the Bird's Eye View images are of the player avatar.
 
-![Sample Manual Slicing and Distribution Models Chart](/Technical%20Manual%20Images/Manual%20Models%20Sample.png)
+![Sample Manual Slicing and Distribution Models Chart](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/8bd284730ba54767b3a0843fb3cb2c5f9743e1b8/Technical%20Manual%20Images/Manual%20Models%20Sample.png)
 
 #### Manual Slicing and Automatic Distribution
 The models were pre-sliced in Blender, but automatically distributed in the application using an algorithm.
 
-![Sample Manual Slicing and Automatic Distribution Models Chart](/Technical%20Manual%20Images/Manual%20Slicing,%20Auto%20Distribution%20Sample.png)
+![Sample Manual Slicing and Automatic Distribution Models Chart](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/8bd284730ba54767b3a0843fb3cb2c5f9743e1b8/Technical%20Manual%20Images/Manual%20Slicing,%20Auto%20Distribution%20Sample.png)
 
 #### Automatic Slicing and Distribution
 The models were both automatically sliced and distributed in the application with algorithms.
 
-![Sample Automatic Slicing and Distribution Models Chart](/Technical%20Manual%20Images/Auto%20Slicing%20and%20Distribution%20Sample.png)
+![Sample Automatic Slicing and Distribution Models Chart](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/8bd284730ba54767b3a0843fb3cb2c5f9743e1b8/Technical%20Manual%20Images/Auto%20Slicing%20and%20Distribution%20Sample.png)
 
 ## Skyboxes
 The following skyboxes were used in the application:
 
 ### AllSky Free - 10 Sky / Skybox Set by rpgwhitelock (2021)
-![Epic Glorious Pink](/Technical%20Manual%20Images/Skyboxes/Epic%20Glorious%20Pink.png)
+![Epic Glorious Pink](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/8bd284730ba54767b3a0843fb3cb2c5f9743e1b8/Technical%20Manual%20Images/Skyboxes/Epic%20Glorious%20Pink.png)
 **Epic_GloriousPink.mat**
 
-![AllSky Space Another Planet](/Technical%20Manual%20Images/Skyboxes/AllSky%20Space%20Another%20Planet.png)
+![AllSky Space Another Planet](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/8bd284730ba54767b3a0843fb3cb2c5f9743e1b8/Technical%20Manual%20Images/Skyboxes/AllSky%20Space%20Another%20Planet.png)
 **AllSky_Space_AnotherPlanet.mat**
 
 ### Fantasy Skybox FREE by Render Knight (2020)
-![FS000_Day_06](/Technical%20Manual%20Images/Skyboxes/FS000%20Day%2006.png)
+![FS000_Day_06](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/8bd284730ba54767b3a0843fb3cb2c5f9743e1b8/Technical%20Manual%20Images/Skyboxes/FS000%20Day%2006.png)
 **FS000_Day_06.mat**
 
 ### 3D Skybox PRO - Mediterranean Freebies by Crosstales (2020)
-![03-Old Draw Well](/Technical%20Manual%20Images/Skyboxes/03%20Old%20Draw%20Well.png)
+![03-Old Draw Well](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/8bd284730ba54767b3a0843fb3cb2c5f9743e1b8/Technical%20Manual%20Images/Skyboxes/03%20Old%20Draw%20Well.png)
 **03-Old Draw Well.mat**
 
 ### City Street Skyboxes Vol. 1 by MoodWare (2019)
-![Skybox 24_pan](/Technical%20Manual%20Images/Skyboxes/Skybox%2024_pan.png)
+![Skybox 24_pan](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/8bd284730ba54767b3a0843fb3cb2c5f9743e1b8/Technical%20Manual%20Images/Skyboxes/Skybox%2024_pan.png)
 **Skybox 24_pan.mat**
 
 ## Getting Started
