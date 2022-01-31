@@ -11,14 +11,14 @@ The application allows the user to solve a model in any of the 3 model processin
 ## Test Models
 The test models are the following 10 models available for solving in each of of the 3 solving modes. They are already provided inside the application. Thus, the user no longer needs to download the models.
 
-## Samples of the Solving Modes
-### Manual Slicing and Distribution
+### Samples
+#### Manual Slicing and Distribution
 The models were both pre-sliced and pre-distributed in Blender before being imported to the application's Unity project.
 
-### Manual Slicing and Automatic Distribution
+#### Manual Slicing and Automatic Distribution
 The models were pre-sliced in Blender, but automatically distributed in the application using an algorithm.
 
-### Automatic Slicing and Distribution
+#### Automatic Slicing and Distribution
 The models were both automatically sliced and distributed in the application with algorithms.
 
 ## Skyboxes
