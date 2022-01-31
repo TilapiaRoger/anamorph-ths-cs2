@@ -9,7 +9,7 @@ public class Initializer : MonoBehaviour
                       player,
                       winningPoint,
                       blade;
-    public float d;
+    public float d = 5;
 
     private GameObject winningSphere,
                        target;
@@ -23,6 +23,7 @@ public class Initializer : MonoBehaviour
                                     // the model can spawn at
 
     private string modelName;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -35,22 +36,25 @@ public class Initializer : MonoBehaviour
         // Initialize modelSpawnPoint
         mspDistance = generate(d, spawnMax);
         modelSpawnPoint.transform.position = new Vector3(0, 0, mspDistance);
-        Debug.Log("d: " + d);
+        Debug.Log("Model Spawn Point: " + modelSpawnPoint.transform.position);
 
         // Initialize winningPoint
         wpDistance = mspDistance - d;
         winningPoint.transform.position = new Vector3(0, 0, wpDistance);
+        Debug.Log("Winning Point: " + winningPoint.transform.position);
+
+        // Set the Player up for main camera frustum calculations
+        player.transform.position = winningPoint.transform.position;
+        player.transform.LookAt(modelSpawnPoint.transform);
 
         // Instantiate the model
         instantiateModel();
-
-        Debug.Log("Model is at " + model.transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     float generate(float min, float max)
@@ -84,27 +88,68 @@ public class Initializer : MonoBehaviour
         Debug.Log("Model name contains a number between" + range + ", therefore d = " + d);
     }
 
-    private void addBoxColliders(GameObject model)
-    {
-        int childCount = model.transform.childCount;
-        if (childCount == 0)
-            model.AddComponent<BoxCollider>();
-        else foreach (Transform child in model.transform)
-                child.gameObject.AddComponent<BoxCollider>();
-    }
-
     private void instantiateModel()
     {
-        
         model.SetActive(true);
         //model.transform.localScale = d / 10 * new Vector3(1, 1, 1);
         model.transform.localEulerAngles = new Vector3(0, 180, 0);
         model.transform.position = Vector3.zero;
-        model.name = "Model";
         model.transform.SetAsFirstSibling();
 
-        GameObject modelClone = Instantiate(model, modelSpawnPoint.transform);
+        // Move reference to the instantiated model
+        model = Instantiate(model, modelSpawnPoint.transform);
+        model.name = "Model";
+
         // Add box colliders to the slices or model
-        addBoxColliders(modelClone);
+        addBoxColliders(model);
+
+        // Scale model to fit the screen
+        scaleToFit();
+    }
+
+    private void addBoxColliders(GameObject model)
+    {
+        int childCount = model.transform.childCount;
+
+        model.AddComponent<BoxCollider>();
+
+        if (childCount != 0)
+            foreach (Transform child in model.transform)
+                child.gameObject.AddComponent<BoxCollider>();
+    }
+
+    void scaleToFit()
+    {
+        // Get dimensions of the camera view at a certain distance
+        float height = 2f * 5f * Mathf.Tan(Camera.main.fieldOfView * Mathf.Deg2Rad / 2),
+              width = height * Screen.width / Screen.height;
+
+        // Get the bounds of the model
+        Bounds bounds = getBounds(model);
+
+        // Get the scale factor
+        // The x-scale is take because it's the smallest
+        float scaleFactor = height / bounds.size.x;
+
+        // Scale each slice of the model
+        // to enlarge the whole model to the size of the screen
+        foreach (Transform child in model.transform)
+            child.localScale *= scaleFactor;
+    }
+
+    Bounds getBounds(GameObject model)
+    {
+        Bounds bounds;
+        BoxCollider childBoxCollider;
+        bounds = new Bounds(model.transform.position, Vector3.zero);
+        foreach (Transform child in model.transform)
+        {
+            childBoxCollider = child.GetComponent<BoxCollider>();
+            if (childBoxCollider)
+                bounds.Encapsulate(childBoxCollider.bounds);
+            else
+                bounds.Encapsulate(getBounds(child.gameObject));
+        }
+        return bounds;
     }
 }
