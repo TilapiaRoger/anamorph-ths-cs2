@@ -13,13 +13,19 @@ The test models are the following 10 models available for solving in each of of 
 
 ### Samples
 #### Manual Slicing and Distribution
-The models were both pre-sliced and pre-distributed in Blender before being imported to the application's Unity project.
+The models were both pre-sliced and pre-distributed in Blender before being imported to the application's Unity project. The charts show the views of the player upon starting a puzzle and of upon the player finishing the puzzle. Both views show the Player's first person view in game and the Bird's Eye View in the scene view at Unity, respectively. The sphere in the Bird's Eye View images are of the player avatar.
+
+![Sample Manual Slicing and Distribution Models Chart](/Technical%20Manual%20Images/Manual%20Models%20Sample.png)
 
 #### Manual Slicing and Automatic Distribution
 The models were pre-sliced in Blender, but automatically distributed in the application using an algorithm.
 
+![Sample Manual Slicing and Automatic Distribution Models Chart](/Technical%20Manual%20Images/Manual%20Slicing,%20Auto%20Distribution%20Sample.png)
+
 #### Automatic Slicing and Distribution
 The models were both automatically sliced and distributed in the application with algorithms.
+
+![Sample Automatic Slicing and Distribution Models Chart](/Technical%20Manual%20Images/Auto%20Slicing%20and%20Distribution%20Sample.png)
 
 ## Skyboxes
 The following skyboxes were used in the application:
