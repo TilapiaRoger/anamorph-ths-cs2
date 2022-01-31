@@ -37,8 +37,6 @@ The following skyboxes were used in the application:
 ![AllSky Space Another Planet](/Technical%20Manual%20Images/Skyboxes/AllSky%20Space%20Another%20Planet.png)
 **AllSky_Space_AnotherPlanet.mat**
 
-![FS000_Day_06](/Technical%20Manual%20Images/Skyboxes/FS000%20Day%2006.png)
-
 ### Fantasy Skybox FREE by Render Knight (2020)
 ![FS000_Day_06](/Technical%20Manual%20Images/Skyboxes/FS000%20Day%2006.png)
 **FS000_Day_06.mat**
