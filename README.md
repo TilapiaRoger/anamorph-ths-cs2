@@ -30,33 +30,43 @@ The winning view algorithm randomly sets the model spawn point, the winning poin
 ## Test Models
 The test models are the following 10 models available for solving in each of of the 3 solving modes. They are already provided inside the application. Thus, the user no longer needs to download the models. The test models are:
 ![Suzanne](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/01.%20Suzanne.jpg)
+
 **Suzanne**
 
 ![The Empire State Building](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/02.%20The%20Empire%20State%20Building.jpg)
+
 **Empire State Building**
 
-![Dolphin](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/01.%20Suzanne.jpg)
+![Dolphin](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/03.%20Dolphin.jpg)
+
 **Dolphin**
 
 ![Utah Teapot](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/04.%20Utah%20Teapot.jpg)
+
 **Utah Teapot**
 
 ![Eiffel Tower](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/05.%20Eiffel%20Tower.jpg)
+
 **Eiffel Tower**
 
 ![TV Set](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/06.%20TV%20Stand%20Set%20LG.jpg)
+
 **TV Set**
 
 ![Standford Dragon](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/07.%20Stanford%20Dragon.jpg)
+
 **Stanford Dragon**
 
 ![Standford Armadillo](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/08.%20StanfordArmadillo.png)
+
 **Stanford Armadillo**
 
 ![Standford Bunny](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/09.%20Stanford%20Bunny.png)
+
 **Stanford Bunny**
 
 ![Phlegmatic Dragon](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/main/Technical%20Manual%20Images/Models/Samples/10.%20Phlegmatic%20Dragon.jpg)
+
 **Phlegmatic Dragon**
 
 ### Samples
