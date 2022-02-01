@@ -18,6 +18,24 @@ In the app, there are 10 models that have been processed in 3 different ways. Ea
 
 Fully manual means models had been sliced up and its slices be distributed by the researcher's hand in Blender. MSAD means the models were manually sliced in Blender, but its slices are automatically distributed by the app. Fully automatic, means both the slicing of the model and the distribution of its slices are all handled by the app.
 
+# Rough Sketch of the Algorithms
+Here is a sketch of the 2 primary algorithms. These algorithms assume the camera is at (0, 5, 0) for Blender ((0, 0, 5) for Unity) and the model is at the origin.
+
+## Distribution
+For the distribution algorithm:
+1. Pick a random slice
+2. Move the slice 10 * i / n - 5 units along the y-axis for Blender (z-axis for Unity).
+3. Repeat n times
+
+Where i is the iteration number and n is the number of slices the model has.
+
+## Slicing
+For the slicing algorithm
+1. Check which triangles are on the left and which are on the right
+2. The triangles that intersect the cutting plane of the blade are cut
+3. The openings made by the cut are capped
+4. Assign the left and right sides to their own mesh.
+
 # System Specifications
 The application associated with the thesis, **Anamorph Puzzle** is mainly about solving automated models automatically sliced and then distributed in an anamorphic manner using algorithms. The application was developed in Unity 2021.1.12f1 using C#, and runs on Windows personal computers.
 
