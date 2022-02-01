@@ -26,7 +26,7 @@ For the distribution algorithm:
 2. Move the slice 10 * i / n - 5 units along the y-axis for Blender (z-axis for Unity).
 3. Repeat n times
 
-Where i is the iteration numnber starting from 1, and n is the number of slices the model has.
+Where i is the iteration number starting from 1, and n is the number of slices the model has.
 
 For the slicing algorithm
 1. Check which triangles are on the left and which are on the right
