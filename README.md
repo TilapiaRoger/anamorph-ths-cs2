@@ -21,7 +21,6 @@ Fully manual means models had been sliced up and its slices be distributed by th
 # Rough Sketch of the Algorithms
 Here is a sketch of the 2 primary algorithms. These algorithms assume the camera is at (0, -5, 0) for Blender ((0, 0, -5) for Unity) and the model is at the origin.
 
-## Distribution
 For the distribution algorithm:
 1. Pick a random slice
 2. Move the slice 10 * i / n - 5 units along the y-axis for Blender (z-axis for Unity).
@@ -29,7 +28,6 @@ For the distribution algorithm:
 
 Where i is the iteration numnber starting from 1, and n is the number of slices the model has.
 
-## Slicing
 For the slicing algorithm
 1. Check which triangles are on the left and which are on the right
 2. The triangles that intersect the cutting plane of the blade are cut
