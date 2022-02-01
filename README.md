@@ -29,10 +29,13 @@ For the distribution algorithm:
 Where i is the iteration number starting from 1, and n is the number of slices the model has.
 
 For the slicing algorithm
-1. Check which triangles are on the left and which are on the right
-2. The triangles that intersect the cutting plane of the blade are cut
-3. The openings made by the cut are capped
-4. Assign the left and right sides to their own mesh.
+1. Cast a ray from the blade
+2. Check which triangles are on the left of the blade and which are on the right
+3. The triangles that intersect the cutting plane of the blade are cut
+4. The openings made by the cut are capped
+5. Assign the left and right sides to their own mesh.
+6. Randomize the blade rotation and position
+7. Repeat as many times as needed
 
 # System Specifications
 The application associated with the thesis, **Anamorph Puzzle** is mainly about solving automated models automatically sliced and then distributed in an anamorphic manner using algorithms. The application was developed in Unity 2021.1.12f1 using C#, and runs on Windows personal computers.
