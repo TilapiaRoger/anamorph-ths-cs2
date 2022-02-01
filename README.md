@@ -18,7 +18,7 @@ In the app, there are 10 models that have been processed in 3 different ways. Ea
 
 Fully manual means models had been sliced up and its slices be distributed by the researcher's hand in Blender. MSAD means the models were manually sliced in Blender, but its slices are automatically distributed by the app. Fully automatic, means both the slicing of the model and the distribution of its slices are all handled by the app.
 
-# Rough Sketch of the Algorithms
+## Rough Sketch of the Algorithms
 Here is a sketch of the 2 primary algorithms. These algorithms assume the camera is at (0, -5, 0) for Blender ((0, 0, -5) for Unity) and the model is at the origin.
 
 For the distribution algorithm:
