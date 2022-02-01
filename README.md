@@ -1,15 +1,33 @@
+## Getting Started
+### Installation 
+1. Click on [this Google Drive link](https://drive.google.com/drive/folders/1QaYy-SKNvhFxNSrBXMH7rque4I_qqR2U?usp=sharing).
+2. Install the ZIP file **Anamorph Puzzle.zip** in the link. Save to a directory of your choice.
+3. Once download is finished, find and unzip the file in the selected directory.
+4. Go inside the folder from the unzipped file, and click on **Anamorph Puzzle** to run the application.
+
+# Anamorphosis
+Anamorphosis is the perspective technique where a complete picture can be viewed from a certain viewpoint, but distorted otherwise. This version of anamorphosis involves slicing the model up and distributing its pieces along the intended line of sight. The application associated with the thesis, **Anamorph Puzzle** is mainly about solving automated models automatically sliced and then distributed in an anamorphic manner using algorithms.
+
+# Solving Modes
+In the app, there are 10 models that have been processed in 3 different ways. Each automating an aspect of setting up the puzzle. The 1st way is fully manual, meaning the models had been sliced up and its slices be distributed by the researcher's hand in Blender. The 2nd way is where the models were manually sliced in Blender, but its slices are automatically distributed by the app. The 3rd way is fully automatic, meaning both the slicing of the model and the distribution of its slices are all handled by the app.
+
 # Automatic Slicing and Distribution of 3D Models Using Anamorphosis
-The application associated with the thesis, **Anamorph Puzzle** is mainly about solving automated models automatically sliced and then distributed in an anamorphic manner using algorithms. The application was developed in Unity 2021.1.12f1 using C#, and runs on Windows personal computers. Although the automatic distribution algorithm used is entirely developed by the thesis researchers, the base automatic slicing algorithm used is by Whirle (2021). The base slicing algorithm was used along with an algorithm for the slicing blade that slices six times. The first three times are sliced vertically, and the last three times are sliced horizontally. 
+The application was developed in Unity 2021.1.12f1 using C#, and runs on Windows personal computers. Although the automatic distribution algorithm used is entirely developed by the thesis researchers, the base automatic slicing algorithm used is by Whirle (2021). The base slicing algorithm was used along with an algorithm for the slicing blade that slices six times. The first three times are sliced vertically, and the last three times are sliced horizontally. 
 
 The winning view algorithm randomly sets the model spawn point, the winning point, and the winning angle. The model spawn point, is where the selected model is placed. Then, the winning point, or winning sphere, is an invisible sphere set at a distance from the model spawn point. The winning angle is a random rotation that rotates the origin, which has the winning angle, winning point, model spawn point, and the model as children.
 
-The application allows the user to solve a model in any of the 3 model processing methods, or solving modes:
-1. Manual Slicing and Distribution 
-2. Manual Slicing and Automatic Distribution, or Manual Slicing, Auto Distribution
-3. Automatic or Auto Slicing and Distribution
-
 ## Test Models
-The test models are the following 10 models available for solving in each of of the 3 solving modes. They are already provided inside the application. Thus, the user no longer needs to download the models.
+The test models are the following 10 models available for solving in each of of the 3 solving modes. They are already provided inside the application. Thus, the user no longer needs to download the models. The test models are:
+1. Suzanne
+2. The Empire State Building
+3. Dolphin
+4. Utah Teapot
+5. Eiffel Tower
+6. TV Set
+7. Standford Dragon
+8. Standford Armadillo
+9. Standford Bunny
+10. Phlegmatic Dragon
 
 ### Samples
 #### Manual Slicing and Distribution
@@ -48,13 +66,6 @@ The following skyboxes were used in the application:
 ### City Street Skyboxes Vol. 1 by MoodWare (2019)
 ![Skybox 24_pan](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/8bd284730ba54767b3a0843fb3cb2c5f9743e1b8/Technical%20Manual%20Images/Skyboxes/Skybox%2024_pan.png)
 **Skybox 24_pan.mat**
-
-## Getting Started
-### Installation 
-1. Click on [this Google Drive link](https://drive.google.com/drive/folders/1QaYy-SKNvhFxNSrBXMH7rque4I_qqR2U?usp=sharing).
-2. Install the ZIP file **Anamorph Puzzle.zip** in the link. Save to a directory of your choice.
-3. Once download is finished, find and unzip the file in the selected directory.
-4. Go inside the folder from the unzipped file, and click on **Anamorph Puzzle** to run the application.
 
 ### User Manual
 [User Manual](https://github.com/TilapiaRoger/anamorph-ths-cs2/blob/629bb780557568ec4cd4e856c9b5cc53a7225122/%5BTHS-CS3%5D%20User%20Manual%20for%20Automatic%20Slicing%20and%20Distribution%20of%203D%20Models%20For%20Puzzles%20Using%20Anamorphosis.pdf)
