@@ -36,7 +36,7 @@ public class Rotator : MonoBehaviour
         do
         {
             phi2 = Random.Range(0, 360);
-            test = clamp(270 - (theta2 + phi2));
+            test = clamp(theta2 + phi2 - 90);
         }
         while (-60 <= test && test <= 60);
         // Rotate modelSpawnPoint around winningPoint
