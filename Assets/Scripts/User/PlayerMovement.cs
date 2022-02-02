@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         // For debugging purposes
         shouldSolve = Input.GetKey(KeyCode.P);
         if(shouldSolve && Vector3.Distance(transform.position, wpPosition) != 0) animate();
+        if (Vector3.Distance(transform.position, wpPosition) == 0) alignPlayerUpToModelUp();
     }
 
     public void StartMove()
@@ -161,4 +162,12 @@ public class PlayerMovement : MonoBehaviour
             angle -= 360;
         return angle;
     }
+}
+
+private void alignPlayerUpToModelUp()
+{
+    float speed = 1f,
+              step = speed * Time.deltaTime;
+    Quaternion q = Quaternion.FromToRotation(transform.up, model.transform.up);
+    transform.rotation = Quaternion.Slerp(transform.rotation, q * transform.rotation, step);
 }
