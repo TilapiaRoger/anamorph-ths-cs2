@@ -130,6 +130,11 @@ public class Initializer : MonoBehaviour
         // Get the scale factor
         // The x-scale is take because it's the smallest
         float scaleFactor = height / bounds.size.x;
+        
+        // Hardcode the scale factors for the following
+        // The Empire State Building - 1
+        // Eiffel Tower - 1.3
+        // Stanford Armadillo - 1.5
 
         // Scale each slice of the model
         // to enlarge the whole model to the size of the screen
