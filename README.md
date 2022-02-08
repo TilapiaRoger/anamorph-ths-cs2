@@ -1,6 +1,6 @@
 ## Getting Started
 ### Installation 
-1. Click on [this Google Drive link](https://drive.google.com/drive/folders/1QaYy-SKNvhFxNSrBXMH7rque4I_qqR2U?usp=sharing).
+1. Click on [this Google Drive link](https://drive.google.com/drive/folders/1hD34uB1nNbVDdHEKqNeoH93jAhe27BU8?usp=sharing).
 2. Install the ZIP file **Anamorph Puzzle.zip** in the link. Save to a directory of your choice.
 3. Once download is finished, find and unzip the file in the selected directory.
 4. Go inside the folder from the unzipped file, and click on **Anamorph Puzzle** to run the application.
