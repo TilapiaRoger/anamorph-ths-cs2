@@ -33,6 +33,8 @@ public class Initializer : MonoBehaviour
 
     private float newScale = 1;
 
+    public Material modelMaterial;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -91,7 +93,6 @@ public class Initializer : MonoBehaviour
         }*/
     }
 
-
     float generate(float min, float max)
     {
         float num;
@@ -133,40 +134,73 @@ public class Initializer : MonoBehaviour
                 child.gameObject.AddComponent<BoxCollider>();
     }
 
-    private void instantiateModel()
+    private void instantiateModel() 
     {
-        GameObject modelClone = Instantiate(model, modelSpawnPoint.transform);
+        model = Instantiate(model, modelSpawnPoint.transform);
         // Add box colliders to the slices or model
-        addBoxColliders(modelClone);
-    }
-    private void adjustCamera()
-    {
-        Bounds modelBounds = GetBounds(model);
-        //Camera.main.rect = new Rect(0, 0, modelBounds.size.x, modelBounds.size.z);
-        Camera.main.fieldOfView = modelBounds.size.x * modelBounds.size.y;
-    }
+        addBoxColliders(model);  
 
-    private Bounds GetBounds(GameObject model)
-    {
-        Bounds bounds = new Bounds();
-        Renderer[] renderers = model.GetComponentsInChildren<Renderer>();
-
-
-        if (renderers.Length > 0)
+        foreach (Transform child in model.transform)
         {
-            //Find first enabled renderer to start encapsulate from it
-            foreach (Renderer renderer in renderers) if (renderer.enabled)
-                {
-                    Debug.Log("Current renderer: " + renderer);
-                    bounds = renderer.bounds;
-                    break;
-                }
+            child.gameObject.GetComponent<Renderer>().material = modelMaterial;
+        }
+        scaleToFit(model);
+    }
 
-            //Encapsulate for all renderers
-            foreach (Renderer renderer in renderers) if (renderer.enabled)
-                    bounds.Encapsulate(renderer.bounds);
+    Bounds getBounds(GameObject model)
+    {
+        Bounds bounds;
+        BoxCollider childBoxCollider;
+        bounds = new Bounds(model.transform.position, Vector3.zero);
+        foreach (Transform child in model.transform)
+        {
+            childBoxCollider = child.GetComponent<BoxCollider>();
+            if (childBoxCollider)
+                bounds.Encapsulate(childBoxCollider.bounds);
+            else
+                bounds.Encapsulate(getBounds(child.gameObject));
+        }
+        return bounds;
+    }
+
+    public void scaleToFit(GameObject model)
+    {
+        float modelMult = 2.7f;
+
+        if (model.name.StartsWith("05") || model.name.StartsWith("02"))
+        {
+            modelMult = 1.2f;
+
+            if(model.name.StartsWith("02") && modelParameters.GetSlicingType() == "Automatic")
+            {
+                modelMult = 0.5f;
+            }
+        }
+        else if (model.name.StartsWith("08"))
+        {
+            modelMult = 2.2f;
         }
 
-        return bounds;
+        // Get dimensions of the camera view at a certain distance
+        float height = modelMult * 5f * Mathf.Tan(Camera.main.fieldOfView * Mathf.Deg2Rad / 2),
+              width = height * Screen.width / Screen.height;
+
+        // Get the bounds of the model
+        Bounds bounds = getBounds(model);
+
+        // Get the scale factor
+        // The x-scale is take because it's the smallest
+        float scaleFactor = height / bounds.size.x;
+
+        // Scale each slice of the model
+        // to enlarge the whole model to the size of the screen
+        foreach (Transform child in model.transform)
+        {
+            Debug.Log("Slice scaled: " + child);
+            child.localScale *= scaleFactor;
+        }
+
+
+        Debug.Log("Model is being scaled to fit");
     }
 }

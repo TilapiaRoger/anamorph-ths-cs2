@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Pan()
     {
-        if (Vector3.Distance(gameObject.transform.position, Vector3.zero) < 15)
+        /*if (Vector3.Distance(gameObject.transform.position, Vector3.zero) < 15)
         {
             linearVelocity = new Vector3(0, 0, 0);
             if (Input.GetKey(KeyCode.Q)) linearVelocity = Vector3.up;
@@ -88,7 +88,17 @@ public class PlayerMovement : MonoBehaviour
 
             transform.Translate(linearVelocity * Time.deltaTime * movementSpeed);
         }
-        else transform.Translate(-linearVelocity * Time.deltaTime * movementSpeed);
+        else transform.Translate(-linearVelocity * Time.deltaTime * movementSpeed);*/
+
+        linearVelocity = new Vector3(0, 0, 0);
+        if (Input.GetKey(KeyCode.Q)) linearVelocity = Vector3.up;
+        if (Input.GetKey(KeyCode.W)) linearVelocity = Vector3.forward;
+        if (Input.GetKey(KeyCode.E)) linearVelocity = -Vector3.up;
+        if (Input.GetKey(KeyCode.A)) linearVelocity = -Vector3.right;
+        if (Input.GetKey(KeyCode.S)) linearVelocity = -Vector3.forward;
+        if (Input.GetKey(KeyCode.D)) linearVelocity = Vector3.right;
+
+        transform.Translate(linearVelocity * Time.deltaTime * movementSpeed);
     }
 
     private void Rotate()
@@ -97,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
               yRotation = transform.localEulerAngles.y;
 
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && -60 <= clamp(xRotation) && clamp(xRotation) <= 60)
         {
             /*yaw += rotateSpeed * Input.GetAxis("Mouse X");
             pitch -= rotateSpeed * Input.GetAxis("Mouse Y");
@@ -116,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
 
             transform.rotation = Quaternion.Euler(X, Y, 0);
         }
+        else transform.Rotate(new Vector3(pitch, yaw, 0));
     }
 
     private float clamp(float angle)

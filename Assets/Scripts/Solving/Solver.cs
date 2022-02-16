@@ -57,7 +57,7 @@ public class Solver : MonoBehaviour
         if (atWinning && lookingAtModel && Vector3.Distance(playerPosition, wpPosition) != 0f && Time.timeScale == 1)
         {
             //int delayTimeSeconds = 20;
-            if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
+            /*if (Vector3.Dot(modelSpawnPoint.transform.GetChild(0).up, Vector3.down) > 0)
             {
                 if (Vector3.Dot(player.transform.up, Vector3.down) > 0)
                 {
@@ -68,14 +68,17 @@ public class Solver : MonoBehaviour
                 {
                     Debug.Log("Orientation is wrong.");
                 }
+
+                if (Vector3.Distance(transform.position, wpPosition) == 0) alignPlayerUpToModelUp();
             }
             else
             {
                 Debug.Log("Congrats!");
                 FinishPuzzle();
-            }  
+            } */
+            Debug.Log("Congrats!");
+            FinishPuzzle();
 
-            
         }
 
         ShowResults();
@@ -106,6 +109,7 @@ public class Solver : MonoBehaviour
     void FinishPuzzle()
     {
         animate();
+        alignPlayerUpToModelUp();
         finishSolving.FreezePlayer();
         finishSolving.DisableTimer();
         isFinishedPuzzle = true;
@@ -196,6 +200,10 @@ public class Solver : MonoBehaviour
         {
             player.transform.RotateAround(player.transform.position, player.transform.forward, 180);
         }
+
+        //float playerFinishZRotation = modelSpawnPoint.transform.rotation.z * step;
+        //player.transform.RotateAround(player.transform.position, Vector3.forward, playerFinishZRotation);
+        //player.transform.localEulerAngles = new Vector3(player.transform.localEulerAngles.x, player.transform.localEulerAngles.y, modelSpawnPoint.transform.localEulerAngles.z*step);
     }
 
     private void OnDrawGizmos()
@@ -203,4 +211,13 @@ public class Solver : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawRay(player.transform.position, player.transform.forward * maxDistance);
     }
+
+    private void alignPlayerUpToModelUp()
+    {
+        float speed = 1f,
+                  step = speed * Time.deltaTime;
+        Quaternion q = Quaternion.FromToRotation(player.transform.up, modelSpawnPoint.transform.GetChild(0).transform.up);
+        player.transform.rotation = Quaternion.Slerp(player.transform.rotation, q * player.transform.rotation, step);  
+    }
+
 }

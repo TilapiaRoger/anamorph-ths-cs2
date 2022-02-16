@@ -98,7 +98,7 @@ public class ExampleMeshSlicer : MonoBehaviour
 
 	void Update()
 	{
-        /*if (index < sliceCtr && shouldExectute == true)
+        if (index < sliceCtr && shouldExectute == true)
         {
             RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, bladeVerticalLength);
 
@@ -127,10 +127,10 @@ public class ExampleMeshSlicer : MonoBehaviour
             index++;
             Debug.Log("Index: " + index);
             transform.localPosition = RandomizePositions(index);
-        }*/
+        }
 
 
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             if (index < sliceCtr)
             {
@@ -163,7 +163,7 @@ public class ExampleMeshSlicer : MonoBehaviour
                 transform.localPosition = RandomizePositions(index);
             }
 
-        }
+        }*/
 
     }
 

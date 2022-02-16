@@ -48,22 +48,22 @@ public class ChooseModelUI : MonoBehaviour
 
         sliceDistributeTypeDropdown.onValueChanged.AddListener(delegate
         {
-            if (sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text == "Manual Slicing and Distribution")
+            if (sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text == "Mode 1")
             {
                 modelParams.sliceType = "Manual";
                 modelParams.distributeType = "Manual";
 
             }
-            else if (sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text == "Auto Slicing and Distribution")
-            {
-                modelParams.sliceType = "Automatic";
-                modelParams.distributeType = "Automatic";
-            }
-            else if (sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text == "Manual Slicing, Auto Distribution")
+            else if (sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text == "Mode 2")
             {
                 modelParams.sliceType = "Manual";
                 modelParams.distributeType = "Automatic";
 
+            }
+            else if (sliceDistributeTypeDropdown.options[sliceDistributeTypeDropdown.value].text == "Mode 3")
+            {
+                modelParams.sliceType = "Automatic";
+                modelParams.distributeType = "Automatic";
             }
 
             Debug.Log("Slice: " + modelParams.sliceType);

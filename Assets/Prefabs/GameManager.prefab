@@ -149,6 +149,7 @@ MonoBehaviour:
   winningPoint: {fileID: 0}
   d: 10
   greatestBound: 0
+  modelMaterial: {fileID: 0}
 --- !u!114 &8125868360355868010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,7 +182,6 @@ MonoBehaviour:
   origin: {fileID: 0}
   modelSpawnPoint: {fileID: 0}
   winningPoint: {fileID: 0}
-  target: {fileID: 0}
   rotateZ: 0
   zAngle: 180
 --- !u!114 &2223200471494294745
@@ -208,9 +208,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9614531f6a8b94b459af59b681f2c503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skyboxBundles: []
+  materialColors:
+  - {r: 0.02745098, g: 0.20392157, b: 0.40784314, a: 0}
+  - {r: 0.23921569, g: 0.38431373, b: 0.40784314, a: 0}
+  - {r: 0.21960784, g: 0.07058824, b: 0.023529412, a: 0}
+  - {r: 0.8039216, g: 0.36078432, b: 0.02745098, a: 0}
+  - {r: 0.87058824, g: 0.0627451, b: 0.68235296, a: 0}
   randomSkyboxes:
   - {fileID: 2100000, guid: 123caa41e84e041d0bd65bb3ae888dd1, type: 2}
   - {fileID: 2100000, guid: 982e0d86f860c1246b831a8bccaf59f2, type: 2}
   - {fileID: 2100000, guid: dde4f2e1b6d94b7429c0de9075b5ec6d, type: 2}
   - {fileID: 2100000, guid: 656058fe318eb48558d21d66d1a79a2b, type: 2}
   - {fileID: 2100000, guid: 8b7dd0809c7c6498789fa32a61eaa6cb, type: 2}
+  directLightIntensity:
+  - 2.75
+  - 2.3
+  - 2.3
+  - 2.3
+  - 2.3
+  modelMaterial: {fileID: 2100000, guid: efa7d3a0ee772984d82e54050d477cb1, type: 2}

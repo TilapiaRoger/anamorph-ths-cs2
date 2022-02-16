@@ -172,12 +172,11 @@ public class Slicer : MonoBehaviour
 
                 Debug.Log("Distributed automatically.");
 
-                //GetComponent<Initializer>().enabled = true;
                 GetComponent<Distributer>().enabled = true;
                 GetComponent<Rotator>().enabled = true;
                 GetComponent<Solver>().enabled = true;
+                GetComponent<Initializer>().scaleToFit(newParent);
                 GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = true;
-
             }
         }
     }
