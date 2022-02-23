@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
             pitch -= rotateSpeed * Input.GetAxis("Mouse Y");
             pitch = Mathf.Clamp(pitch, -60f, 60f);
 
-            transform.rotation = Quaternion.Euler(ptich, yaw, 0);
+            transform.rotation = Quaternion.Euler(pitch, yaw, 0);
         }
     }
     
