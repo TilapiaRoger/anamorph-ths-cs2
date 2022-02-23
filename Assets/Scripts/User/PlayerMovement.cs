@@ -22,16 +22,11 @@ public class PlayerMovement : MonoBehaviour
                     linearVelocity,
                     angularVelocity,
                     wpPosition,
-                    mspPosition,
-                    nsPosition;
-
-    private Transform nearestSlice;
+                    mspPosition;
 
     private float zPlayerRotation = 0;
 
-    private bool canMove = false,
-                 shouldSolve = false,
-                 blegh = true;
+    private bool canMove = false;
 
     // Start is called before the first frame update
     void Start()
@@ -47,10 +42,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Pan();
             Rotate();
-
-            //transform.Rotate(Vector3.forward, zPlayerRotation);
-        }
-
+         }
     }
 
     public void SetMoveStatus(bool canMove)
@@ -70,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
         // point the camera towards the nearest slice
         model = modelSpawnPoint.transform.GetChild(0).gameObject;
         Transform nearestSlice = findNearest(model.transform);
-        nsPosition = nearestSlice.position;
         transform.LookAt(nearestSlice);
     }
 
@@ -103,42 +94,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Rotate()
     {
-        float xRotation = transform.localEulerAngles.x,
-              yRotation = transform.localEulerAngles.y;
-
-
-        if (Input.GetMouseButton(1) && -60 <= clamp(xRotation) && clamp(xRotation) <= 60)
+        if (Input.GetMouseButton(1))
         {
-            /*yaw += rotateSpeed * Input.GetAxis("Mouse X");
-            pitch -= rotateSpeed * Input.GetAxis("Mouse Y");
-
-            pitch = Mathf.Clamp(pitch, minRotationLimit, maxRotationLimit);
-
-            transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);*/
-
             yaw = rotateSpeed * Input.GetAxis("Mouse X");
             pitch = rotateSpeed * Input.GetAxis("Mouse Y");
 
-            transform.Rotate(new Vector3(-pitch, yaw, 0));
-
-            X = transform.rotation.eulerAngles.x;
-            Y = transform.rotation.eulerAngles.y;
+            X -= pitch;
+            X = Mathf.Clamp(X, -60f, 60f);
+            Y += yaw;
 
             transform.rotation = Quaternion.Euler(X, Y, 0);
         }
-        else transform.Rotate(new Vector3(pitch, yaw, 0));
     }
-
-    private float clamp(float angle)
-    {
-        if (angle > 180)
-        {
-            angle -= 360;
-        }
-        return angle;
-    }
-
-
+    
     public void SetMoveSpeed(float moveSpeed)
     {
         this.movementSpeed = moveSpeed;
