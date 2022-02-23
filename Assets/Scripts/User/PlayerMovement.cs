@@ -22,7 +22,8 @@ public class PlayerMovement : MonoBehaviour
                     linearVelocity,
                     angularVelocity,
                     wpPosition,
-                    mspPosition;
+                    mspPosition,
+                    nsPosition;
 
     private float zPlayerRotation = 0;
 
