@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         // point the camera towards the nearest slice
         model = modelSpawnPoint.transform.GetChild(0).gameObject;
         Transform nearestSlice = findNearest(model.transform);
+        nsPosition = nearestSlice.position;
         transform.LookAt(nearestSlice);
     }
 
