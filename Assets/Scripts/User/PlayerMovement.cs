@@ -96,14 +96,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
-            yaw = rotateSpeed * Input.GetAxis("Mouse X");
-            pitch = rotateSpeed * Input.GetAxis("Mouse Y");
+            yaw += rotateSpeed * Input.GetAxis("Mouse X");
+            pitch -= rotateSpeed * Input.GetAxis("Mouse Y");
+            pitch = Mathf.Clamp(pitch, -60f, 60f);
 
-            X -= pitch;
-            X = Mathf.Clamp(X, -60f, 60f);
-            Y += yaw;
-
-            transform.rotation = Quaternion.Euler(X, Y, 0);
+            transform.rotation = Quaternion.Euler(ptich, yaw, 0);
         }
     }
     
